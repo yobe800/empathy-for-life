@@ -1,6 +1,11 @@
-function App() {
+import React from "react";
+import Home from "./Home";
+import "./styles/reset.css";
+import "./styles/font.css";
+
+const App = () => {
   return (
-    <h1>Empathy for Life</h1>
+    <Home />
   );
 }
 
