@@ -1,0 +1,26 @@
+@value (
+  defaultBorderRadius,
+  defaultBorderWidth
+) from "./shapes.css";
+@value mainBlack from "./colors.css";
+
+.mainImage {
+  width: 100vw;
+}
+
+.guideText {
+  margin-top: 1vw;
+  margin-left: 1vw;
+  font-family: "neodgm", sans-serif;
+  font-size: 1.3vw;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputButtonContainer {
+  margin-left: 1.5vw;
+}

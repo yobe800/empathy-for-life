@@ -1,0 +1,23 @@
+@value (
+  defaultBorderRadius,
+  defaultBorderWidth
+) from "./shapes.css";
+@value mainBlack from "./colors.css";
+
+.inputButton {
+  width: 10vw;
+  padding: 0.7vw;
+  margin-top: 1vw;
+  background-color: white;
+  border: defaultBorderWidth solid mainBlack;
+  border-radius: defaultBorderRadius;
+  box-shadow: 0.3vw 0.3vw 0.2vw 0 black;
+  font-family: "neodgm", sans-serif;
+  font-size: 1vw;
+}
+
+.inputButton:active {
+  border-width: 0.4vw 0.1vw 0.1vw 0.4vw;
+  border-color: mainBlack;
+  box-shadow: none;
+}
