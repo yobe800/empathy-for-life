@@ -4,6 +4,7 @@ import dogPhoto from "../assets/images/emily.jpg";
 import getDogDescriptions from "../utils/getDogDescriptionLists";
 
 import styles from "./styles/DogProfile.module.css";
+import Container from "./shared/Container";
 
 const dogData = {
   _id: "1",
@@ -32,23 +33,21 @@ const DogProfile = () => {
     ));
 
   return (
-    <div className={styles.container}>
-      <div className={styles.profileBorder}>
-        <div className={styles.informationContainer}>
-          <img
-            className={styles.profilePhoto}
-            src={dogPhoto}
-            alt="a dog profile photo"
-          />
-          <dl className={styles.descriptionList}>
-            {dogDescriptionLists}
-          </dl>
-        </div>
+    <Container>
+      <div className={styles.informationContainer}>
+        <img
+          className={styles.profilePhoto}
+          src={dogPhoto}
+          alt="a dog profile photo"
+        />
+        <dl className={styles.descriptionList}>
+          {dogDescriptionLists}
+        </dl>
       </div>
       <p className={styles.content}>
         {dogData.description}
       </p>
-    </div>
+    </Container>
   );
 };
 
