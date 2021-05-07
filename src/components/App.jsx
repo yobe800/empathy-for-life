@@ -6,10 +6,15 @@ import UserSignIn from "./UserSignIn";
 import AdminAuth from "./AdminAuth";
 import AdminSignIn from "./AdminSignIn";
 import AdminSignUp from "./AdminSignUp";
+import Main from "./Main";
+import Modal from "./shared/Modal";
 
 const App = () => {
   return (
-    <AdminSignIn />
+    <>
+      <Main />
+      <Modal />
+    </>
   );
 }
 
