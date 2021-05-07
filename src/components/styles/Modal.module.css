@@ -1,7 +1,9 @@
 .modalContainer {
   width: 50vh;
   height: 80vh;
-  background-color: yellow;
+  margin: 12vh 20vw 10vh 60vw;
   position: absolute;
+  display: flex;
+  align-items: center;
   z-index: 10;
 }
