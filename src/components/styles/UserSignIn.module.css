@@ -1,0 +1,40 @@
+@value (
+  mainBlack,
+  mainWhite,
+  defaultBorderRadius
+) from "./variables.css";
+
+.signInButton {
+  width: 20vw;
+  height: 4vw;
+  border-width: 0.2vw 0.2vw 0.2vw 0.2vw;
+  border-style: solid;
+  border-color: black;
+  border-radius: defaultBorderRadius;
+  margin-top: 4vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: mainWhite;
+  box-shadow: 4px 5px 3px 1px black;
+  transition: box-shadow 0.05s;
+}
+
+.signInButton:active {
+  border-radius: 0.5vw;
+  border-width: 0.5vw 0.1vw 0.1vw 0.5vw;
+  border-style: solid;
+  border-color: black;
+  box-shadow: none;
+}
+
+.googleIcon {
+  width: 2vw;
+  margin-right: 1vw;
+}
+
+.signText {
+  font-family: "neodgm", sans-serif;
+  font-size: 1.3vw;
+  color: mainBlack;
+}

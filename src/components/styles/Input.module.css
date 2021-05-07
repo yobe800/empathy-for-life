@@ -1,0 +1,24 @@
+@value (
+  defaultBorderRadius,
+  defaultBorderWidth
+) from "./variables.css";
+
+.container {
+  margin-top: 1vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.title {
+  font-family: "neodgm", sans-serif;
+  font-size: 1.3vw;
+}
+
+.textInput {
+  border: defaultBorderWidth solid;
+  border-radius: defaultBorderRadius;
+  margin-left: 2vw;
+  padding: 0.7vw 2vw;
+  font-size: 1.2vw;
+}
