@@ -7,13 +7,16 @@ import AdminAuth from "./AdminAuth";
 import AdminSignIn from "./AdminSignIn";
 import AdminSignUp from "./AdminSignUp";
 import Main from "./Main";
-import Modal from "./shared/Modal";
+import Modal from "./Modal";
+import DogProfile from "./DogProfile";
 
 const App = () => {
   return (
     <>
+      <Modal>
+        <DogProfile />
+      </Modal>
       <Main />
-      <Modal />
     </>
   );
 }
