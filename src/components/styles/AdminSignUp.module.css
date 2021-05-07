@@ -1,0 +1,25 @@
+@value (
+  defaultBorderRadius,
+  defaultBorderWidth,
+  mainBlack
+) from "./variables.css";
+
+.guideText {
+  margin-top: 1vw;
+  font-family: "neodgm", sans-serif;
+  font-size: 1.3vw;
+}
+
+.form {
+  margin-top: 1vw;
+  margin-right: 8vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.buttonsContainer {
+  width: 17.5vw;
+  display: flex;
+  justify-content: space-around;
+}

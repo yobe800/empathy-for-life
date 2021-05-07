@@ -7,8 +7,6 @@ import Home from "./shared/Home.jsx";
 import Input from "./shared/Input.jsx";
 import InputButton from "./shared/InputButton.jsx";
 
-const inputStyle = { width: "6vw" };
-
 const AdminSignIn = () => {
   return (
     <Home imageSrc={dogsHangingBackImg}>
@@ -16,12 +14,14 @@ const AdminSignIn = () => {
         <Input title={"ID"}/>
         <Input title={"Password"}/>
         <div className={styles.buttonsContainer}>
-          <InputButton text={"sign up"} style={inputStyle} />
-          <InputButton text={"sign in"} style={inputStyle} />
+          <InputButton text={"sign up"} style={inputButtonStyle} />
+          <InputButton text={"sign in"} style={inputButtonStyle} />
         </div>
       </form>
     </Home>
   );
 };
+
+const inputButtonStyle = { width: "6vw" };
 
 export default AdminSignIn;

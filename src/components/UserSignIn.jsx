@@ -10,7 +10,7 @@ const UserSignIn = () => {
   return (
     <Home imageSrc={dogsHangingFrontImg}>
       <button className={styles.signInButton}>
-        <img className={styles.googleIcon} src={googleIcon} />
+        <img className={styles.googleIcon} src={googleIcon} alt="Google Logo" />
         <span className={styles.signText}>Sign In with Google</span>
       </button>
     </Home>
