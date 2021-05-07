@@ -40,9 +40,9 @@ const DogProfile = () => {
             src={dogPhoto}
             alt="a dog profile photo"
           />
-            <dl className={styles.descriptionList}>
-              {dogDescriptionLists}
-            </dl>
+          <dl className={styles.descriptionList}>
+            {dogDescriptionLists}
+          </dl>
         </div>
       </div>
       <p className={styles.content}>
