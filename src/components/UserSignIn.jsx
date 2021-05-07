@@ -8,16 +8,11 @@ import Home from "./shared/Home.jsx";
 
 const UserSignIn = () => {
   return (
-    <Home>
-        <img
-          className={styles.mainImage}
-          src={dogsHangingFrontImg}
-          alt="dogs watching you over the wall"
-        />
-        <button className={styles.signInButton}>
-          <img className={styles.googleIcon} src={googleIcon} width={50} />
-          <span className={styles.signText}>Sign In with Google</span>
-        </button>
+    <Home imageSrc={dogsHangingFrontImg}>
+      <button className={styles.signInButton}>
+        <img className={styles.googleIcon} src={googleIcon} />
+        <span className={styles.signText}>Sign In with Google</span>
+      </button>
     </Home>
   );
 };

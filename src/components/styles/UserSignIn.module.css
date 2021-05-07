@@ -1,10 +1,6 @@
 @value mainBlack, mainWhite from "./colors.css";
 @value defaultBorderRadius from "./shapes.css";
 
-.mainImage {
-  width: 100vw;
-}
-
 .signInButton {
   width: 20vw;
   height: 4vw;

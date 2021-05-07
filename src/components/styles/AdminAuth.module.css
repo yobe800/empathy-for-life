@@ -4,10 +4,6 @@
 ) from "./shapes.css";
 @value mainBlack from "./colors.css";
 
-.mainImage {
-  width: 100vw;
-}
-
 .guideText {
   margin-top: 1vw;
   margin-left: 1vw;

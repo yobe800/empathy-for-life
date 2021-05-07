@@ -4,7 +4,7 @@ import styles from "../styles/InputButton.module.css";
 
 const InputButton = ({ text, style, ...rest }) => {
   return (
-    <input className={style ? style : styles.inputButton} type="submit" value={text} {...rest} />
+    <input className={styles.inputButton} style={style} type="submit" value={text} {...rest} />
   );
 };
 

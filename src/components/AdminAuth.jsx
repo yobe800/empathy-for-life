@@ -9,8 +9,7 @@ import Input from "./shared/Input.jsx";
 
 const AdminAuth = () => {
   return (
-    <Home>
-      <img className={styles.mainImage} src={dogsHangingBackImg} alt="" />
+    <Home imageSrc={dogsHangingBackImg}>
       <span className={styles.guideText}>
         the password for access to administrator
       </span>
