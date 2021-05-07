@@ -37,10 +37,50 @@
   margin-bottom: 5%;
 }
 
-.canvasContainer {
+.main {
   width: 100vh;
   margin-left: 2vw;
   position: relative;
+}
+
+.header {
+  width: 70vh;
+  margin-top: 1vh;
+  margin-left: 1vh;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 12.8vh;
+  z-index: 2;
+}
+
+.timeBoardHeading {
+  font-size: 1.1vh;
+  position: absolute;
+  top: 0;
+  left: 5%;
+}
+
+.timeBoardText {
+ font-size: 3vh;
+ position: absolute;
+ top: 40%;
+ left: 25%;
+}
+
+.navigation {
+  width: 49vh;
+  margin-left: 3vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.anchor:hover {
+  cursor: pointer;
+}
+
+.anchor:active {
+  opacity: 0.7;
 }
 
 .canvas {

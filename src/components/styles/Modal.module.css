@@ -1,0 +1,7 @@
+.modalContainer {
+  width: 50vh;
+  height: 80vh;
+  background-color: yellow;
+  position: absolute;
+  z-index: 10;
+}
