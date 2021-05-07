@@ -1,14 +1,13 @@
 @value (
   defaultBorderRadius,
   defaultBorderWidth
-) from "./shapes.css";
-
+) from "./variables.css";
 
 .container {
   margin-top: 1vw;
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .title {
@@ -17,9 +16,9 @@
 }
 
 .textInput {
+  border: defaultBorderWidth solid;
+  border-radius: defaultBorderRadius;
   margin-left: 2vw;
   padding: 0.7vw 2vw;
   font-size: 1.2vw;
-  border: defaultBorderWidth solid;
-  border-radius: defaultBorderRadius;
 }

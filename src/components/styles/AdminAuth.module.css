@@ -1,8 +1,8 @@
 @value (
   defaultBorderRadius,
-  defaultBorderWidth
-) from "./shapes.css";
-@value mainBlack from "./colors.css";
+  defaultBorderWidth,
+  mainBlack
+) from "./variables.css";
 
 .guideText {
   margin-top: 1vw;

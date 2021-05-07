@@ -1,4 +1,4 @@
-@value mainBlack, mainWhite from "./colors.css";
+@value mainBlack, mainWhite from "./variables.css";
 
 .container {
   width: 100vw;

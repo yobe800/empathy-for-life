@@ -1,5 +1,8 @@
-@value mainBlack, mainWhite from "./colors.css";
-@value defaultBorderRadius from "./shapes.css";
+@value (
+  mainBlack,
+  mainWhite,
+  defaultBorderRadius
+) from "./variables.css";
 
 .signInButton {
   width: 20vw;
