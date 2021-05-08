@@ -10,12 +10,13 @@ import Main from "./Main";
 import Modal from "./Modal";
 import DogProfile from "./DogProfile";
 import Posts from "./Posts";
+import DogsInformation from "./DogsInformation";
 
 const App = () => {
   return (
     <>
       <Modal>
-        <Posts />
+        <DogsInformation />
       </Modal>
       <Main />
     </>

@@ -1,0 +1,53 @@
+@value (
+  mainBlack,
+  mainWhite,
+  defaultBorderRadius
+) from "./variables.css";
+
+.container {
+  width: 90%;
+  padding: 2%;
+  border-radius: defaultBorderRadius;
+  margin: 3%;
+  display: flex;
+  align-items: center;
+  background-color: mainWhite;
+
+}
+
+.imageBox {
+  width: 6vh;
+  height: 6vh;
+  margin-left: 3%;
+  overflow: hidden;
+  position: relative;
+}
+
+.brownShiba {
+  width: 2450%;
+  position: absolute;
+  bottom: -41%;
+  left: -676%;
+}
+
+.darkShiba {
+  width: 2450%;
+  position: absolute;
+  bottom: -41%;
+  left: -1486%;
+}
+
+.grayShiba {
+  width: 2450%;
+  position: absolute;
+  bottom: -41%;
+  left: -2298%;
+}
+
+.descriptions {
+  width: 45%;
+  margin: 0 5%;
+  font-size: 2vh;
+  line-height: 2.3vh;
+  color: mainBlack;
+}

@@ -4,7 +4,6 @@
 ) from "./variables.css";
 
 .container {
-  margin-top: 1vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
