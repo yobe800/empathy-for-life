@@ -2,11 +2,14 @@ import React from "react";
 
 import styles from "../styles/Input.module.css";
 
-const Input = ({ title, type = "text", ...rest }) => {
+const Input = ({ title, type = "text", headingAttr, inputAttr }) => {
   return (
     <div className={styles.container}>
-      {title ? <h2 className={styles.title}>{title}</h2> : null}
-      <input className={styles.textInput} type={type} {...rest} />
+      {title
+        ? <label for={title} className={styles.title} {...headingAttr}>{title}</label>
+        : null
+      }
+      <input id={title} className={styles.textInput} type={type} {...inputAttr} />
     </div>
   );
 };

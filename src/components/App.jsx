@@ -11,12 +11,13 @@ import Modal from "./Modal";
 import DogProfile from "./DogProfile";
 import Posts from "./Posts";
 import DogsInformation from "./DogsInformation";
+import DogForm from "./DogForm";
 
 const App = () => {
   return (
     <>
       <Modal>
-        <DogsInformation />
+        <DogForm />
       </Modal>
       <Main />
     </>
