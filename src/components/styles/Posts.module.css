@@ -1,0 +1,9 @@
+.inputsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.postsContainer {
+  height: 65vh;
+  overflow: auto;
+}

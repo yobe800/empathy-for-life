@@ -5,13 +5,15 @@
 ) from "./variables.css";
 
 .inputButton {
-  width: 10vw;
-  padding: 0.7vw;
-  margin-top: 1vw;
+  padding: 1vh;
   border: defaultBorderWidth solid mainBlack;
   border-radius: defaultBorderRadius;
-  background-color: white;
+  margin-top: 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0.3vw 0.3vw 0.2vw 0 black;
+  background-color: white;
   font-family: "neodgm", sans-serif;
   font-size: 1vw;
 }
@@ -20,4 +22,5 @@
   border-width: 0.4vw 0.1vw 0.1vw 0.4vw;
   border-color: mainBlack;
   box-shadow: none;
+
 }

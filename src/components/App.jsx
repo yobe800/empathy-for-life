@@ -9,12 +9,13 @@ import AdminSignUp from "./AdminSignUp";
 import Main from "./Main";
 import Modal from "./Modal";
 import DogProfile from "./DogProfile";
+import Posts from "./Posts";
 
 const App = () => {
   return (
     <>
       <Modal>
-        <DogProfile />
+        <Posts />
       </Modal>
       <Main />
     </>
