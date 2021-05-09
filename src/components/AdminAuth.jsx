@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
+
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import { adminAuthPassed } from "../features/rootSlice";
@@ -22,7 +23,8 @@ const AdminAuth = ({ dispatch }) => {
     if (!isDetecting || !password) {
       return;
     }
-
+    const controller = new AbortController();
+    const { signal } = controller;
     const detectAuthPassword = async () => {
       try {
         const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -35,6 +37,7 @@ const AdminAuth = ({ dispatch }) => {
               "Content-Type": "application/json",
             },
             body,
+            signal,
           },
         );
 
@@ -45,19 +48,19 @@ const AdminAuth = ({ dispatch }) => {
           return history.replace("/admin/sign-in");
         }
 
-        setError("invalid");
         setIsDetecting(false);
+        setError("invalid");
       } catch (err) {
         logWarnOrErrInDevelopment(err);
-        setError("error");
         setIsDetecting(false);
+        setError("error");
       }
     };
 
     detectAuthPassword();
 
-    return () => {};
-  }, [isDetecting]);
+    return () => controller.abort();
+  }, [isDetecting, password]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

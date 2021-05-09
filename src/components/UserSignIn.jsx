@@ -23,12 +23,15 @@ const UserSignIn = ({ dispatch }) => {
       return;
     }
 
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const signInUser = async () => {
       try {
         const idToken = await signInWithGoogle();
         const authHeader = getAuthHeaderByToken(idToken);
         const serverUrl = process.env.REACT_APP_SERVER_URL;
-        const response = await fetch(`${serverUrl}/user/sign-in`, { method: "POST", headers: authHeader });
+        const response = await fetch(`${serverUrl}/user/sign-in`, { method: "POST", headers: authHeader, signal });
         const user = await response.json();
 
         if (!response.ok || user.error) {
@@ -44,7 +47,7 @@ const UserSignIn = ({ dispatch }) => {
         };
 
         dispatch(userAdded(userState));
-        history.replace("/");
+        return history.replace("/");
       } catch (error) {
         logWarnOrErrInDevelopment(error);
         setIsError(true);
@@ -54,7 +57,7 @@ const UserSignIn = ({ dispatch }) => {
 
     signInUser();
 
-    return () => {};
+    return () => controller.abort();
   }, [isSigningIn]);
 
   const handleSignIn = () => {
