@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useReducer, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
 import "./styles/reset.css";
 import "./styles/font.css";
+
+import {
+  reducer,
+  initiateState,
+  getUserId,
+  getIsPassedAdminAuth,
+} from "../features/rootSlice";
 
 import UserSignIn from "./UserSignIn";
 import AdminAuth from "./AdminAuth";
@@ -14,13 +28,32 @@ import DogsInformation from "./DogsInformation";
 import DogForm from "./DogForm";
 
 const App = () => {
+  const [state, dispatch] = useReducer(reducer, initiateState);
+  const hasUserSignedIn = !!getUserId(state);
+  const isPassedAdminAuth = getIsPassedAdminAuth(state);
+
   return (
-    <>
-      <Modal>
-        <DogForm />
-      </Modal>
-      <Main />
-    </>
+    <Router>
+      <Switch>
+        <Route exact path="/admin">
+          <AdminAuth dispatch={dispatch} />
+        </Route>
+        <Route exact path="/admin/sign-in" render={() => (
+          isPassedAdminAuth
+            ? <AdminSignIn />
+            : <Redirect to="/admin" />
+        )} />
+        <Route path="/sign-in">
+          <UserSignIn dispatch={dispatch} />
+        </Route>
+        <Route path="/" render={() => (
+          hasUserSignedIn
+            ? <Main />
+            : <Redirect to="/sign-in" />
+        )} />
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   );
 }
 

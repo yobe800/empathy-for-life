@@ -6,11 +6,13 @@
 }
 
 .form {
+  margin-top: 1vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .inputButtonContainer {
+  margin-top: 1vh;
   margin-left: 1.5vw;
 }

@@ -1,8 +1,33 @@
 @value (
   mainBlack,
   mainWhite,
+  defaultBorderWidth,
   defaultBorderRadius
 ) from "./variables.css";
+
+
+.errorWindow {
+  padding: 1%;
+  border: defaultBorderRadius solid mainBlack;
+  border-radius: defaultBorderWidth;
+  position: absolute;
+  background-color: rgba(250, 250, 250, 0.8);
+  font-family: "neodgm", sans-serif;
+}
+
+.closeErrorWindow {
+  border: 0.3vh solid mainBlack;
+  position: absolute;
+  right: 3%;
+  top: 10%;
+  background-color: mainWhite;
+  font-family: "neodgm", sans-serif;
+  font-size: 1.5vh;
+}
+
+.closeErrorWindow:hover {
+  cursor: pointer;
+}
 
 .signInButton {
   width: 20vw;
