@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import validator from "validator";
 
 import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
@@ -13,7 +13,7 @@ import InputButton from "./shared/InputButton.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
-const AdminSignUp = ({ dispatch }) => {
+const AdminSignUp = ({ dispatch, isAdministrator }) => {
   const history = useHistory();
   const [signUpForm, setSignUpForm] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,7 +48,7 @@ const AdminSignUp = ({ dispatch }) => {
         const { message, result } = await response.json();
 
         if (message === "ok") {
-          const user = {
+          const userSession = {
             id: result._id,
             userName: result.user_name,
             isAdministrator: result.is_administrator,
@@ -56,7 +56,7 @@ const AdminSignUp = ({ dispatch }) => {
             accessTime: result.access_time,
           };
 
-          dispatch(userAdded(user));
+          dispatch(userAdded(userSession));
           return history.replace("/");
         }
 
@@ -79,7 +79,7 @@ const AdminSignUp = ({ dispatch }) => {
     signUpAdmin();
 
     return () => controller.abort();
-  }, [signUpForm]);
+  }, [signUpForm, dispatch, history]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -122,6 +122,10 @@ const AdminSignUp = ({ dispatch }) => {
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
+
+  if (isAdministrator) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Home imageSrc={dogsHangingBackImg}>

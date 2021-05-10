@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
@@ -13,7 +13,7 @@ import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
-const AdminSignIn = ({ dispatch }) => {
+const AdminSignIn = ({ dispatch, isAdministrator }) => {
   const history = useHistory();
   const [idValue, setIdValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -37,6 +37,7 @@ const AdminSignIn = ({ dispatch }) => {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body,
             signal,
           },
@@ -78,7 +79,7 @@ const AdminSignIn = ({ dispatch }) => {
 
     signInAdministrator();
     return () => controller.abort();
-  }, [isSigningIn]);
+  }, [isSigningIn, dispatch, history, idValue, passwordValue]);
 
   const handleClosePopUp = () => {
     setErrorMessage("");
@@ -97,6 +98,10 @@ const AdminSignIn = ({ dispatch }) => {
   const passwordInputAttr = {
     onInput: (event) => setPasswordValue(event.target.value),
   };
+
+  if (isAdministrator) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Home imageSrc={dogsHangingBackImg}>

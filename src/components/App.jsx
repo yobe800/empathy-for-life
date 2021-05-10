@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,11 +9,16 @@ import {
 import "./styles/reset.css";
 import "./styles/font.css";
 
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+
 import {
   reducer,
   initiateState,
+  userAdded,
+  adminAuthPassed,
   getUserId,
   getIsPassedAdminAuth,
+  getIsAdministrator,
 } from "../features/rootSlice";
 
 import UserSignIn from "./UserSignIn";
@@ -29,35 +34,101 @@ import DogForm from "./DogForm";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initiateState);
+  const [isLoading, setIsLoading] = useState(true);
   const hasUserSignedIn = !!getUserId(state);
   const isPassedAdminAuth = getIsPassedAdminAuth(state);
+  const isAdministrator = getIsAdministrator(state);
+
+  useEffect(() => {
+    if (hasUserSignedIn || !isLoading) {
+      return;
+    }
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const fetchUser = async () => {
+
+      try {
+        const serverUrl = process.env.REACT_APP_SERVER_URL;
+        const response = await fetch(
+          `${serverUrl}/user`,
+          { credentials: "include" },
+          signal,
+        );
+        const { message, result } = await response.json();
+
+        if (message === "ok") {
+          const userSession = {
+            id: result._id,
+            userName: result.user_name,
+            isAdministrator: result.is_administrator,
+            character: result.character,
+            accessTime: result.access_time,
+          };
+
+          if (userSession.isAdministrator) {
+            dispatch(adminAuthPassed());
+          }
+
+          dispatch(userAdded(userSession));
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+      } finally {
+        setIsLoading(false);
+      }
+
+    };
+
+    fetchUser();
+
+    return () => controller.abort();
+  }, [hasUserSignedIn, isLoading, dispatch]);
+
+  if (isLoading) {
+    return <h1>로딩 중</h1>;
+  }
 
   return (
     <Router>
       <Switch>
         <Route exact path="/admin">
-          <AdminAuth dispatch={dispatch} />
+          {isPassedAdminAuth
+            ? <Redirect to="/" />
+            : <AdminAuth dispatch={dispatch} />
+          }
         </Route>
         <Route exact path="/admin/sign-in">
           {isPassedAdminAuth
-            ? <AdminSignIn dispatch={dispatch} />
+            ? <AdminSignIn
+                dispatch={dispatch}
+                isAdministrator={isAdministrator}
+              />
             : <Redirect to="/admin" />
           }
         </Route>
         <Route exact path="/admin/sign-up">
           {isPassedAdminAuth
-            ? <AdminSignUp dispatch={dispatch} />
+            ? <AdminSignUp
+                dispatch={dispatch}
+                isAdministrator={isAdministrator}
+              />
             : <Redirect to="/admin" />
           }
         </Route>
         <Route path="/sign-in">
-          <UserSignIn dispatch={dispatch} />
+          {hasUserSignedIn
+            ? <Redirect to="/" />
+            : <UserSignIn dispatch={dispatch} />
+          }
         </Route>
-        <Route path="/" render={() => (
-          hasUserSignedIn
+        <Route path="/">
+          {hasUserSignedIn
             ? <Main />
             : <Redirect to="/sign-in" />
-        )} />
+          }
+        </Route>
         <Redirect to="/" />
       </Switch>
     </Router>
