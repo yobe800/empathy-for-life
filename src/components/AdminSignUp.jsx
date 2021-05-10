@@ -11,12 +11,12 @@ import Home from "./shared/Home.jsx";
 import Input from "./shared/Input.jsx";
 import InputButton from "./shared/InputButton.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 const AdminSignUp = ({ dispatch }) => {
   const history = useHistory();
   const [signUpForm, setSignUpForm] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const formRef = useRef(null);
 
   useEffect(() => {
     if (!signUpForm) {
@@ -45,28 +45,34 @@ const AdminSignUp = ({ dispatch }) => {
           },
         );
 
-        const result = await response.json();
+        const { message, result } = await response.json();
 
-        if (result.message) {
-          setErrorMessage(result.message);
+        if (message === "ok") {
+          const user = {
+            id: result._id,
+            userName: result.user_name,
+            isAdministrator: result.is_administrator,
+            character: result.character,
+            accessTime: result.access_time,
+          };
 
-          return setSignUpForm(null);
+          dispatch(userAdded(user));
+          return history.replace("/");
         }
 
-        const user = {
-          id: result._id,
-          userName: result.user_name,
-          isAdministrator: result.is_administrator,
-          character: result.character,
-          accessTime: result.access_time,
-        };
+        setSignUpForm(null);
 
-        dispatch(userAdded(user));
-        history.replace("/");
+        if (message === "existed id") {
+          setErrorMessage("이미 존재하는 아이디입니다.");
+        } else if (message === "invalid request") {
+          setErrorMessage("잘못된 입력값입니다. 다시 입력해주세요.")
+        } else {
+          setErrorMessage(message);
+        }
       } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setSignUpForm(null);
         setErrorMessage("잠시 후 다시 시도해 주세요");
-
-        return setSignUpForm(null);
       }
     };
 
@@ -123,7 +129,7 @@ const AdminSignUp = ({ dispatch }) => {
         ? <PopUpWindow text={errorMessage} onClick={handleClosePopUp}/>
         : null
       }
-      <form className={styles.form} ref={formRef}>
+      <form className={styles.form}>
         {inputs}
         <div className={styles.buttonsContainer}>
           <InputButton text={"sign up"} onClick={handleSubmit} disabled={!!signUpForm}/>

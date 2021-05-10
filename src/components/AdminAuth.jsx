@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
 
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
-
+import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import { adminAuthPassed } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
@@ -17,10 +17,11 @@ const AdminAuth = ({ dispatch }) => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [isDetecting, setIsDetecting] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (!isDetecting || !password) {
+      setIsDetecting(false);
       return;
     }
 
@@ -41,19 +42,24 @@ const AdminAuth = ({ dispatch }) => {
           },
         );
 
-        const { result } = await response.json();
+        const { message } = await response.json();
 
-        if (result) {
+        if (message === "ok") {
           dispatch(adminAuthPassed());
           return history.replace("/admin/sign-in");
         }
 
         setIsDetecting(false);
-        setError("invalid");
+
+        if (message === "invalid password") {
+          setErrorMessage("유효하지 않은 비밀번호입니다.");
+        } else {
+          setErrorMessage(message);
+        }
       } catch (err) {
         logWarnOrErrInDevelopment(err);
         setIsDetecting(false);
-        setError("error");
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
@@ -72,7 +78,7 @@ const AdminAuth = ({ dispatch }) => {
   };
 
   const handleClosePopUp = () => {
-    setError(null);
+    setErrorMessage("");
   };
 
   const inputAttribute = {
@@ -80,16 +86,12 @@ const AdminAuth = ({ dispatch }) => {
     onInput: handleInput,
   };
 
-  const warningText = error && error === "invalid"
-    ? "잘못된 비밀번호입니다"
-    : "잠시 후 다시 시도해 주세요";
-
   return (
     <Home imageSrc={dogsHangingBackImg}>
-      {error
+      {errorMessage
         ? (
             <PopUpWindow
-              text={warningText}
+              text={errorMessage}
               onClick={handleClosePopUp}
             />
           )
@@ -101,7 +103,7 @@ const AdminAuth = ({ dispatch }) => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input type="password" inputAttr={inputAttribute} />
         <div className={styles.inputButtonContainer}>
-          <InputButton text="확인" />
+          <InputButton text="확인" disabled={!!isDetecting}/>
         </div>
       </form>
     </Home>
