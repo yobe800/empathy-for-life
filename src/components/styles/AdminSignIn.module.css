@@ -13,7 +13,10 @@
 }
 
 .buttonsContainer {
-  width: 17.5vw;
+  width: 100%;
+  margin-top: 1vh;
+  position: relative;
+  left: 3vw;
   display: flex;
   justify-content: space-around;
 }

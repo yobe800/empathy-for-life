@@ -6,7 +6,7 @@ import InputButton from "./InputButton";
 const Post = ({ imageSrc, content, writer, writtenDate }) => {
   return (
     <div className={styles.container}>
-      <img className={styles.photo} src={imageSrc} alt="A photo for a post" />
+      <img className={styles.photo} src={imageSrc} alt="post" />
       <p className={styles.content}>{content}</p>
       <div className={styles.footer}>
         <div className={styles.buttons}>

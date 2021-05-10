@@ -6,7 +6,7 @@ const Input = ({ title, type = "text", headingAttr, inputAttr }) => {
   return (
     <div className={styles.container}>
       {title
-        ? <label for={title} className={styles.title} {...headingAttr}>{title}</label>
+        ? <label htmlFor={title} className={styles.title} {...headingAttr}>{title}</label>
         : null
       }
       <input id={title} className={styles.textInput} type={type} {...inputAttr} />

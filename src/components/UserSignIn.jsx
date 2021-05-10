@@ -58,7 +58,7 @@ const UserSignIn = ({ dispatch }) => {
     signInUser();
 
     return () => controller.abort();
-  }, [isSigningIn]);
+  }, [isSigningIn, dispatch, history]);
 
   const handleSignIn = () => {
     setIsSigningIn(true);

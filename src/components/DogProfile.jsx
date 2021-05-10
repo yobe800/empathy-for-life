@@ -21,7 +21,7 @@ const DogProfile = () => {
         <img
           className={styles.profilePhoto}
           src={dogPhoto}
-          alt="a dog profile photo"
+          alt="a dog"
         />
         <dl className={styles.descriptionList}>
           {dogDescriptionLists}

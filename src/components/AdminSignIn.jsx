@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
 
@@ -8,20 +9,28 @@ import Input from "./shared/Input.jsx";
 import InputButton from "./shared/InputButton.jsx";
 
 const AdminSignIn = () => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push("/admin/sign-up");
+  };
+
   return (
     <Home imageSrc={dogsHangingBackImg}>
       <form className={styles.form}>
         <Input title={"ID"}/>
         <Input title={"Password"}/>
         <div className={styles.buttonsContainer}>
-          <InputButton text={"sign up"} style={inputButtonStyle} />
-          <InputButton text={"sign in"} style={inputButtonStyle} />
+          <InputButton
+            type="button"
+            text={"sign up"}
+            onClick={handleClick}
+          />
+          <InputButton text={"sign in"} />
         </div>
       </form>
     </Home>
   );
 };
-
-const inputButtonStyle = { width: "6vw" };
 
 export default AdminSignIn;

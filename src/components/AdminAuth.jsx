@@ -23,8 +23,10 @@ const AdminAuth = ({ dispatch }) => {
     if (!isDetecting || !password) {
       return;
     }
+
     const controller = new AbortController();
     const { signal } = controller;
+
     const detectAuthPassword = async () => {
       try {
         const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -60,7 +62,7 @@ const AdminAuth = ({ dispatch }) => {
     detectAuthPassword();
 
     return () => controller.abort();
-  }, [isDetecting, password]);
+  }, [isDetecting, password, dispatch, history]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
