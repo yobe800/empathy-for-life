@@ -9,4 +9,6 @@ const DOG_PROFILE_ENUMS = [
   { en: "adoption_status", ko: "입양 상태" },
 ];
 
-export { DOG_PROFILE_ENUMS };
+const DEFAULT_ERROR_MESSAGE = "오류가 발생했습니다.\n잠시후 다시 시도해 주세요.";
+
+export { DOG_PROFILE_ENUMS, DEFAULT_ERROR_MESSAGE };

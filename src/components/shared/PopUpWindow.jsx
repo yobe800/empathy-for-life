@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "../styles/PopUpWindow.module.css";
 
-const PopUpWindow = ({ text, handleClick }) => {
+const PopUpWindow = ({ text, onClick }) => {
   return (
     <div className={styles.popUpContainer}>
       <button
         className={styles.closeButton}
-        onClick={handleClick}
+        onClick={onClick}
       >
         X
       </button>
