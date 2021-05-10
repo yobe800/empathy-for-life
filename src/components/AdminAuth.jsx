@@ -35,9 +35,7 @@ const AdminAuth = ({ dispatch }) => {
           `${serverUrl}/admin/authentication`,
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body,
             signal,
           },
@@ -73,7 +71,7 @@ const AdminAuth = ({ dispatch }) => {
     setPassword(event.target.value);
   };
 
-  const closePopUp = () => {
+  const handleClosePopUp = () => {
     setError(null);
   };
 
@@ -92,7 +90,7 @@ const AdminAuth = ({ dispatch }) => {
         ? (
             <PopUpWindow
               text={warningText}
-              handleClick={closePopUp}
+              onClick={handleClosePopUp}
             />
           )
         : null

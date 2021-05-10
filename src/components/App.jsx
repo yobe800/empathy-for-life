@@ -40,7 +40,7 @@ const App = () => {
         </Route>
         <Route exact path="/admin/sign-in">
           {isPassedAdminAuth
-            ? <AdminSignIn />
+            ? <AdminSignIn dispatch={dispatch} />
             : <Redirect to="/admin" />
           }
         </Route>

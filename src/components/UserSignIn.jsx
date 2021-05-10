@@ -64,7 +64,7 @@ const UserSignIn = ({ dispatch }) => {
     setIsSigningIn(true);
   };
 
-  const handleCloseWindow = () => {
+  const handleClosePopUp = () => {
     setIsError(false);
   };
 
@@ -74,7 +74,7 @@ const UserSignIn = ({ dispatch }) => {
         ? (
             <PopUpWindow
               text={`로그인 실패.\n잠시 후 다시 시도해 주세요.`}
-              handleClick={handleCloseWindow}
+              onClick={handleClosePopUp}
             />
           )
         : null

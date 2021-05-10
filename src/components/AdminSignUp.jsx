@@ -54,7 +54,7 @@ const AdminSignUp = ({ dispatch }) => {
         }
 
         const user = {
-          id: result.admin_id,
+          id: result._id,
           userName: result.user_name,
           isAdministrator: result.is_administrator,
           character: result.character,
@@ -120,7 +120,7 @@ const AdminSignUp = ({ dispatch }) => {
   return (
     <Home imageSrc={dogsHangingBackImg}>
       {errorMessage
-        ? <PopUpWindow text={errorMessage} handleClick={handleClosePopUp}/>
+        ? <PopUpWindow text={errorMessage} onClick={handleClosePopUp}/>
         : null
       }
       <form className={styles.form} ref={formRef}>
