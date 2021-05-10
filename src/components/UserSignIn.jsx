@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import dogsHangingFrontImg from "../assets/images/dogs-hanging-front.png";
 import googleIcon from "../assets/images/google-icon.png";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 
 import { userAdded } from "../features/rootSlice";
 
@@ -17,7 +18,7 @@ import Home from "./shared/Home.jsx";
 const UserSignIn = ({ dispatch }) => {
   const history = useHistory();
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     if (!isSigningIn) {
       return;
@@ -31,27 +32,37 @@ const UserSignIn = ({ dispatch }) => {
         const idToken = await signInWithGoogle();
         const authHeader = getAuthHeaderByToken(idToken);
         const serverUrl = process.env.REACT_APP_SERVER_URL;
-        const response = await fetch(`${serverUrl}/user/sign-in`, { method: "POST", headers: authHeader, signal });
-        const user = await response.json();
+        const response = await fetch(
+          `${serverUrl}/user/sign-in`,
+          {
+            method: "POST",
+            headers: authHeader,
+            credentials: "include",
+            signal,
+          },
+        );
 
-        if (!response.ok || user.error) {
-          throw new Error(user.error || response.statusText);
+        const { message, result } = await response.json();
+
+        if (message === "ok") {
+          const userState = {
+            id: result._id,
+            userName: result.user_name,
+            isAdministrator: result.is_administrator,
+            character: result.character,
+            accessTime:result.access_time,
+          };
+
+          dispatch(userAdded(userState));
+          return history.replace("/");
         }
 
-        const userState = {
-          id: user._id,
-          userName: user.user_name,
-          isAdministrator: user.is_administrator,
-          character: user.character,
-          accessTime:user.access_time,
-        };
-
-        dispatch(userAdded(userState));
-        return history.replace("/");
+        setIsSigningIn(false);
+        setErrorMessage(message);
       } catch (error) {
         logWarnOrErrInDevelopment(error);
-        setIsError(true);
         setIsSigningIn(false);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
@@ -63,14 +74,13 @@ const UserSignIn = ({ dispatch }) => {
   const handleSignIn = () => {
     setIsSigningIn(true);
   };
-
   const handleClosePopUp = () => {
-    setIsError(false);
+    setErrorMessage("");
   };
 
   return (
     <Home imageSrc={dogsHangingFrontImg}>
-      {isError
+      {errorMessage
         ? (
             <PopUpWindow
               text={`로그인 실패.\n잠시 후 다시 시도해 주세요.`}
