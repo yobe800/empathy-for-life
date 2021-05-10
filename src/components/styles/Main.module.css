@@ -84,6 +84,13 @@
   opacity: 0.7;
 }
 
+.anchor:link {
+  color: mainWhite;
+  text-decoration: none;
+}
+.anchor:visited {
+  color: mainWhite;
+}
 .canvas {
   width: 91vh;
   height: 84vh;

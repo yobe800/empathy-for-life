@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import grassGroundImage from "../assets/images/grass-ground.png";
 
 import useCanvasDraw from "../hooks/useCanvasDraw";
@@ -65,7 +66,7 @@ const Canvas = () => {
 const navigations = ["미니게임", "게시글", "강아지들", "메뉴"]
   .map((text, index) => (
     <HeaderBoard key={index}>
-      <a className={styles.anchor}>{text}</a>
+      <Link className={styles.anchor} to="">{text}</Link>
     </HeaderBoard>
   ));
 

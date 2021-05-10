@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -38,11 +38,18 @@ const App = () => {
         <Route exact path="/admin">
           <AdminAuth dispatch={dispatch} />
         </Route>
-        <Route exact path="/admin/sign-in" render={() => (
-          isPassedAdminAuth
+        <Route exact path="/admin/sign-in">
+          {isPassedAdminAuth
             ? <AdminSignIn />
             : <Redirect to="/admin" />
-        )} />
+          }
+        </Route>
+        <Route exact path="/admin/sign-up">
+          {isPassedAdminAuth
+            ? <AdminSignUp dispatch={dispatch} />
+            : <Redirect to="/admin" />
+          }
+        </Route>
         <Route path="/sign-in">
           <UserSignIn dispatch={dispatch} />
         </Route>
