@@ -38,6 +38,9 @@ const userAdded = (user) => {
 const getUserId = (state) => {
   return state.user.id;
 };
+const getIsAdministrator = (state) => {
+  return state.user.isAdministrator;
+};
 const getIsPassedAdminAuth = (state) => {
   return state.isPassedAdminAuth;
 };
@@ -48,5 +51,6 @@ export {
   adminAuthPassed,
   userAdded,
   getUserId,
+  getIsAdministrator,
   getIsPassedAdminAuth,
 };
