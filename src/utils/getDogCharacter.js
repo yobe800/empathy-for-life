@@ -17,6 +17,34 @@ const getDogCharacter = (character) => {
       right: { ...initValues },
       down: { ...initValues },
       left: { ...initValues },
+      toUp: function () {
+        if (this.up.maxX === this.up.x) {
+          this.up.x = this.up.initX;
+        } else {
+          this.up.x += this.up.gapX;
+        }
+      },
+      toRight: function () {
+        if (this.right.maxX === this.right.x) {
+          this.right.x = this.right.initX;
+        } else {
+          this.right.x += this.right.gapX;
+        }
+      },
+      toDown: function () {
+        if (this.down.maxX === this.down.x) {
+          this.down.x = this.down.initX;
+        } else {
+          this.down.x += this.down.gapX;
+        }
+      },
+      toLeft: function () {
+        if (this.left.maxX === this.left.x) {
+          this.left.x = this.left.initX;
+        } else {
+          this.left.x += this.left.gapX;
+        }
+      },
     },
   };
 
@@ -132,6 +160,8 @@ const getDogCharacter = (character) => {
     left.gapX = left.width + left.gap;
     left.maxX = left.initX + left.gapX * 3;
   }
+
+  return dogCharacter;
 };
 
 export default getDogCharacter;

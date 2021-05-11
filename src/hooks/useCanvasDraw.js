@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { IMAGE_URLS } from "../constants/constants";
 import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
-import getDogCharacter from "../utils/getDogCharacter";
-import getRandomDogCoordinates from "../utils/getRandomDogCoordinates";
+import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
+import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
 
 const useCanvasDraw = (ref) => {
   useEffect(() => {
@@ -13,6 +13,8 @@ const useCanvasDraw = (ref) => {
     humansImage.src = IMAGE_URLS.HUMAN_SPRITE;
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [humansImage, dogsImage];
+    const randomCoordinates = [];
+    const dogElements = Array(5).fill(null).map(() => ({ type: "dog" }));
     const drawElements = [];
 
     const draw = () => {
@@ -31,13 +33,32 @@ const useCanvasDraw = (ref) => {
             drawElement.dHeight,
           );
         }
+
+        if (drawElement.type === "dog") {
+          ctx.drawImage(
+            dogsImage,
+            drawElement.sx,
+            drawElement.sy,
+            drawElement.sWidth,
+            drawElement.sHeight,
+            drawElement.dx,
+            drawElement.dy,
+            drawElement.dWidth,
+            drawElement.dHeight,
+          );
+        }
       });
+
       requestAnimationFrame(draw);
     };
 
     const checkImageLoad = () => {
       if (images.every((image) => image.complete)) {
         requestAnimationFrame(draw);
+        dogElements.forEach((el) => {
+          getAutomaticMoveDog(randomCoordinates, el);
+        });
+        drawElements.push(...dogElements);
         return;
       }
 
@@ -48,12 +69,20 @@ const useCanvasDraw = (ref) => {
       myCharacterDrawingObject,
       walkMyCharacter,
       stopMyCharacter,
-    } = getMyCharacterControllers(canvas.width, canvas.height);
+    } = getMyCharacterControllers(canvas.width, canvas.height, "human3");
 
     drawElements.push(myCharacterDrawingObject);
     document.addEventListener("keydown", walkMyCharacter);
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
+    setInterval(() => {
+      if (10 < randomCoordinates.length) {
+        return;
+      }
+      const x = getRandomDogCoordinate(1000);
+      const y = getRandomDogCoordinate(920);
+      randomCoordinates.push({ x, y });
+    }, 2000);
   }, [ref]);
 };
 
