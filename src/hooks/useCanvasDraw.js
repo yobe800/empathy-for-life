@@ -14,7 +14,6 @@ const useCanvasDraw = (ref) => {
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [humansImage, dogsImage];
     const drawElements = [];
-    let intervalId;
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,7 +44,6 @@ const useCanvasDraw = (ref) => {
       setTimeout(checkImageLoad, 100);
     };
 
-
     const {
       myCharacterDrawingObject,
       walkMyCharacter,
@@ -56,8 +54,6 @@ const useCanvasDraw = (ref) => {
     document.addEventListener("keydown", walkMyCharacter);
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
-
-    return () => clearInterval(intervalId);
   }, [ref]);
 };
 
