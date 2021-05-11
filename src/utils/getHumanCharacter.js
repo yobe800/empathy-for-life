@@ -14,7 +14,6 @@ const getHumanCharacter = (character) => {
         height: CHRACTER_SIZE,
         gap: CHRACTER_SIZE,
         maxX: CHRACTER_SIZE * 11,
-        maxY: 0,
       },
       right: {
         initX: CHRACTER_SIZE * 4,
@@ -25,7 +24,6 @@ const getHumanCharacter = (character) => {
         height: CHRACTER_SIZE,
         gap: CHRACTER_SIZE,
         maxX: CHRACTER_SIZE * 7,
-        maxY: 0,
       },
       down: {
         initX: 0,
@@ -36,7 +34,6 @@ const getHumanCharacter = (character) => {
         height: CHRACTER_SIZE,
         gap: CHRACTER_SIZE,
         maxX: CHRACTER_SIZE * 3,
-        maxY: 0,
       },
       left: {
         initX: CHRACTER_SIZE * 12,
@@ -47,10 +44,9 @@ const getHumanCharacter = (character) => {
         height: CHRACTER_SIZE,
         gap: CHRACTER_SIZE,
         maxX: CHRACTER_SIZE * 15,
-        maxY: 0,
       },
     },
-    CHRACTER_SIZE,
+    drawSize: CHRACTER_SIZE * 2,
   };
 };
 
