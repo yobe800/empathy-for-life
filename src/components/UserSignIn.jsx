@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import dogsHangingFrontImg from "../assets/images/dogs-hanging-front.png";
-import googleIcon from "../assets/images/google-icon.png";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
-import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import {
+  DEFAULT_ERROR_MESSAGE,
+  IMAGE_URLS,
+ } from "../constants/constants";
 
 import { userAdded } from "../features/rootSlice";
 
@@ -79,7 +80,7 @@ const UserSignIn = ({ dispatch }) => {
   };
 
   return (
-    <Home imageSrc={dogsHangingFrontImg}>
+    <Home imageSrc={IMAGE_URLS.DOGS_HANGING_FRONT}>
       {errorMessage
         ? (
             <PopUpWindow
@@ -90,7 +91,11 @@ const UserSignIn = ({ dispatch }) => {
         : null
       }
       <button className={styles.signInButton} onClick={handleSignIn}>
-        <img className={styles.googleIcon} src={googleIcon} alt="Google Logo" />
+        <img
+          className={styles.googleIcon}
+          src={IMAGE_URLS.GOOGLE_ICON}
+          alt="Google Logo"
+        />
         <span className={styles.signText}>Sign In with Google</span>
       </button>
     </Home>

@@ -1,7 +1,6 @@
 @value mainWhite, defaultBorderRadius from "./variables.css";
 
 .container {
-  height: 100vh;
   padding: 2vh;
   background-image: url("../../assets/images/sky-background.jpg");
   background-size: cover;
@@ -98,7 +97,7 @@
   border-radius: defaultBorderRadius;
   background-color: rgba(240, 240, 240, 0.5);
   position: absolute;
-  bottom: 8vh;
+  bottom: 4vh;
   z-index: 1;
 }
 
