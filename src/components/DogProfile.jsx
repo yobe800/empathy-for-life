@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 
-import dogPhoto from "../assets/images/emily.jpg";
 import getDogDescriptions from "../utils/getDogDescriptionLists";
 
 import styles from "./styles/DogProfile.module.css";
@@ -20,7 +19,7 @@ const DogProfile = () => {
       <div className={styles.informationContainer}>
         <img
           className={styles.profilePhoto}
-          src={dogPhoto}
+          src={"/aseets/images/emily.jpg"}
           alt="a dog"
         />
         <dl className={styles.descriptionList}>

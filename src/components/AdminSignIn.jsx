@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 
-import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
-import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import {
+  DEFAULT_ERROR_MESSAGE,
+  IMAGE_URLS,
+ } from "../constants/constants";
 
 import { userAdded } from "../features/rootSlice";
 
@@ -104,7 +106,7 @@ const AdminSignIn = ({ dispatch, isAdministrator }) => {
   }
 
   return (
-    <Home imageSrc={dogsHangingBackImg}>
+    <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
         ? <PopUpWindow text={errorMessage} onClick={handleClosePopUp} />
         : null

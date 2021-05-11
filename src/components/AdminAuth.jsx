@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import dogsHangingBackImg from "../assets/images/dogs-hanging-back.png";
-
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
-import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import {
+  DEFAULT_ERROR_MESSAGE,
+  IMAGE_URLS,
+} from "../constants/constants";
 import { adminAuthPassed } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
@@ -87,7 +88,7 @@ const AdminAuth = ({ dispatch }) => {
   };
 
   return (
-    <Home imageSrc={dogsHangingBackImg}>
+    <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
         ? (
             <PopUpWindow

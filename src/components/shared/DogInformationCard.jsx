@@ -1,6 +1,6 @@
 import React from "react";
 
-import dogsSpirteImage from "../../assets/images/dogs-sprite.png";
+import { IMAGE_URLS } from "../../constants/constants";
 
 import styles from "../styles/dogsInformationCard.module.css";
 import InputButton from "./InputButton";
@@ -9,7 +9,11 @@ const DogInformationCard = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imageBox}>
-        <img className={styles[dogData.character]} src={dogsSpirteImage} alt="A dog character" />
+        <img
+          className={styles[dogData.character]}
+          src={IMAGE_URLS.DOGS_SPRITE}
+          alt="A dog character"
+        />
       </div>
       <ul className={styles.descriptions}>
         <li>

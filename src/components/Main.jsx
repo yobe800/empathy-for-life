@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import grassGroundImage from "../assets/images/grass-ground.png";
+import { IMAGE_URLS } from "../constants/constants";
 
 import useCanvasDraw from "../hooks/useCanvasDraw";
 
@@ -22,7 +22,11 @@ const Main = () => {
           <Navigation />
         </header>
         <Canvas />
-        <img className={styles.grassGroundImage} src={grassGroundImage} alt="" />
+        <img
+          className={styles.grassGroundImage}
+          src={IMAGE_URLS.GRASS_GROUND}
+          alt="grass ground"
+        />
       </main>
     </div>
   );
@@ -59,7 +63,7 @@ const Canvas = () => {
   useCanvasDraw(canvasRef);
 
   return (
-    <canvas className={styles.canvas} ref={canvasRef}></canvas>
+    <canvas className={styles.canvas} ref={canvasRef} width={1080} height={1000}></canvas>
   );
 };
 
