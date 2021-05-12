@@ -6,7 +6,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,
 } from "../constants/constants";
-import { adminAuthPassed } from "../features/rootSlice";
+import { actionCreators } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
 import Home from "./shared/Home.jsx";
@@ -46,7 +46,9 @@ const AdminAuth = ({ dispatch }) => {
         const { message } = await response.json();
 
         if (message === "ok") {
-          dispatch(adminAuthPassed());
+          dispatch(
+            actionCreators.adminAuthPassed(),
+          );
           return history.replace("/admin/sign-in");
         }
 

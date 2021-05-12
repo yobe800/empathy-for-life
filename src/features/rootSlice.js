@@ -3,7 +3,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 const initiateState = {
   user: {
     id: null,
-    userName: null,
+    name: null,
     isAdministrator: false,
     character: null,
     accessTime: null,
@@ -28,29 +28,34 @@ const reducer = (state, action) => {
   }
 };
 
-const adminAuthPassed = () => {
-  return { type: "adminAuthPassed" };
-};
-const userAdded = (user) => {
-  return { type: "userAdded", payload: user };
+
+const actionCreators = {
+  adminAuthPassed: () => {
+    return { type: "adminAuthPassed" };
+  },
+  userAdded: (user) => {
+    return { type: "userAdded", payload: user };
+  },
 };
 
-const getUserId = (state) => {
-  return state.user.id;
-};
-const getIsAdministrator = (state) => {
-  return state.user.isAdministrator;
-};
-const getIsPassedAdminAuth = (state) => {
-  return state.isPassedAdminAuth;
+const selectors = {
+  getUserId: (state) => {
+    return state.user.id;
+  },
+  getUserName: (state) => {
+    return state.user.name;
+  },
+  getIsAdministrator: (state) => {
+    return state.user.isAdministrator;
+  },
+  getIsPassedAdminAuth: (state) => {
+    return state.isPassedAdminAuth;
+  },
 };
 
 export {
   reducer,
   initiateState,
-  adminAuthPassed,
-  userAdded,
-  getUserId,
-  getIsAdministrator,
-  getIsPassedAdminAuth,
+  actionCreators,
+  selectors,
 };

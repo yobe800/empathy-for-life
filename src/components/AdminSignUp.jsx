@@ -4,7 +4,7 @@ import validator from "validator";
 
 import { IMAGE_URLS } from "../constants/constants";
 
-import { userAdded } from "../features/rootSlice";
+import { actionCreators } from "../features/rootSlice";
 
 import styles from "./styles/AdminSignUp.module.css";
 import Home from "./shared/Home.jsx";
@@ -50,13 +50,15 @@ const AdminSignUp = ({ dispatch, isAdministrator }) => {
         if (message === "ok") {
           const userSession = {
             id: result._id,
-            userName: result.user_name,
+            name: result.user_name,
             isAdministrator: result.is_administrator,
             character: result.character,
             accessTime: result.access_time,
           };
 
-          dispatch(userAdded(userSession));
+          dispatch(
+            actionCreators.userAdded(userSession),
+          );
           return history.replace("/");
         }
 

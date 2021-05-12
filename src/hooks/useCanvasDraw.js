@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { IMAGE_URLS } from "../constants/constants";
+import socket from "../socket/socket";
 import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
 import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
@@ -15,9 +16,10 @@ const useCanvasDraw = (ref) => {
     const images = [humansImage, dogsImage];
     const randomCoordinates = [];
     const dogElements = Array(10).fill(null).map(() => ({ type: "dog" }));
-    const drawElements = [];
+    let drawElements = [];
 
     const draw = () => {
+      socket.emit("user canvas image", drawElements[0]);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawElements.forEach((drawElement) => {
         if (drawElement.type === "human") {
@@ -76,13 +78,35 @@ const useCanvasDraw = (ref) => {
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
     setInterval(() => {
-      if (5 < randomCoordinates.length) {
+      if (10 < randomCoordinates.length) {
         return;
       }
       const x = getRandomDogCoordinate(1000);
       const y = getRandomDogCoordinate(920);
       randomCoordinates.push({ x, y });
     }, 300);
+
+    socket.on(
+      "another user draw element",
+      (anotherUserDrawElement) => {
+        let hasUser = false;
+        for (const element of drawElements) {
+          if (element.id === anotherUserDrawElement.id) {
+            hasUser = true;
+            Object.assign(element, anotherUserDrawElement);
+            break;
+          }
+        }
+
+        if (!hasUser) {
+          drawElements.push(anotherUserDrawElement);
+        }
+      },
+    );
+
+    socket.on("disconnected user", (anotherUserId) => {
+      drawElements = drawElements.filter((element) => element.id !== anotherUserId);
+    });
   }, [ref]);
 };
 
