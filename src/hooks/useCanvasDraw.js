@@ -56,7 +56,7 @@ const useCanvasDraw = (ref) => {
       if (images.every((image) => image.complete)) {
         requestAnimationFrame(draw);
         dogElements.forEach((el) => {
-          getAutomaticMoveDog(randomCoordinates, el);
+          getAutomaticMoveDog(randomCoordinates, el, "grayShiba");
         });
         drawElements.push(...dogElements);
         return;
@@ -82,7 +82,7 @@ const useCanvasDraw = (ref) => {
       const x = getRandomDogCoordinate(1000);
       const y = getRandomDogCoordinate(920);
       randomCoordinates.push({ x, y });
-    }, 2000);
+    }, 500);
   }, [ref]);
 };
 

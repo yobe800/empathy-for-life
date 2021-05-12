@@ -60,7 +60,7 @@ const getDogCharacter = (character) => {
     up.gap = 42;
     up.gapX = up.width + up.gap;
     up.maxX = up.initX + up.gapX * 3;
-    right.initX = 423;
+    right.initX = 353;
     right.initY = 108;
     right.x = right.initX;
     right.y = right.initY;
@@ -107,7 +107,7 @@ const getDogCharacter = (character) => {
     right.gapX = right.width + right.gap;
     right.maxX = right.initX + right.gapX * 3;
     down.initX = 710;
-    down.initY = 356;
+    down.initY = 12;
     down.x = down.initX;
     down.y = down.initY;
     down.width = 44;
@@ -117,8 +117,10 @@ const getDogCharacter = (character) => {
     down.maxX = down.initX + down.gapX * 3;
     left.initX = 697;
     left.initY = 280;
+    left.x = left.initX;
+    left.y = left.initY;
     left.width = 73;
-    left.height = 68;
+    left.height = 65; //gray
     left.gap = 13;
     left.gapX = left.width + left.gap;
     left.maxX = left.initX + left.gapX * 3;
@@ -136,9 +138,9 @@ const getDogCharacter = (character) => {
     right.initY = 111;
     right.x = right.initX;
     right.y = right.initY;
-    right.width = 60;
+    right.width = 67;
     right.height = 65;
-    right.gap = 24;
+    right.gap = 18;
     right.gapX = right.width + right.gap;
     right.maxX = right.initX + right.gapX * 3
     down.initX = 22;
@@ -154,9 +156,9 @@ const getDogCharacter = (character) => {
     left.initY = 283;
     left.x = left.initX;
     left.y = left.initY;
-    left.width = 60;
+    left.width = 65;
     left.height = 65;
-    left.gap = 26;
+    left.gap = 20;
     left.gapX = left.width + left.gap;
     left.maxX = left.initX + left.gapX * 3;
   }

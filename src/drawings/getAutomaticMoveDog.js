@@ -4,7 +4,7 @@ import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
 const getAutomaticMoveDog = (coordinates, drawElement, dog) => {
   let coordinate = coordinates.pop();
   const MOVE_DISTANCE = 10;
-  const dogCharacter = getDogCharacter();
+  const dogCharacter = getDogCharacter(dog);
 
   drawElement.sx = dogCharacter.walk.down.initX;
       drawElement.sy = dogCharacter.walk.down.initY;
@@ -86,7 +86,7 @@ const getAutomaticMoveDog = (coordinates, drawElement, dog) => {
     }
   };
 
-  const timeId = setInterval(moveDog, 300);
+  const timeId = setInterval(moveDog, 60);
 
   return timeId;
 };
