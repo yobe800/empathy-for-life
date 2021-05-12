@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { IMAGE_URLS } from "../constants/constants";
 
+import socket from "../socket/socket";
 import useCanvasDraw from "../hooks/useCanvasDraw";
 
 import styles from "./styles/Main.module.css";
@@ -10,9 +11,25 @@ import Input from "./shared/Input";
 import HeaderBoard from "./shared/HeaderBoard";
 
 const Main = () => {
+  const [chatContent, setChatContent] = useState("");
+
+  useEffect(() => {
+    socket.connect();
+    socket.on("chat", () => {
+    });
+
+    return socket.disconnect;
+  }, []);
+
+  useEffect(() => {});
+
+  const handleInput = (event) => {
+    setChatContent(event.target.value);
+  };
+
   return (
     <div className={styles.container}>
-      <ChatContainer />
+      <ChatContainer handleInput={handleInput} />
       <main className={styles.main}>
         <header className={styles.header}>
           <HeaderBoard style={volunteerTimeBoardStyle}>
@@ -40,19 +57,19 @@ const Navigation = () => {
   );
 };
 
-const ChatContainer = () => {
+const ChatContainer = ({ handleInput }) => {
   return (
     <div className={styles.chatContainer}>
       <div className={styles.conversationBorder} />
-      <InputContainer />
+      <InputContainer handleInput={handleInput} />
     </div>
   );
 };
 
-const InputContainer = () => {
+const InputContainer = ({ handleInput }) => {
   return (
     <div className={styles.inputContainer}>
-      <Input style={inputStyle} />
+      <Input style={inputStyle} inputAttr={{ onInput: handleInput }}/>
       <InputButton text={"전송"} style={inputButtonStyle} />
     </div>
   );

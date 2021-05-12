@@ -14,7 +14,7 @@ const useCanvasDraw = (ref) => {
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [humansImage, dogsImage];
     const randomCoordinates = [];
-    const dogElements = Array(5).fill(null).map(() => ({ type: "dog" }));
+    const dogElements = Array(10).fill(null).map(() => ({ type: "dog" }));
     const drawElements = [];
 
     const draw = () => {
@@ -56,7 +56,7 @@ const useCanvasDraw = (ref) => {
       if (images.every((image) => image.complete)) {
         requestAnimationFrame(draw);
         dogElements.forEach((el) => {
-          getAutomaticMoveDog(randomCoordinates, el, "grayShiba");
+          getAutomaticMoveDog(randomCoordinates, el, "s");
         });
         drawElements.push(...dogElements);
         return;
@@ -76,13 +76,13 @@ const useCanvasDraw = (ref) => {
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
     setInterval(() => {
-      if (10 < randomCoordinates.length) {
+      if (5 < randomCoordinates.length) {
         return;
       }
       const x = getRandomDogCoordinate(1000);
       const y = getRandomDogCoordinate(920);
       randomCoordinates.push({ x, y });
-    }, 500);
+    }, 300);
   }, [ref]);
 };
 

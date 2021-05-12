@@ -34,8 +34,8 @@ const getAutomaticMoveDog = (coordinates, drawElement, dog) => {
       drawElement.sy = dogCharacter.walk.down.initY;
       drawElement.sWidth = dogCharacter.walk.down.width;
       drawElement.sHeight = dogCharacter.walk.down.height;
-      drawElement.dx = drawElement.dx || getRandomDogCoordinate(1000);
-      drawElement.dy = drawElement.dy || getRandomDogCoordinate(980);
+      drawElement.dx = drawElement.dx;
+      drawElement.dy = drawElement.dy;
       drawElement.dWidth = dogCharacter.walk.down.width;
       drawElement.dHeight = dogCharacter.walk.down.height;
       return;
@@ -86,7 +86,7 @@ const getAutomaticMoveDog = (coordinates, drawElement, dog) => {
     }
   };
 
-  const timeId = setInterval(moveDog, 60);
+  const timeId = setInterval(moveDog, 100);
 
   return timeId;
 };
