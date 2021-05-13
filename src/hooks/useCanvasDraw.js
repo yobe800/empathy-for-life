@@ -3,7 +3,12 @@ import { IMAGE_URLS } from "../constants/constants";
 import socket from "../socket/socket";
 import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
-import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
+import getThrottleEmit from "../utils/getThrottleEmit";
+
+const emitMyCharacterDrawing = getThrottleEmit(
+  60,
+  { leading: false, trailing: true },
+);
 
 const useCanvasDraw = (ref) => {
   useEffect(() => {
@@ -14,41 +19,55 @@ const useCanvasDraw = (ref) => {
     humansImage.src = IMAGE_URLS.HUMAN_SPRITE;
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [humansImage, dogsImage];
-    const randomCoordinates = [];
-    const dogElements = Array(10).fill(null).map(() => ({ type: "dog" }));
-    let drawElements = [];
+    let timeIds;
+    let dogElements = [];
+    let humansElements = [];
 
     const draw = () => {
-      socket.emit("user canvas image", drawElements[0]);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawElements.forEach((drawElement) => {
-        if (drawElement.type === "human") {
-          ctx.drawImage(
-            humansImage,
-            drawElement.sx,
-            drawElement.sy,
-            drawElement.sWidth,
-            drawElement.sHeight,
-            drawElement.dx,
-            drawElement.dy,
-            drawElement.dWidth,
-            drawElement.dHeight,
-          );
+      humansElements.forEach((humanElement, index) => {
+        if (!index) {
+          const shouldEmit
+          = humanElement.lastDx !== humanElement.dx
+          || humanElement.lastDy !== humanElement.dy;
+          if (shouldEmit) {
+            emitMyCharacterDrawing(
+              "user canvas image",
+              humanElement,
+            );
+          }
         }
 
-        if (drawElement.type === "dog") {
-          ctx.drawImage(
-            dogsImage,
-            drawElement.sx,
-            drawElement.sy,
-            drawElement.sWidth,
-            drawElement.sHeight,
-            drawElement.dx,
-            drawElement.dy,
-            drawElement.dWidth,
-            drawElement.dHeight,
-          );
+        ctx.drawImage(
+          humansImage,
+          humanElement.sx,
+          humanElement.sy,
+          humanElement.sWidth,
+          humanElement.sHeight,
+          humanElement.dx,
+          humanElement.dy,
+          humanElement.dWidth,
+          humanElement.dHeight,
+        );
+      });
+
+      dogElements.forEach((dogElement) => {
+        if (!dogElement.hadRequest && dogElement.shouldUpdate) {
+          dogElement.hadRequest = true;
+          socket.emit("update a dog for drawing", dogElement._id);
         }
+
+        ctx.drawImage(
+          dogsImage,
+          dogElement.sx,
+          dogElement.sy,
+          dogElement.sWidth,
+          dogElement.sHeight,
+          dogElement.dx,
+          dogElement.dy,
+          dogElement.dWidth,
+          dogElement.dHeight,
+        );
       });
 
       requestAnimationFrame(draw);
@@ -57,11 +76,6 @@ const useCanvasDraw = (ref) => {
     const checkImageLoad = () => {
       if (images.every((image) => image.complete)) {
         requestAnimationFrame(draw);
-        dogElements.forEach((el) => {
-          getAutomaticMoveDog(randomCoordinates, el, "s");
-        });
-        drawElements.push(...dogElements);
-        return;
       }
 
       setTimeout(checkImageLoad, 100);
@@ -71,26 +85,29 @@ const useCanvasDraw = (ref) => {
       myCharacterDrawingObject,
       walkMyCharacter,
       stopMyCharacter,
-    } = getMyCharacterControllers(canvas.width, canvas.height, "human3");
+    } = getMyCharacterControllers(canvas.width, canvas.height, "human7");
 
-    drawElements.push(myCharacterDrawingObject);
+    emitMyCharacterDrawing(
+      "user canvas image",
+      myCharacterDrawingObject,
+    );
+
+    humansElements.push(myCharacterDrawingObject);
     document.addEventListener("keydown", walkMyCharacter);
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
-    setInterval(() => {
-      if (10 < randomCoordinates.length) {
-        return;
-      }
-      const x = getRandomDogCoordinate(1000);
-      const y = getRandomDogCoordinate(920);
-      randomCoordinates.push({ x, y });
-    }, 300);
 
+    socket.on(
+      "current users",
+      (otherDrawElements) => {
+        humansElements = humansElements.concat(otherDrawElements);
+      },
+    );
     socket.on(
       "another user draw element",
       (anotherUserDrawElement) => {
         let hasUser = false;
-        for (const element of drawElements) {
+        for (const element of humansElements) {
           if (element.id === anotherUserDrawElement.id) {
             hasUser = true;
             Object.assign(element, anotherUserDrawElement);
@@ -99,14 +116,44 @@ const useCanvasDraw = (ref) => {
         }
 
         if (!hasUser) {
-          drawElements.push(anotherUserDrawElement);
+          humansElements.push(anotherUserDrawElement);
         }
       },
     );
+    socket.on(
+      "disconnected user",
+      (anotherUserId) => {
+        humansElements = humansElements.filter(
+          (element) => element.id !== anotherUserId,
+        );
+      },
+    );
+    socket.on(
+      "current dogs",
+      (dogs) => {
+        dogElements = dogs;
+        timeIds = dogElements.map((dog) => {
+          const { timeId } = getAutomaticMoveDog(dog);
+          return timeId;
+        });
+        timeIds.push(setInterval(() => socket.emit("update all dog")));
+      },
+    );
+    socket.on(
+      "update a dog",
+      (dog) => {
+        const dogElement = dogElements.find(
+          (dogEl) => dogEl._id === dog._id,
+        );
+        dogElement.targetCoordinates = dog.targetCoordinates;
+        dogElement.hadRequest = false;
+        dogElement.shouldUpdate = false;
+      },
+    );
 
-    socket.on("disconnected user", (anotherUserId) => {
-      drawElements = drawElements.filter((element) => element.id !== anotherUserId);
-    });
+    return () => {
+      timeIds.forEach((timeId) => clearInterval(timeId));
+    };
   }, [ref]);
 };
 

@@ -120,7 +120,7 @@ const getDogCharacter = (character) => {
     left.x = left.initX;
     left.y = left.initY;
     left.width = 73;
-    left.height = 65; //gray
+    left.height = 65;
     left.gap = 13;
     left.gapX = left.width + left.gap;
     left.maxX = left.initX + left.gapX * 3;

@@ -1,94 +1,93 @@
 import getDogCharacter from "../utils/getDogCharacter";
 import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
 
-const getAutomaticMoveDog = (coordinates, drawElement, dog) => {
-  let coordinate = coordinates.pop();
+const getAutomaticMoveDog = (dog) => {
   const MOVE_DISTANCE = 10;
-  const dogCharacter = getDogCharacter(dog);
+  const dogCharacter = getDogCharacter(dog.character);
 
-  drawElement.sx = dogCharacter.walk.down.initX;
-      drawElement.sy = dogCharacter.walk.down.initY;
-      drawElement.sWidth = dogCharacter.walk.down.width;
-      drawElement.sHeight = dogCharacter.walk.down.height;
-      drawElement.dx = drawElement.dx || getRandomDogCoordinate(1000);
-      drawElement.dy = drawElement.dy || getRandomDogCoordinate(980);
-      drawElement.dWidth = dogCharacter.walk.down.width;
-      drawElement.dHeight = dogCharacter.walk.down.height;
+
+  dog.shouldUpdate = false;
+  dog.hadRequest = false;
+  dog.sx = dogCharacter.walk.down.initX;
+  dog.sy = dogCharacter.walk.down.initY;
+  dog.sWidth = dogCharacter.walk.down.width;
+  dog.sHeight = dogCharacter.walk.down.height;
+  dog.dx = dog.targetCoordinates.x;
+  dog.dy = dog.targetCoordinates.y;
+  dog.dWidth = dogCharacter.walk.down.width;
+  dog.dHeight = dogCharacter.walk.down.height;
 
   const moveDog = () => {
+    const { targetCoordinates } = dog;
     const isInCoordinateXBoundary
-      = !coordinate
-        || coordinate.x - 20 <= drawElement.dx
-        && drawElement.dx <= coordinate.x + 20;
+      = targetCoordinates.x - 20 <= dog.dx
+        && dog.dx <= targetCoordinates.x + 20;
     const isInCoordinateYBoundary
-      = !coordinate
-        || coordinate.y - 20 <= drawElement.dy
-        && drawElement.dy <= coordinate.y + 20;
+      = targetCoordinates.y - 20 <= dog.dy
+        && dog.dy <= targetCoordinates.y + 20;
 
     const shouldUpdateCoordinate
       = isInCoordinateYBoundary && isInCoordinateXBoundary
 
     if (shouldUpdateCoordinate) {
-      coordinate = coordinates.pop();
-      drawElement.sx = dogCharacter.walk.down.initX;
-      drawElement.sy = dogCharacter.walk.down.initY;
-      drawElement.sWidth = dogCharacter.walk.down.width;
-      drawElement.sHeight = dogCharacter.walk.down.height;
-      drawElement.dx = drawElement.dx;
-      drawElement.dy = drawElement.dy;
-      drawElement.dWidth = dogCharacter.walk.down.width;
-      drawElement.dHeight = dogCharacter.walk.down.height;
+      dog.sx = dogCharacter.walk.down.initX;
+      dog.sy = dogCharacter.walk.down.initY;
+      dog.sWidth = dogCharacter.walk.down.width;
+      dog.sHeight = dogCharacter.walk.down.height;
+      dog.dWidth = dogCharacter.walk.down.width;
+      dog.dHeight = dogCharacter.walk.down.height;
+      dog.shouldUpdate = true;
       return;
     }
 
-    if (coordinate.y < drawElement.dy) {
+    if (targetCoordinates.y < dog.dy) {
       dogCharacter.walk.toUp();
-      drawElement.sx = dogCharacter.walk.up.x;
-      drawElement.sy = dogCharacter.walk.up.y;
-      drawElement.sWidth = dogCharacter.walk.up.width;
-      drawElement.sHeight = dogCharacter.walk.up.height;
-      drawElement.dy -= MOVE_DISTANCE;
-      drawElement.dWidth = dogCharacter.walk.up.width;
-      drawElement.dHeight = dogCharacter.walk.up.height;
+      dog.sx = dogCharacter.walk.up.x;
+      dog.sy = dogCharacter.walk.up.y;
+      dog.sWidth = dogCharacter.walk.up.width;
+      dog.sHeight = dogCharacter.walk.up.height;
+      dog.dy -= MOVE_DISTANCE;
+      dog.dWidth = dogCharacter.walk.up.width;
+      dog.dHeight = dogCharacter.walk.up.height;
     }
 
-    if (drawElement.dy < coordinate.y) {
+    if (dog.dy < targetCoordinates.y) {
       dogCharacter.walk.toDown();
-      drawElement.sx = dogCharacter.walk.down.x;
-      drawElement.sy = dogCharacter.walk.down.y;
-      drawElement.sWidth = dogCharacter.walk.down.width;
-      drawElement.sHeight = dogCharacter.walk.down.height;
-      drawElement.dy += MOVE_DISTANCE;
-      drawElement.dWidth = dogCharacter.walk.down.width;
-      drawElement.dHeight = dogCharacter.walk.down.height;
+      dog.sx = dogCharacter.walk.down.x;
+      dog.sy = dogCharacter.walk.down.y;
+      dog.sWidth = dogCharacter.walk.down.width;
+      dog.sHeight = dogCharacter.walk.down.height;
+      dog.dy += MOVE_DISTANCE;
+      dog.dWidth = dogCharacter.walk.down.width;
+      dog.dHeight = dogCharacter.walk.down.height;
     }
 
-    if (drawElement.dx < coordinate.x) {
+    if (dog.dx < targetCoordinates.x) {
       dogCharacter.walk.toRight();
-      drawElement.sx = dogCharacter.walk.right.x;
-      drawElement.sy = dogCharacter.walk.right.y;
-      drawElement.sWidth = dogCharacter.walk.right.width;
-      drawElement.sHeight = dogCharacter.walk.right.height;
-      drawElement.dx += MOVE_DISTANCE;
-      drawElement.dWidth = dogCharacter.walk.right.width;
-      drawElement.dHeight = dogCharacter.walk.right.height;
+      dog.sx = dogCharacter.walk.right.x;
+      dog.sy = dogCharacter.walk.right.y;
+      dog.sWidth = dogCharacter.walk.right.width;
+      dog.sHeight = dogCharacter.walk.right.height;
+      dog.dx += MOVE_DISTANCE;
+      dog.dWidth = dogCharacter.walk.right.width;
+      dog.dHeight = dogCharacter.walk.right.height;
     }
 
-    if (coordinate.x < drawElement.dx) {
+    if (targetCoordinates.x < dog.dx) {
       dogCharacter.walk.toLeft();
-      drawElement.sx = dogCharacter.walk.left.x;
-      drawElement.sy = dogCharacter.walk.left.y;
-      drawElement.sWidth = dogCharacter.walk.left.width;
-      drawElement.sHeight = dogCharacter.walk.left.height;
-      drawElement.dx -= MOVE_DISTANCE;
-      drawElement.dWidth = dogCharacter.walk.left.width;
-      drawElement.dHeight = dogCharacter.walk.left.height;
+      dog.sx = dogCharacter.walk.left.x;
+      dog.sy = dogCharacter.walk.left.y;
+      dog.sWidth = dogCharacter.walk.left.width;
+      dog.sHeight = dogCharacter.walk.left.height;
+      dog.dx -= MOVE_DISTANCE;
+      dog.dWidth = dogCharacter.walk.left.width;
+      dog.dHeight = dogCharacter.walk.left.height;
     }
   };
 
   const timeId = setInterval(moveDog, 100);
 
-  return timeId;
+  return { timeId };
 };
 
 export default getAutomaticMoveDog;
