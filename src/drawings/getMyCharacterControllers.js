@@ -6,7 +6,7 @@ function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human
   const drawSize = myCharacter.drawSize;
   let destinationX = 0;
   let destinationY = 0;
-  const MOVE_DISTANCE = 10;
+  const MOVE_DISTANCE = 12;
 
   const myCharacterDrawingObject = {
     type: "human",

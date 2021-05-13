@@ -4,10 +4,15 @@ import socket from "../socket/socket";
 import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
 import getThrottleEmit from "../utils/getThrottleEmit";
+import throttle from "lodash.throttle";
 
 const emitMyCharacterDrawing = getThrottleEmit(
   60,
   { leading: false, trailing: true },
+);
+const drawCanvas = throttle(
+  (drawingFunction) => requestAnimationFrame(drawingFunction),
+  1200,
 );
 
 const useCanvasDraw = (ref) => {
@@ -70,7 +75,7 @@ const useCanvasDraw = (ref) => {
         );
       });
 
-      requestAnimationFrame(draw);
+      drawCanvas(draw);
     };
 
     const checkImageLoad = () => {
@@ -93,7 +98,7 @@ const useCanvasDraw = (ref) => {
     );
 
     humansElements.push(myCharacterDrawingObject);
-    document.addEventListener("keydown", walkMyCharacter);
+    document.addEventListener("keydown", throttle((event) => walkMyCharacter(event), 100, { leading: true, trailing: false }));
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
 
