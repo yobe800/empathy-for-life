@@ -14,14 +14,10 @@
   font-family: "neodgm", sans-serif;
 }
 
-.closeButton {
-  border: 0.3vh solid mainBlack;
+.buttonContainer {
   position: absolute;
   right: 3%;
   top: 10%;
-  background-color: mainWhite;
-  font-family: "neodgm", sans-serif;
-  font-size: 1.5vh;
 }
 
 .content {

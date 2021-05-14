@@ -120,7 +120,6 @@ const AdminSignUp = ({ dispatch, isAdministrator }) => {
       setSignUpForm(signUpForm);
     }
   };
-
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
@@ -161,7 +160,7 @@ const inputs = ["ID", "Password", "Confirm Password", "User name", "Email"]
         key={index}
         type={inputType}
         title={title}
-        inputAttr={{...inputAttribute, name: title}}
+        inputAttr={{ ...inputAttribute, name: title }}
       />
     );
   });

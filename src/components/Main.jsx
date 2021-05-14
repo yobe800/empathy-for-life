@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IMAGE_URLS, CHATS } from "../constants/constants";
 
 import socket from "../socket/socket";
@@ -11,7 +11,6 @@ import Input from "./shared/Input";
 import HeaderBoard from "./shared/HeaderBoard";
 
 const Main = ({ userName }) => {
-
   useEffect(() => {
     socket.auth = { userName };
     socket.connect();
@@ -40,6 +39,28 @@ const Main = ({ userName }) => {
 };
 
 const Navigation = () => {
+  const location = useLocation();
+  const navigations = [
+    { en : "minigame", ko: "미니게임" },
+    { en: "posts", ko:"게시글" },
+    { en: "dogs", ko: "강아지들" },
+    { en: "menu", ko: "메뉴" },
+  ]
+    .map(({ en, ko }, index) => {
+      return (
+        <HeaderBoard key={index}>
+          <Link
+            className={styles.anchor}
+            to={{
+              pathname: `/${en}`,
+              state: { modal: location },
+            }}
+          >
+            {ko}
+          </Link>
+        </HeaderBoard>
+      );
+  });
   return (
     <nav className={styles.navigation}>
       {navigations}
@@ -139,7 +160,7 @@ const ChatContainer = () => {
           <span className={styles.messageDate}>{createdAt}</span>
         </li>
       );
-    } else if (type = CHATS.DISCONNECTED_USER) {
+    } else if (type === CHATS.DISCONNECTED_USER) {
       return (
         <li className={styles.connection} key={createdAt}>
           <span>{userName}님이 퇴장하셨습니다.</span>
@@ -194,13 +215,6 @@ const Canvas = () => {
     <canvas className={styles.canvas} ref={canvasRef} width={1080} height={1000}></canvas>
   );
 };
-
-const navigations = ["미니게임", "게시글", "강아지들", "메뉴"]
-  .map((text, index) => (
-    <HeaderBoard key={index}>
-      <Link className={styles.anchor} to="">{text}</Link>
-    </HeaderBoard>
-  ));
 
 const volunteerTimeBoardStyle = { width: "20vh", height: "6vh" };
 const inputStyle = { width: "85%" };
