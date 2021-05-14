@@ -1,4 +1,4 @@
-@value mainWhite, defaultBorderRadius from "./variables.css";
+@value mainWhite, mainBlack, defaultBorderRadius from "./variables.css";
 
 .container {
   padding: 2vh;
@@ -7,11 +7,12 @@
   display: flex;
   justify-content: center;
   position: relative;
+  background-color: mainWhite;
 }
 
 .chatContainer {
   width: 28vw;
-  height: 90vh;
+  height: 90vh;;
   margin-top: 6vh;
   border-radius: defaultBorderRadius;
   display: flex;
@@ -19,13 +20,71 @@
   justify-content: flex-end;
   align-items: center;
   background-color: mainWhite;
+  color: mainBlack;
 }
 
-.conversationBorder {
+.chatBorder {
   width: 90%;
-  height: 85%;
+  height: 86%;
+  border: 0.3vh solid mainBlack;
   border-radius: defaultBorderRadius;
-  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+  font-family: "neodgm", sans-serif;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.connection {
+  margin-bottom: 2%;
+  align-self: center;
+  font-size: 70%;
+}
+
+.otherMessageContainer {
+  width: 50%;
+  margin: 5%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.myMessageContainer {
+  width: 50%;
+  margin: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.userName {
+  font-size: 80%;
+  padding-left: 3%;
+}
+
+.myMessage {
+  padding: 5%;
+  border-radius: defaultBorderRadius;
+  background-color: #FEE80F;
+  align-self: flex-end;
+  font-size: 100%;
+  margin: 5% 0;
+  line-height: 110%;
+}
+
+.otherMessage {
+  width: fit-content;
+  padding: 5%;
+  border-radius: defaultBorderRadius;
+  background-color: #E8E9EB;
+  font-size: 100%;
+  margin: 2% 0 3% 0;
+  line-height: 110%;
+}
+
+.messageDate {
+  font-size: 70%;
 }
 
 .formContainer {

@@ -127,7 +127,7 @@ const useCanvasDraw = (ref) => {
     );
     socket.on(
       "disconnected user",
-      (anotherUserId) => {
+      ({ id: anotherUserId }) => {
         humansElements = humansElements.filter(
           (element) => element.id !== anotherUserId,
         );

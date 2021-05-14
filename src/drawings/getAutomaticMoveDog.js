@@ -1,5 +1,4 @@
 import getDogCharacter from "../utils/getDogCharacter";
-import getRandomDogCoordinate from "../utils/getRandomDogCoordinates";
 
 const getAutomaticMoveDog = (dog) => {
   const MOVE_DISTANCE = 10;
