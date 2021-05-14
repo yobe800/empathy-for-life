@@ -2,7 +2,6 @@ const getHumanCharacter = (character) => {
   const humanNumber = character.split("human")[1];
   const CHRACTER_SIZE = 32;
 
-
   return {
     walk: {
       up: {

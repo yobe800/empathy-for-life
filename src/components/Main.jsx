@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { IMAGE_URLS } from "../constants/constants";
+import { IMAGE_URLS, CHATS } from "../constants/constants";
 
+import socket from "../socket/socket";
 import useCanvasDraw from "../hooks/useCanvasDraw";
 
 import styles from "./styles/Main.module.css";
@@ -9,7 +10,13 @@ import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
 import HeaderBoard from "./shared/HeaderBoard";
 
-const Main = () => {
+const Main = ({ userName }) => {
+
+  useEffect(() => {
+    socket.auth = { userName };
+    socket.connect();
+  }, [userName]);
+
   return (
     <div className={styles.container}>
       <ChatContainer />
@@ -41,20 +48,141 @@ const Navigation = () => {
 };
 
 const ChatContainer = () => {
+  const [chatDatum, setChatDatum] = useState([]);
+  const [chatMessage, setChatMessage] = useState("");
+  const [shouldSendMessage, setShouldSendMessage] = useState(false);
+  const chatContainerRef = useRef();
+
+  useEffect(() => {
+    if (!shouldSendMessage) {
+      return;
+    }
+
+    socket.emit("chat", chatMessage);
+    setShouldSendMessage(false);
+    setChatMessage("");
+  }, [chatMessage, shouldSendMessage, setShouldSendMessage]);
+
+  useEffect(() => {
+    socket.on(
+      "connected user",
+      ({ name: userName, createdAt }) => {
+        const chatData = {
+          type: CHATS.CONNECTED_USER,
+          userName,
+          createdAt,
+        };
+        setChatDatum(
+          (lastChatContents) => [...lastChatContents, chatData],
+        );
+      },
+    );
+    socket.on(
+      "disconnected user",
+      ({ name: userName, disconnectedAt }) => {
+        const chatData = {
+          type: CHATS.DISCONNECTED_USER,
+          userName,
+          createdAt: disconnectedAt,
+        };
+        setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
+      },
+    );
+    socket.on(
+      "chat",
+      ({ user, message, createdAt }) => {
+        let isSelf = false;
+
+        if (socket.id === user.id) {
+          isSelf = true;
+        }
+
+        const chatData = {
+          type: CHATS.MESSAGE,
+          isSelf,
+          userName: user.name,
+          message,
+          createdAt,
+        };
+        setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
+      }
+    );
+  }, [setChatDatum]);
+
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }, [chatDatum]);
+
+  const chats = chatDatum.map(({ type, userName, isSelf, message, createdAt }) => {
+    if (type === CHATS.CONNECTED_USER) {
+      return (
+        <li className={styles.connection} key={createdAt}>
+          <span>{userName}님이 입장하셨습니다.</span>
+        </li>
+      );
+    } else if (type === CHATS.MESSAGE) {
+      return (
+        <li
+          className={isSelf
+            ? styles.myMessageContainer
+            : styles.otherMessageContainer
+          }
+          key={createdAt}
+        >
+          {isSelf ? null : <span className={styles.userName}>{userName}</span>}
+          <p
+            className={isSelf ? styles.myMessage : styles.otherMessage}
+          >
+            {message}
+          </p>
+          <span className={styles.messageDate}>{createdAt}</span>
+        </li>
+      );
+    } else if (type = CHATS.DISCONNECTED_USER) {
+      return (
+        <li className={styles.connection} key={createdAt}>
+          <span>{userName}님이 퇴장하셨습니다.</span>
+        </li>
+      );
+    }
+  });
+
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.conversationBorder} />
-      <InputContainer />
+      <ol className={styles.chatBorder} ref={chatContainerRef}>
+        {chats}
+      </ol>
+      <InputContainer
+        chatMessage={chatMessage}
+        setChatMessage={setChatMessage}
+        setShouldSendMessage={setShouldSendMessage}
+      />
     </div>
   );
 };
 
-const InputContainer = () => {
+const InputContainer = ({ chatMessage, setChatMessage, setShouldSendMessage }) => {
+  const handleInput = (event) => {
+    setChatMessage(event.target.value);
+  };
+  const handleSubmitMessage = (event) => {
+    event.preventDefault();
+    if (!chatMessage) {
+      return;
+    }
+
+    setShouldSendMessage(true);
+  };
+
   return (
-    <div className={styles.inputContainer}>
-      <Input style={inputStyle} />
-      <InputButton text={"전송"} style={inputButtonStyle} />
-    </div>
+    <form className={styles.formContainer} onSubmit={handleSubmitMessage}>
+      <Input style={inputStyle} inputAttr={{ onInput: handleInput, value: chatMessage }}/>
+      <InputButton
+        text={"전송"}
+        style={inputButtonStyle}
+      />
+    </form>
   );
 };
 

@@ -7,7 +7,7 @@ import {
   IMAGE_URLS,
  } from "../constants/constants";
 
-import { userAdded } from "../features/rootSlice";
+import { actionCreators } from "../features/rootSlice";
 
 import PopUpWindow from "./shared/PopUpWindow";
 import { signInWithGoogle } from "../auth/firebase";
@@ -46,15 +46,17 @@ const UserSignIn = ({ dispatch }) => {
         const { message, result } = await response.json();
 
         if (message === "ok") {
-          const userState = {
+          const userSession = {
             id: result._id,
-            userName: result.user_name,
+            name: result.user_name,
             isAdministrator: result.is_administrator,
             character: result.character,
             accessTime:result.access_time,
           };
 
-          dispatch(userAdded(userState));
+          dispatch(
+            actionCreators.userAdded(userSession),
+          );
           return history.replace("/");
         }
 

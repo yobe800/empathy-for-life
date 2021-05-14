@@ -14,11 +14,8 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import {
   reducer,
   initiateState,
-  userAdded,
-  adminAuthPassed,
-  getUserId,
-  getIsPassedAdminAuth,
-  getIsAdministrator,
+  actionCreators,
+  selectors,
 } from "../features/rootSlice";
 
 import UserSignIn from "./UserSignIn";
@@ -35,9 +32,15 @@ import DogForm from "./DogForm";
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initiateState);
   const [isLoading, setIsLoading] = useState(true);
-  const hasUserSignedIn = !!getUserId(state);
-  const isPassedAdminAuth = getIsPassedAdminAuth(state);
-  const isAdministrator = getIsAdministrator(state);
+
+  const userName = selectors.getUserName(state);
+  const hasUserSignedIn = !!selectors.getUserId(state);
+  const isPassedAdminAuth = (
+    selectors.getIsPassedAdminAuth(state)
+  );
+  const isAdministrator = (
+    selectors.getIsAdministrator(state)
+  );
 
   useEffect(() => {
     if (hasUserSignedIn || !isLoading) {
@@ -61,17 +64,21 @@ const App = () => {
         if (message === "ok") {
           const userSession = {
             id: result._id,
-            userName: result.user_name,
+            name: result.user_name,
             isAdministrator: result.is_administrator,
             character: result.character,
             accessTime: result.access_time,
           };
 
           if (userSession.isAdministrator) {
-            dispatch(adminAuthPassed());
+            dispatch(
+              actionCreators.adminAuthPassed(),
+            );
           }
 
-          dispatch(userAdded(userSession));
+          dispatch(
+            actionCreators.userAdded(userSession),
+          );
         }
       } catch (error) {
         logWarnOrErrInDevelopment(error);
@@ -125,7 +132,7 @@ const App = () => {
         </Route>
         <Route path="/">
           {hasUserSignedIn
-            ? <Main />
+            ? <Main userName={userName} />
             : <Redirect to="/sign-in" />
           }
         </Route>

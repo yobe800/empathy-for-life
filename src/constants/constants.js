@@ -8,6 +8,11 @@ const DOG_PROFILE_ENUMS = [
   { en: "neutering", ko: "중성화" },
   { en: "adoption_status", ko: "입양 상태" },
 ];
+const CHATS = {
+  CONNECTED_USER: "connected user",
+  MESSAGE: "message",
+  DISCONNECTED_USER: "disconnected user",
+};
 
 const DEFAULT_ERROR_MESSAGE = "오류가 발생했습니다.\n잠시후 다시 시도해 주세요.";
 
@@ -28,6 +33,7 @@ const DIRECTIONS = {
 };
 
 export {
+  CHATS,
   DOG_PROFILE_ENUMS,
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,

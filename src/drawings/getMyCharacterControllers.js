@@ -6,7 +6,7 @@ function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human
   const drawSize = myCharacter.drawSize;
   let destinationX = 0;
   let destinationY = 0;
-  const MOVE_DISTANCE = 10;
+  const MOVE_DISTANCE = 12;
 
   const myCharacterDrawingObject = {
     type: "human",
@@ -14,6 +14,8 @@ function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human
     sy: myCharacter.walk.down.y,
     sWidth: myCharacter.walk.down.width,
     sHeight: myCharacter.walk.down.height,
+    lastDx: destinationX,
+    lastDy: destinationY,
     dx: destinationX,
     dy: destinationY,
     dWidth: drawSize,
@@ -26,6 +28,9 @@ function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human
     if (!direction) {
       return;
     }
+
+    myCharacterDrawingObject.lastDx = myCharacterDrawingObject.dx;
+    myCharacterDrawingObject.lastDy = myCharacterDrawingObject.dy;
 
     if (direction === "up") {
       if (myCharacter.walk.up.x === myCharacter.walk.up.maxX) {
@@ -94,9 +99,11 @@ function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human
     if (!direction) {
       return;
     }
+
+    myCharacterDrawingObject.lastDx = myCharacterDrawingObject.dx;
+    myCharacterDrawingObject.lastDy = myCharacterDrawingObject.dy;
     myCharacter.walk[direction].x = myCharacter.walk[direction].initX;
     myCharacter.walk[direction].y = myCharacter.walk[direction].initY;
-
     myCharacterDrawingObject.sx = myCharacter.walk[direction].x;
     myCharacterDrawingObject.sy = myCharacter.walk[direction].y;
   };
