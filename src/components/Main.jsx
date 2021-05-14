@@ -15,7 +15,6 @@ const Main = ({ userName }) => {
   useEffect(() => {
     socket.auth = { userName };
     socket.connect();
-
   }, [userName]);
 
   return (
@@ -65,38 +64,49 @@ const ChatContainer = () => {
   }, [chatMessage, shouldSendMessage, setShouldSendMessage]);
 
   useEffect(() => {
-    socket.on("connected user", ({ name: userName, createdAt }) => {
-      const chatData = {
-        type: CHATS.CONNECTED_USER,
-        userName,
-        createdAt,
-      };
-      setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
-    });
-    socket.on("disconnected user", ({ name: userName, disconnectedAt }) => {
-      const chatData = {
-        type: CHATS.DISCONNECTED_USER,
-        userName,
-        createdAt: disconnectedAt,
-      };
-      setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
-    });
-    socket.on("chat", ({ user, message, createdAt }) => {
-      let isSelf = false;
+    socket.on(
+      "connected user",
+      ({ name: userName, createdAt }) => {
+        const chatData = {
+          type: CHATS.CONNECTED_USER,
+          userName,
+          createdAt,
+        };
+        setChatDatum(
+          (lastChatContents) => [...lastChatContents, chatData],
+        );
+      },
+    );
+    socket.on(
+      "disconnected user",
+      ({ name: userName, disconnectedAt }) => {
+        const chatData = {
+          type: CHATS.DISCONNECTED_USER,
+          userName,
+          createdAt: disconnectedAt,
+        };
+        setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
+      },
+    );
+    socket.on(
+      "chat",
+      ({ user, message, createdAt }) => {
+        let isSelf = false;
 
-      if (socket.id === user.id) {
-        isSelf = true;
+        if (socket.id === user.id) {
+          isSelf = true;
+        }
+
+        const chatData = {
+          type: CHATS.MESSAGE,
+          isSelf,
+          userName: user.name,
+          message,
+          createdAt,
+        };
+        setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
       }
-
-      const chatData = {
-        type: CHATS.MESSAGE,
-        isSelf,
-        userName: user.name,
-        message,
-        createdAt,
-      };
-      setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
-    });
+    );
   }, [setChatDatum]);
 
   useEffect(() => {

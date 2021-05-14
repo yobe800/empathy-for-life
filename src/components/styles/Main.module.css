@@ -25,7 +25,8 @@
 
 .chatBorder {
   width: 90%;
-  height: 86%;
+  height: 84%;
+  padding: 2% 0;
   border: 0.3vh solid mainBlack;
   border-radius: defaultBorderRadius;
   display: flex;
@@ -43,7 +44,7 @@
 
 .otherMessageContainer {
   width: 50%;
-  margin: 5%;
+  margin: 2%;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -51,7 +52,7 @@
 
 .myMessageContainer {
   width: 50%;
-  margin: 5%;
+  margin: 2%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -65,21 +66,21 @@
 
 .myMessage {
   padding: 5%;
+  margin: 5% 0;
   border-radius: defaultBorderRadius;
   background-color: #FEE80F;
   align-self: flex-end;
   font-size: 100%;
-  margin: 5% 0;
   line-height: 110%;
 }
 
 .otherMessage {
   width: fit-content;
   padding: 5%;
+  margin: 2% 0 3% 0;
   border-radius: defaultBorderRadius;
   background-color: #E8E9EB;
   font-size: 100%;
-  margin: 2% 0 3% 0;
   line-height: 110%;
 }
 
