@@ -18,6 +18,13 @@
   color: mainBlack;
 }
 
+.popUpContainer input {
+  position: absolute;
+  padding: 0.3vh;
+  top: 7vh;
+  left: 13vh;
+}
+
 .closeButtonContainer {
   position: absolute;
   right: 6%;

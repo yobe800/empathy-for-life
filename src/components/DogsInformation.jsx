@@ -101,7 +101,7 @@ const DogsInformation = () => {
     };
 
     fetchNextDogInformations();
-  }, [shouldFetch]);
+  }, [shouldFetch, nextPage, search]);
 
   const handleModalClose = () => {
     history.push("/");

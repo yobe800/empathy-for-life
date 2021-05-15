@@ -20,6 +20,7 @@ const DogForm = () => {
   const [shouldDelete, setShouldDelete] = useState(false);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState("");
   const { id } = useParams();
   const history = useHistory();
   const { modal } = history.location.state;
@@ -29,7 +30,6 @@ const DogForm = () => {
     if (!shouldFetch || !dogForm) {
       return;
     }
-    setShouldFetch(false);
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -59,6 +59,7 @@ const DogForm = () => {
         logWarnOrErrInDevelopment(error);
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
         setDogForm(null);
+        setShouldFetch(false);
       }
     };
 
@@ -96,8 +97,11 @@ const DogForm = () => {
       addNewDog();
     }
 
-    return () => controller.abort();
-  }, [dogForm]);
+    return () => {
+      console.log("헬로");
+      controller.abort();
+    }
+  }, [dogForm, history, id, modal, shouldFetch]);
 
   useEffect(() => {
     if (!id) {
@@ -159,6 +163,45 @@ const DogForm = () => {
     getDogInformation();
   }, [id]);
 
+  useEffect(() => {
+    if (!shouldDelete) {
+      return;
+    }
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const deleteDogInformation = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/dog/${id}`,
+          {
+            method: "DELETE",
+            signal,
+          },
+        );
+
+        const { message } = await response.json();
+
+        if (message === "ok") {
+          history.push("/dogs", { modal });
+        } else {
+          setErrorMessage(message);
+          setShouldDelete(false);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+        setShouldDelete(false);
+      }
+    };
+
+    deleteDogInformation();
+
+    return () => controller.abort();
+  }, [shouldDelete, history, id, modal]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -201,6 +244,7 @@ const DogForm = () => {
   };
   const handleClosePopUp = () => {
     setErrorMessage("");
+    setDeleteMessage("");
   };
   const handleModalClose = () => {
     history.push("/");
@@ -227,7 +271,16 @@ const DogForm = () => {
     }
   };
   const handleDogDelete = () => {
-    setShouldDelete();
+    setDeleteMessage("");
+    setShouldDelete(true);
+  };
+
+  const handleDeletionPopUp = () => {
+    if (shouldDelete) {
+      return;
+    }
+
+    setDeleteMessage("정말 삭제하시겠습니까?");
   };
 
   return (
@@ -241,13 +294,23 @@ const DogForm = () => {
           </div>
         : null
       }
+      {deleteMessage
+        ? <div className={styles.popUpContainer}>
+            <PopUpWindow
+              text={deleteMessage}
+              onClick={handleClosePopUp}
+            />
+            <InputButton text="확인" type="button" onClick={handleDogDelete} />
+          </div>
+        : null
+      }
       <div className={styles.closeButtonContainer}>
-        <CloseButton onClick={handleModalClose}/>
+        <CloseButton onClick={handleModalClose} />
       </div>
       <ModalHeader text="강아지 추가">
         <div className={styles.inputButtonsContainer}>
           <InputButton text={id ? "수정" : "추가"} form="dogForm" />
-          {id ? <InputButton text="삭제" type="button" onClick={handleDogDelete} /> : null}
+          {id ? <InputButton text="삭제" type="button" onClick={handleDeletionPopUp} /> : null}
           <InputButton text="취소" type="button" onClick={handleFormCancel} />
         </div>
       </ModalHeader>
@@ -299,7 +362,7 @@ const DogForm = () => {
             onChange: handleFileSize,
           }}
         />
-        <img className={styles.thumnail} ref={imgRef} />
+        <img className={styles.thumnail} ref={imgRef} alt="dog profile thumnail"/>
         <div className={styles.selectContainer}>
           <label className={styles.selectLabel} htmlFor="dogCharacter">캐릭터</label>
           <select
