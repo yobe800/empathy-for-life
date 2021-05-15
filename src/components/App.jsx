@@ -156,6 +156,9 @@ const App = () => {
               <Route path="/dogs/new">
                 <DogForm />
               </Route>
+              <Route path="/dogs/edit/:id">
+                <DogForm />
+              </Route>
               <Route path="/dogs/:id">
                 <DogProfile />
               </Route>

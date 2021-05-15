@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import validator from "validator";
 
+import { LIMIT_FILE_SIZE, DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import getBase64FromImageAsync from "../utils/getBase64FromImageAsync";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+
+
 import styles from "./styles/DogForm.module.css";
 import Container from "./shared/Container";
 import Input from "./shared/Input";
@@ -13,25 +16,30 @@ import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton";
 
 const DogForm = () => {
+  const [dogForm, setDogForm] = useState(null);
+  const [shouldDelete, setShouldDelete] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { id } = useParams();
   const history = useHistory();
   const { modal } = history.location.state;
-  const [dogForm, setDogForm] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
+  const imgRef = useRef(null);
 
   useEffect(() => {
-    if (!dogForm) {
+    if (!shouldFetch || !dogForm) {
       return;
     }
+    setShouldFetch(false);
 
     const controller = new AbortController();
     const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const addNewDog = async () => {
       try {
         const { photo } = dogForm;
         const base64 = await getBase64FromImageAsync(photo);
         const copiedDogForm = { ...dogForm, photo: base64 };
-        const serverUrl = process.env.REACT_APP_SERVER_URL;
         const response = await fetch(
           `${serverUrl}/dog/new`,
           {
@@ -49,20 +57,112 @@ const DogForm = () => {
         }
       } catch (error) {
         logWarnOrErrInDevelopment(error);
-        setErrorMessage("잠시 후 다시 시도해 주세요");
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
         setDogForm(null);
       }
     };
 
-    addNewDog();
+    const editDog = async () => {
+      try {
+        const { photo } = dogForm;
+        const base64 = await getBase64FromImageAsync(photo);
+        const copiedDogForm = { ...dogForm, photo: base64 };
+
+        const response = await fetch(
+          `${serverUrl}/dog/${id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(copiedDogForm),
+            signal,
+          },
+        );
+
+        const { message } = await response.json();
+
+        if (message === "ok") {
+          history.push("/dogs", { modal });
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+        setDogForm(null);
+      }
+    };
+
+    if (id) {
+      editDog();
+    } else {
+      addNewDog();
+    }
 
     return () => controller.abort();
   }, [dogForm]);
 
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const getDogInformation = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/dog/${id}`,
+          { signal },
+        );
+
+        const { message, result } = await response.json();
+        const {
+          name,
+          gender,
+          breed,
+          age,
+          weight,
+          heart_worm: heartWorm,
+          neutering,
+          entranced_at,
+          adoption_status: adoptionStatus,
+          photo,
+          character: dogCharacter,
+          description,
+        } = result;
+
+        if (message === "ok") {
+          imgRef.current.src = photo.url;
+          const dogInformation = {
+            name,
+            gender,
+            breed,
+            age,
+            weight,
+            heartWorm,
+            neutering,
+            entrancedAt: entranced_at.split("T")[0],
+            adoptionStatus,
+            dogCharacter,
+            description,
+          };
+
+          setDogForm(dogInformation);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+        setDogForm(null);
+      }
+    };
+
+    getDogInformation();
+  }, [id]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (dogForm) {
+    if (shouldFetch) {
       return;
     }
 
@@ -96,14 +196,38 @@ const DogForm = () => {
       setErrorMessage(message);
     } else {
       setDogForm(dogInformation);
+      setShouldFetch(true);
     }
   };
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
-
   const handleModalClose = () => {
     history.push("/");
+  };
+  const handleFormCancel = () => {
+    history.goBack();
+  };
+  const handleFileSize = (event) => {
+    const fileSize = event.target.files[0]?.size;
+
+    if (!fileSize) {
+      return;
+    }
+
+    if (LIMIT_FILE_SIZE < fileSize) {
+      setErrorMessage("5MB 이상의 파일은 업로드 할 수 없습니다");
+      event.target.value = "";
+    } else {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        imgRef.current.src = fileReader.result;
+      };
+      fileReader.readAsDataURL(event.target.files[0]);
+    }
+  };
+  const handleDogDelete = () => {
+    setShouldDelete();
   };
 
   return (
@@ -122,35 +246,37 @@ const DogForm = () => {
       </div>
       <ModalHeader text="강아지 추가">
         <div className={styles.inputButtonsContainer}>
-          <InputButton text="추가" form="dogForm" />
-          <InputButton text="취소" form="dogForm" type="button" />
+          <InputButton text={id ? "수정" : "추가"} form="dogForm" />
+          {id ? <InputButton text="삭제" type="button" onClick={handleDogDelete} /> : null}
+          <InputButton text="취소" type="button" onClick={handleFormCancel} />
         </div>
       </ModalHeader>
       <form id="dogForm" className={styles.form} onSubmit={handleSubmit}>
-        <Input title="이름" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "name" }} />
+        <Input title="이름" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "name", defaultValue: dogForm?.name }} />
         <div className={styles.selectContainer}>
           <label className={styles.selectLabel} htmlFor="gender">
             성별
           </label>
-          <select className={styles.select} id="gender" name="gender">
+          <select className={styles.select} id="gender" name="gender" defaultValue={dogForm?.gender}>
             <option value="male">수컷</option>
             <option value="female">암컷</option>
           </select>
         </div>
-        <Input title="견종" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "breed" }} />
-        <Input title="나이" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "age" }} />
-        <Input title="무게(Kg)" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "weight" }} />
+        <Input title="견종" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "breed", defaultValue: dogForm?.breed }} />
+        <Input title="나이" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "age", defaultValue: dogForm?.age }} />
+        <Input title="무게(Kg)" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "weight", defaultValue: dogForm?.weight }} />
         <div className={styles.checkboxesContainer}>
-          <Input title="심장사상충" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "heartWorm" }} />
-          <Input title="중성화" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "neutering" }}/>
+          <Input title="심장사상충" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "heartWorm", defaultValue: dogForm?.heartWorm }} />
+          <Input title="중성화" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "neutering", defaultValue: dogForm?.neutering }}/>
         </div>
-        <Input title="입소일" headingAttr={headingAttribute} inputAttr={{ ...dateInputAttribute, name: "entrancedAt"}} />
+        <Input title="입소일" headingAttr={headingAttribute} inputAttr={{ ...dateInputAttribute, name: "entrancedAt", defaultValue: dogForm?.entrancedAt}} />
         <div className={styles.selectContainer}>
           <label className={styles.selectLabel} htmlFor="adoptionStatus">입양 상태</label>
           <select
             id="adoptionStatus"
             className={styles.select}
             name="adoptionStatus"
+            defaultValue={dogForm?.adoptionStatus}
           >
             <option value="ready">
               준비 중
@@ -166,11 +292,22 @@ const DogForm = () => {
         <Input
           title="사진"
           headingAttr={headingAttribute}
-          inputAttr={{ ...fileInputAttribute, name: "photo", required: true }}
+          inputAttr={{
+            ...fileInputAttribute,
+            name: "photo",
+            required: id ? false : true,
+            onChange: handleFileSize,
+          }}
         />
+        <img className={styles.thumnail} ref={imgRef} />
         <div className={styles.selectContainer}>
           <label className={styles.selectLabel} htmlFor="dogCharacter">캐릭터</label>
-          <select className={styles.select} id="dogCharacter" name="dogCharacter">
+          <select
+            id="dogCharacter"
+            className={styles.select}
+            name="dogCharacter"
+            defaultValue={dogForm?.dogCharacter}
+          >
             <option value="brownShiba">
               갈색 시바견
             </option>
@@ -188,6 +325,7 @@ const DogForm = () => {
             id="description"
             className={styles.textarea}
             name="description"
+            defaultValue={dogForm?.description}
             placeholder="창을 아래로 늘릴 수 있어요. :)"
           />
         </div>

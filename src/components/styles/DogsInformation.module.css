@@ -1,7 +1,20 @@
+@value (
+  mainBlack,
+  defaultBorderRadius
+) from "./variables.css";
+
+.popUpContainer {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  color: mainBlack;
+  z-index: 10;
+}
+
 .closeButtonContainer {
   position: absolute;
   right: 6%;
-  top: 10%;
+  top: 3%;
 }
 
 .inputsContainer {
@@ -12,5 +25,6 @@
 
 .cardContainer {
   max-height: 65vh;
+  margin-top: 1vh;
   overflow: auto;
 }

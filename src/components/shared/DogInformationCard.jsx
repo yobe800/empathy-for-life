@@ -1,48 +1,62 @@
 import React from "react";
-
+import { Link, useLocation } from "react-router-dom";
 import { IMAGE_URLS } from "../../constants/constants";
 
 import styles from "../styles/dogsInformationCard.module.css";
 import InputButton from "./InputButton";
 
-const DogInformationCard = () => {
+const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
+  const { pathname, state } = useLocation();
+  const { modal } = state;
   return (
     <div className={styles.container}>
       <div className={styles.imageBox}>
         <img
-          className={styles[dogData.character]}
+          className={styles[character]}
           src={IMAGE_URLS.DOGS_SPRITE}
           alt="A dog character"
         />
       </div>
       <ul className={styles.descriptions}>
         <li>
-          이름: {dogData.name}
+          이름: {name}
         </li>
         <li>
-          견종: {dogData.breed}
+          견종: {breed}
         </li>
         <li>
-          성별: {dogData.gender}
+          성별: {gender}
         </li>
         <li>
-          나이: {dogData.age}
+          나이: {age}
         </li>
       </ul>
-      <InputButton text="상세보기" style={{ padding: "1.5% 3%", fontSize: "1.6vh" }}/>
+      <nav>
+        <Link to={{
+          pathname: `${pathname}/edit/${id}`,
+          state: { modal },
+        }}>
+          <InputButton
+            text="편집"
+            style={{ padding: "0.7vh 1vh", fontSize: "1.6vh" }}
+          />
+        </Link>
+        <Link to={{
+          pathname: `${pathname}/${id}`,
+          state: { modal },
+        }}>
+          <InputButton
+            text="세부정보"
+            style={{
+              marginTop: "1vh",
+              padding: "0.7vh 1vh",
+              fontSize: "1.6vh",
+            }}
+          />
+        </Link>
+      </nav>
     </div>
   );
-};
-
-const dogData = {
-  _id: "1",
-  name: "에밀리",
-  gender: "암컷",
-  breed: "진도믹스",
-  age: 1,
-  entranced_at: "2020-03-03T00:00:00.000Z",
-  adoption_status: "progress",
-  character: "brownShiba",
 };
 
 export default DogInformationCard;

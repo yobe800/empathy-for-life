@@ -31,6 +31,13 @@
   overflow: auto;
 }
 
+.thumnail {
+  max-width: 15vh;
+  max-height: 15vh;
+  object-fit: contain;
+  margin-left: 17vh;
+}
+
 .selectContainer {
   display: flex;
   justify-content: flex-end;
