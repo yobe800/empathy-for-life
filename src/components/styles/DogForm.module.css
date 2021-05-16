@@ -1,7 +1,8 @@
 @value (
   defaultBorderWidth,
   defaultBorderRadius,
-  mainBlack
+  mainBlack,
+  mainWhite
 ) from "./variables.css";
 
 .inputButtonsContainer {
@@ -40,10 +41,13 @@
 
 .thumnail {
   width: 15vh;
-  max-height: 15vh;
+  height: 15vh;
   margin-left: 17vh;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
+  background-color: mainWhite;
+  color: mainBlack;
+  font-size: 1.3vh;
 }
 
 .selectContainer {

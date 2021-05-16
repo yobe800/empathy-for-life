@@ -1,15 +1,31 @@
-@value defaultBorderRadius from "./variables.css";
+@value (
+  mainBlack,
+  mainWhite,
+  defaultBorderRadius
+) from "./variables.css";
 
 .informationContainer {
   display: flex;
 }
 
+.closeButtonContainer {
+  position: absolute;
+  right: 2vh;
+  top: 1.7vh;
+}
+
+.popUpContainer {
+  color: mainBlack;
+}
+
 .profilePhoto {
-  width: 60%;
-  height: 60%;
+  width: 25vh;
+  height: 25vh;
+  object-fit: cover;
   border-radius: defaultBorderRadius;
   margin-left: 2%;
   margin-top: 2%;
+  background-color: mainWhite;
 }
 
 .descriptionList {
@@ -30,7 +46,7 @@
 }
 
 .content {
-  width: 55%;
+  width: 25vh;
   height: 38%;
   position: absolute;
   left: 6%;
