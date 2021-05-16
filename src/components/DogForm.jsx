@@ -261,17 +261,18 @@ const DogForm = () => {
   const handleFormCancel = () => {
     history.goBack();
   };
-  const handleFileSize = (event) => {
-    console.log("")
-    const fileSize = event.target.files[0]?.size;
+  const handlePhotoInput = (event) => {
+    const photo = event.target.files[0];
 
-    if (!fileSize) {
+    if (!photo) {
       imgRef.current.src = "";
       imgRef.current.style.display = "none";
       return;
     }
 
-    if (LIMIT_FILE_SIZE < fileSize) {
+    const photoSize = photo.size;
+
+    if (LIMIT_FILE_SIZE < photoSize) {
       setErrorMessage("5MB 이상의 파일은 업로드 할 수 없습니다");
       event.target.value = "";
     } else {
@@ -372,7 +373,7 @@ const DogForm = () => {
             ...fileInputAttribute,
             name: "photo",
             required: id ? false : true,
-            onChange: handleFileSize,
+            onChange: handlePhotoInput,
           }}
         />
         <img

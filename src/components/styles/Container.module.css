@@ -21,6 +21,8 @@
 
 .border {
   width: 94%;
+  max-height: 76vh;
+  overflow: auto;
   border: defaultBorderWidth solid mainWhite;
   border-radius: defaultBorderRadius;
   background-color: mainBrown;

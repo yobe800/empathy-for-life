@@ -37,12 +37,8 @@ const App = () => {
   const { getUserId, getIsPassedAdminAuth } = selectors;
   const modal = location.state?.modal;
 
-  const userName = selectors.getUserName(state);
   const hasUserSignedIn = !!getUserId(state);
   const isPassedAdminAuth = getIsPassedAdminAuth(state);
-  const isAdministrator = (
-    selectors.getIsAdministrator(state)
-  );
 
   useEffect(() => {
     if (hasUserSignedIn || !isLoading) {
@@ -93,7 +89,7 @@ const App = () => {
     fetchUser();
 
     return () => controller.abort();
-  }, [hasUserSignedIn, isLoading, dispatch]);
+  }, [hasUserSignedIn, isLoading, dispatch, userAdded, adminAuthPassed]);
 
   if (isLoading) {
     return <h1>로딩 중</h1>;

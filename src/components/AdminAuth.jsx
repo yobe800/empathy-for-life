@@ -69,7 +69,7 @@ const AdminAuth = () => {
     detectAuthPassword();
 
     return () => controller.abort();
-  }, [isDetecting, password, dispatch, history]);
+  }, [isDetecting, password, dispatch, history, adminAuthPassed]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,3 +1,12 @@
+@value mainBlack from "./variables.css";
+
+.popUpContainer {
+  position: absolute;
+  top: 25vh;
+  left: 12%;
+  color: mainBlack;
+}
+
 .CloseButtonContainer {
   position: absolute;
   right: 1.5vw;
@@ -20,23 +29,38 @@
   align-items: flex-start;
 }
 
+.photoContainer {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+}
+
 .selectLabel {
   width: 100%;
+  margin-top: 1vh;
+  display: flex;
   font-size: 1.3vw;
 }
 
 .select {
   width: 8vw;
-  height: 3vh;
+  height: 10vh;
   margin-left: 4vh;
+}
+
+.photo {
+  width: 42vh;
+  height: 42vh;
+  margin-top: 0.5vh;
+  object-fit: cover;
 }
 
 .textarea {
   min-width: 95%;
   max-width: 95%;
-  height: 50vh;
-  min-height: 50vh;
-  max-height: 50vh;
+  height: 30vh;
+  min-height: 30vh;
+  max-height: 30vh;
   padding: 1vw;
   border: defaultBorderWidth solid mainBlack;
   border-radius: defaultBorderRadius;
