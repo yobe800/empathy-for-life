@@ -25,10 +25,10 @@ const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
           견종: {breed}
         </li>
         <li>
-          성별: {gender}
+          성별: {gender === "male" ? "수컷" : "암컷"}
         </li>
         <li>
-          나이: {age}
+          나이: {`${age}살`}
         </li>
       </ul>
       <nav>

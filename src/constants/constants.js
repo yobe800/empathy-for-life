@@ -1,4 +1,4 @@
-const DOG_PROFILE_ENUMS = [
+const DOG_PROFILE_TITLES = [
   { en: "name", ko: "이름" },
   { en: "breed", ko: "견종" },
   { en: "gender", ko: "성별" },
@@ -32,7 +32,7 @@ const LIMIT_FILE_SIZE = 5 * 1048576;
 
 export {
   CHATS,
-  DOG_PROFILE_ENUMS,
+  DOG_PROFILE_TITLES,
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,
   DIRECTIONS,
