@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 
 import {
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,
  } from "../constants/constants";
-
-import { actionCreators } from "../features/rootSlice";
+import {
+  actionCreators,
+  selectors,
+  ReducerContext,
+} from "../features/rootSlice";
 
 import styles from "./styles/AdminSignIn.module.css";
 import Home from "./shared/Home";
@@ -15,12 +18,14 @@ import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
-const AdminSignIn = ({ dispatch, isAdministrator }) => {
-  const history = useHistory();
+const AdminSignIn = () => {
   const [idValue, setIdValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { dispatch, state } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
+  const history = useHistory();
 
   useEffect(() => {
     if (!isSigningIn) {

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import validator from "validator";
 
 import { IMAGE_URLS } from "../constants/constants";
 
-import { actionCreators } from "../features/rootSlice";
+import {
+  actionCreators,
+  selectors,
+  ReducerContext,
+} from "../features/rootSlice";
 
 import styles from "./styles/AdminSignUp.module.css";
 import Home from "./shared/Home.jsx";
@@ -13,10 +17,12 @@ import InputButton from "./shared/InputButton.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
-const AdminSignUp = ({ dispatch, isAdministrator }) => {
-  const history = useHistory();
+const AdminSignUp = () => {
   const [signUpForm, setSignUpForm] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const { state, dispatch } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
+  const history = useHistory();
 
   useEffect(() => {
     if (!signUpForm) {

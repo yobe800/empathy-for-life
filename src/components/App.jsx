@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Switch,
   Route,
@@ -12,8 +12,7 @@ import "./styles/font.css";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import {
-  reducer,
-  initiateState,
+  ReducerContext,
   actionCreators,
   selectors,
 } from "../features/rootSlice";
@@ -31,16 +30,16 @@ import DogForm from "./DogForm";
 import PostForm from "./PostForm";
 
 const App = () => {
-  const location = useLocation();
-  const modal = location.state?.modal;
-  const [state, dispatch] = useReducer(reducer, initiateState);
   const [isLoading, setIsLoading] = useState(true);
+  const { state, dispatch } = useContext(ReducerContext);
+  const location = useLocation();
+  const { adminAuthPassed, userAdded } = actionCreators;
+  const { getUserId, getIsPassedAdminAuth } = selectors;
+  const modal = location.state?.modal;
 
   const userName = selectors.getUserName(state);
-  const hasUserSignedIn = !!selectors.getUserId(state);
-  const isPassedAdminAuth = (
-    selectors.getIsPassedAdminAuth(state)
-  );
+  const hasUserSignedIn = !!getUserId(state);
+  const isPassedAdminAuth = getIsPassedAdminAuth(state);
   const isAdministrator = (
     selectors.getIsAdministrator(state)
   );
@@ -75,12 +74,12 @@ const App = () => {
 
           if (userSession.isAdministrator) {
             dispatch(
-              actionCreators.adminAuthPassed(),
+              adminAuthPassed(),
             );
           }
 
           dispatch(
-            actionCreators.userAdded(userSession),
+            userAdded(userSession),
           );
         }
       } catch (error) {
@@ -106,36 +105,30 @@ const App = () => {
         <Route exact path="/admin">
           {isPassedAdminAuth
             ? <Redirect to="/" />
-            : <AdminAuth dispatch={dispatch} />
+            : <AdminAuth />
           }
         </Route>
         <Route exact path="/admin/sign-in">
           {isPassedAdminAuth
-            ? <AdminSignIn
-                dispatch={dispatch}
-                isAdministrator={isAdministrator}
-              />
+            ? <AdminSignIn />
             : <Redirect to="/admin" />
           }
         </Route>
         <Route exact path="/admin/sign-up">
           {isPassedAdminAuth
-            ? <AdminSignUp
-                dispatch={dispatch}
-                isAdministrator={isAdministrator}
-              />
+            ? <AdminSignUp />
             : <Redirect to="/admin" />
           }
         </Route>
         <Route path="/sign-in">
           {hasUserSignedIn
             ? <Redirect to="/" />
-            : <UserSignIn dispatch={dispatch} />
+            : <UserSignIn />
           }
         </Route>
         <Route exact path="/">
           {hasUserSignedIn
-            ? <Main userName={userName} />
+            ? <Main />
             : <Redirect to="/sign-in" />
           }
         </Route>

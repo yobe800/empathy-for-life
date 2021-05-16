@@ -1,3 +1,5 @@
+import React, { useReducer } from "react";
+
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 const initiateState = {
@@ -28,6 +30,16 @@ const reducer = (state, action) => {
   }
 };
 
+const ReducerContext = React.createContext(null);
+const Provider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initiateState);
+  return (
+    <ReducerContext.Provider value={{ state, dispatch }}>
+      {children}
+    </ReducerContext.Provider>
+  );
+};
+
 
 const actionCreators = {
   adminAuthPassed: () => {
@@ -54,8 +66,8 @@ const selectors = {
 };
 
 export {
-  reducer,
-  initiateState,
+  ReducerContext,
+  Provider,
   actionCreators,
   selectors,
 };

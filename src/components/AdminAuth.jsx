@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
@@ -6,7 +6,7 @@ import {
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,
 } from "../constants/constants";
-import { actionCreators } from "../features/rootSlice";
+import { actionCreators, ReducerContext } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
 import Home from "./shared/Home.jsx";
@@ -14,11 +14,13 @@ import InputButton from "./shared/InputButton.jsx";
 import Input from "./shared/Input.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
 
-const AdminAuth = ({ dispatch }) => {
-  const history = useHistory();
+const AdminAuth = () => {
   const [password, setPassword] = useState("");
   const [isDetecting, setIsDetecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { dispatch } = useContext(ReducerContext);
+  const { adminAuthPassed } = actionCreators;
+  const history = useHistory();
 
   useEffect(() => {
     if (!isDetecting || !password) {
@@ -46,9 +48,7 @@ const AdminAuth = ({ dispatch }) => {
         const { message } = await response.json();
 
         if (message === "ok") {
-          dispatch(
-            actionCreators.adminAuthPassed(),
-          );
+          dispatch(adminAuthPassed());
           return history.replace("/admin/sign-in");
         }
 
