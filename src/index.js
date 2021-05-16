@@ -6,11 +6,15 @@ import {
 } from "react-router-dom";
 import "./auth/firebase";
 
+import { Provider } from "./features/rootSlice";
+
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <Provider>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

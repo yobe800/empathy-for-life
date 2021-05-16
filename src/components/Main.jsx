@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IMAGE_URLS, CHATS } from "../constants/constants";
 
+import { IMAGE_URLS, CHATS } from "../constants/constants";
+import { ReducerContext, selectors } from "../features/rootSlice";
 import socket from "../socket/socket";
 import useCanvasDraw from "../hooks/useCanvasDraw";
 
@@ -10,10 +11,15 @@ import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
 import HeaderBoard from "./shared/HeaderBoard";
 
-const Main = ({ userName }) => {
+const Main = () => {
+  const { state } = useContext(ReducerContext);
+  const userName = selectors.getUserName(state);
+
   useEffect(() => {
     socket.auth = { userName };
     socket.connect();
+
+    return () => socket.disconnect();
   }, [userName]);
 
   return (

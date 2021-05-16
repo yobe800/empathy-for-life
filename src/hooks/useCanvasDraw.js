@@ -24,7 +24,7 @@ const useCanvasDraw = (ref) => {
     humansImage.src = IMAGE_URLS.HUMAN_SPRITE;
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [humansImage, dogsImage];
-    let timeIds;
+    let timeIds = [];
     let dogElements = [];
     let humansElements = [];
 
@@ -158,6 +158,7 @@ const useCanvasDraw = (ref) => {
 
     return () => {
       timeIds.forEach((timeId) => clearInterval(timeId));
+      socket.removeAllListeners();
     };
   }, [ref]);
 };

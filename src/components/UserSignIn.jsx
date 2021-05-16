@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
@@ -7,7 +7,10 @@ import {
   IMAGE_URLS,
  } from "../constants/constants";
 
-import { actionCreators } from "../features/rootSlice";
+import {
+  actionCreators,
+  ReducerContext,
+} from "../features/rootSlice";
 
 import PopUpWindow from "./shared/PopUpWindow";
 import { signInWithGoogle } from "../auth/firebase";
@@ -16,10 +19,12 @@ import styles from "./styles/UserSignIn.module.css";
 import Home from "./shared/Home.jsx";
 
 
-const UserSignIn = ({ dispatch }) => {
-  const history = useHistory();
+const UserSignIn = () => {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { dispatch } = useContext(ReducerContext);
+  const history = useHistory();
+
   useEffect(() => {
     if (!isSigningIn) {
       return;
@@ -54,9 +59,8 @@ const UserSignIn = ({ dispatch }) => {
             accessTime:result.access_time,
           };
 
-          dispatch(
-            actionCreators.userAdded(userSession),
-          );
+          dispatch(actionCreators.userAdded(userSession));
+
           return history.replace("/");
         }
 
