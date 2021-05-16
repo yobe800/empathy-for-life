@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useReducer } from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
+  useLocation,
 } from "react-router-dom";
 
 import "./styles/reset.css";
@@ -28,8 +28,11 @@ import DogProfile from "./DogProfile";
 import Posts from "./Posts";
 import DogsInformation from "./DogsInformation";
 import DogForm from "./DogForm";
+import PostForm from "./PostForm";
 
 const App = () => {
+  const location = useLocation();
+  const modal = location.state?.modal;
   const [state, dispatch] = useReducer(reducer, initiateState);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -98,8 +101,8 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <Switch>
+    <>
+      <Switch location={modal || location}>
         <Route exact path="/admin">
           {isPassedAdminAuth
             ? <Redirect to="/" />
@@ -130,7 +133,7 @@ const App = () => {
             : <UserSignIn dispatch={dispatch} />
           }
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           {hasUserSignedIn
             ? <Main userName={userName} />
             : <Redirect to="/sign-in" />
@@ -138,7 +141,32 @@ const App = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    </Router>
+      {modal
+        ? <Modal>
+            <Switch>
+              <Route exact path="/posts">
+                <Posts />
+              </Route>
+              <Route path="/posts/new">
+                <PostForm />
+              </Route>
+              <Route exact path="/dogs">
+                <DogsInformation />
+              </Route>
+              <Route path="/dogs/new">
+                <DogForm />
+              </Route>
+              <Route path="/dogs/edit/:id">
+                <DogForm />
+              </Route>
+              <Route path="/dogs/:id">
+                <DogProfile />
+              </Route>
+            </Switch>
+          </Modal>
+        : null
+      }
+    </>
   );
 }
 

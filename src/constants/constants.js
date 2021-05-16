@@ -13,9 +13,7 @@ const CHATS = {
   MESSAGE: "message",
   DISCONNECTED_USER: "disconnected user",
 };
-
 const DEFAULT_ERROR_MESSAGE = "오류가 발생했습니다.\n잠시후 다시 시도해 주세요.";
-
 const IMAGE_URLS = {
   DOGS_HANGING_FRONT: "/assets/images/dogs-hanging-front.png",
   DOGS_HANGING_BACK: "/assets/images/dogs-hanging-front.png",
@@ -24,13 +22,13 @@ const IMAGE_URLS = {
   GRASS_GROUND: "/assets/images/grass-ground.png",
   HUMAN_SPRITE: "/assets/images/human-sprite.png",
 };
-
 const DIRECTIONS = {
   38: "up",
   40: "down",
   39: "right",
   37: "left",
 };
+const LIMIT_FILE_SIZE = 5 * 1048576;
 
 export {
   CHATS,
@@ -38,4 +36,5 @@ export {
   DEFAULT_ERROR_MESSAGE,
   IMAGE_URLS,
   DIRECTIONS,
+  LIMIT_FILE_SIZE,
 };

@@ -11,11 +11,39 @@
   justify-content: space-around;
 }
 
+.popUpContainer {
+  position: absolute;
+  left: 20%;
+  top: 30%;
+  color: mainBlack;
+}
+
+.popUpContainer input {
+  position: absolute;
+  padding: 0.3vh;
+  top: 7vh;
+  left: 13vh;
+}
+
+.closeButtonContainer {
+  position: absolute;
+  right: 6%;
+  top: 3%;
+}
+
 .form {
   max-height: 60vh;
   padding-bottom: 1vh;
   margin-right: 10vh;
   overflow: auto;
+}
+
+.thumnail {
+  width: 15vh;
+  max-height: 15vh;
+  margin-left: 17vh;
+  object-fit: contain;
+  object-position: center;
 }
 
 .selectContainer {
@@ -64,7 +92,9 @@
   width: 23.5vh;
   min-width: 23.5vh;
   max-width: 23.5vh;
-  height: 8vh;
+  height: 20vh;
+  min-height: 20vh;
+  max-height: 20vh;
   padding: 1vw;
   border: defaultBorderWidth solid mainBlack;
   border-radius: defaultBorderRadius;

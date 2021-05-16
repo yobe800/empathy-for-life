@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory, Link } from "react-router-dom";
 
 import styles from "./styles/Posts.module.css";
 import Container from "./shared/Container";
@@ -6,8 +7,15 @@ import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
 import Post from "./shared/Post";
+import CloseButton from "./shared/CloseButton";
 
 const Posts = () => {
+  const history = useHistory();
+  const { modal } = history.location.state;
+  const handleModalClose = () => {
+    history.push("/");
+  };
+
   const posts = postsMock.map(({ _id, writer, content, photo_url, updated_at }) => {
     const writtenDate = new Date(updated_at).toDateString();
 
@@ -24,10 +32,27 @@ const Posts = () => {
 
   return (
     <Container>
+      <div className={styles.CloseButtonContainer}>
+        <CloseButton onClick={handleModalClose}/>
+      </div>
       <ModalHeader text={"게시글"}>
         <div className={styles.inputsContainer}>
-          <InputButton text={"글쓰기"} style={{fontSize}} />
-          <Input style={{fontSize}} placeholder="검색하기" />
+          <Link to={{
+            pathname: "/posts/new",
+            state: { modal },
+          }}>
+            <InputButton
+              type="button"
+              text={"글쓰기"}
+              style={{ fontSize }}
+            />
+          </Link>
+          <Input
+            inputAttr={{
+              style: { fontSize },
+              placeholder: "검색하기",
+            }}
+          />
         </div>
       </ModalHeader>
         <div className={styles.postsContainer}>

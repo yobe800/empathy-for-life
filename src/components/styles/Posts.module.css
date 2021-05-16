@@ -1,3 +1,10 @@
+
+.CloseButtonContainer {
+  position: absolute;
+  top: 2.5vh;
+  right: 3vh;
+}
+
 .inputsContainer {
   display: flex;
   justify-content: space-between;
