@@ -25,6 +25,9 @@ const DogForm = () => {
   const history = useHistory();
   const { modal } = history.location.state;
   const imgRef = useRef(null);
+  const genderRef = useRef(null);
+  const adoptionStatusRef = useRef(null);
+  const dogCharacterRef = useRef(null);
 
   useEffect(() => {
     if (!shouldFetch || !dogForm) {
@@ -98,7 +101,6 @@ const DogForm = () => {
     }
 
     return () => {
-      console.log("헬로");
       controller.abort();
     }
   }, [dogForm, history, id, modal, shouldFetch]);
@@ -137,6 +139,9 @@ const DogForm = () => {
 
         if (message === "ok") {
           imgRef.current.src = photo.url;
+          genderRef.current.value = gender;
+          adoptionStatusRef.current.value = adoptionStatus;
+          dogCharacterRef.current.value = dogCharacter;
           const dogInformation = {
             name,
             gender,
@@ -235,6 +240,10 @@ const DogForm = () => {
       message += "견종을 입력해 주세요\n";
     }
 
+    if (validator.isEmpty(dogInformation.dogCharacter)) {
+      message += "캐릭터를 입력해 주세요\n";
+    }
+
     if (message) {
       setErrorMessage(message);
     } else {
@@ -253,9 +262,12 @@ const DogForm = () => {
     history.goBack();
   };
   const handleFileSize = (event) => {
+    console.log("")
     const fileSize = event.target.files[0]?.size;
 
     if (!fileSize) {
+      imgRef.current.src = "";
+      imgRef.current.style.display = "none";
       return;
     }
 
@@ -266,6 +278,7 @@ const DogForm = () => {
       const fileReader = new FileReader();
       fileReader.onload = () => {
         imgRef.current.src = fileReader.result;
+        imgRef.current.style.display = "";
       };
       fileReader.readAsDataURL(event.target.files[0]);
     }
@@ -320,7 +333,7 @@ const DogForm = () => {
           <label className={styles.selectLabel} htmlFor="gender">
             성별
           </label>
-          <select className={styles.select} id="gender" name="gender" defaultValue={dogForm?.gender}>
+          <select className={styles.select} id="gender" name="gender" ref={genderRef}>
             <option value="male">수컷</option>
             <option value="female">암컷</option>
           </select>
@@ -339,7 +352,7 @@ const DogForm = () => {
             id="adoptionStatus"
             className={styles.select}
             name="adoptionStatus"
-            defaultValue={dogForm?.adoptionStatus}
+            ref={adoptionStatusRef}
           >
             <option value="ready">
               준비 중
@@ -362,14 +375,18 @@ const DogForm = () => {
             onChange: handleFileSize,
           }}
         />
-        <img className={styles.thumnail} ref={imgRef} alt="dog profile thumnail"/>
+        <img
+          className={styles.thumnail}
+          ref={imgRef}
+          alt="dog profile thumnail"
+        />
         <div className={styles.selectContainer}>
           <label className={styles.selectLabel} htmlFor="dogCharacter">캐릭터</label>
           <select
             id="dogCharacter"
             className={styles.select}
             name="dogCharacter"
-            defaultValue={dogForm?.dogCharacter}
+            ref={dogCharacterRef}
           >
             <option value="brownShiba">
               갈색 시바견
