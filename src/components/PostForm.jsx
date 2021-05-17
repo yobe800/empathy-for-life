@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import {
   LIMIT_FILE_SIZE,
@@ -29,9 +29,9 @@ const PostForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [shouldFetch, setShouldFetch] = useState(false);
   const { state } = useContext(ReducerContext);
+  const { id } = useParams();
   const history = useHistory();
   const { modal } = history.location.state;
-
   const userId = selectors.getUserId(state);
 
   useEffect(() => {
@@ -72,24 +72,23 @@ const PostForm = () => {
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
+    const body = JSON.stringify({
+      writer: userId,
+      dogIds,
+      content,
+      photo,
+    });
+    const fetchOptions = {
+      headers: { "Content-Type": "application/json" },
+      body,
+      signal,
+    };
 
     const addNewPost = async () => {
-      console.log("here");
       try {
-        const body = JSON.stringify({
-          writer: userId,
-          dogIds,
-          content,
-          photo,
-        });
         const response = await fetch(
           `${serverUrl}/posts/new`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body,
-            signal,
-          },
+          { ...fetchOptions, method: "POST" },
         );
 
         const { message } = await response.json();
@@ -106,11 +105,74 @@ const PostForm = () => {
         setShouldFetch(false);
       }
     };
+    const editPost = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/posts/${id}`,
+          { ...fetchOptions, method: "PUT" },
+        );
 
-    addNewPost();
+        const { message } = await response.json();
+
+        if (message === "ok") {
+          history.push("/posts", { modal });
+        } else {
+          setErrorMessage(message);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setShouldFetch(false);
+      }
+
+    };
+
+    if (id) {
+      editPost();
+    } else {
+      addNewPost();
+    }
 
     return () => controller.abort();
-  }, [shouldFetch, content, dogIds, history, modal, photo, userId]);
+  }, [id, shouldFetch, content, dogIds, history, modal, photo, userId]);
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const getPost = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/posts/${id}`,
+          { signal },
+        );
+
+        const { message, result } = await response.json();
+        const { dogs, content, photo: { url } } = result || {};
+
+        if (message === "ok") {
+          setDogIds(dogs);
+          setPhoto(url);
+          setContent(content);
+        } else {
+          setErrorMessage(message);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      }
+    };
+
+    getPost();
+
+    return () => controller.abort();
+  }, [id]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -145,7 +207,7 @@ const PostForm = () => {
 
     if (LIMIT_FILE_SIZE < photoSize) {
       setErrorMessage("5MB 이상의 파일은 업로드 할 수 없습니다");
-      event.target.value = "";
+      setPhoto(null);
     } else {
       const fileReader = new FileReader();
       fileReader.onload = () => {
@@ -166,7 +228,7 @@ const PostForm = () => {
 
     let message = "";
 
-    if (!photo) {
+    if (!id && !photo) {
       message += "사진을 추가해주세요\n";
     }
 
@@ -201,7 +263,7 @@ const PostForm = () => {
       </div>
       <ModalHeader text="글쓰기">
         <div className={styles.inputButtonsContainer}>
-          <InputButton text="추가" form="postForm" />
+          <InputButton text={id ? "수정" : "추가"} form="postForm" />
           <InputButton text="취소" type="button" onClick={handlePostCancel}/>
         </div>
       </ModalHeader>

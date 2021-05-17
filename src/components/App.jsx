@@ -136,6 +136,9 @@ const App = () => {
               <Route exact path="/posts">
                 <Posts />
               </Route>
+              <Route path="/posts/edit/:id">
+                <PostForm />
+              </Route>
               <Route path="/posts/new">
                 <PostForm />
               </Route>
