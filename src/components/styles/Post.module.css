@@ -9,6 +9,13 @@
   align-items: center;
 }
 
+.deleteButton {
+  padding: 0.5vh;
+  position: absolute;
+  font-size: 1.5vh;
+  font-family: "neodgm", sans-serif;
+}
+
 .photo {
   width: 100%;
   border-radius: defaultBorderRadius;
