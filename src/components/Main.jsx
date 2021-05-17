@@ -5,6 +5,7 @@ import { IMAGE_URLS, CHATS } from "../constants/constants";
 import { ReducerContext, selectors } from "../features/rootSlice";
 import socket from "../socket/socket";
 import useCanvasDraw from "../hooks/useCanvasDraw";
+import useVideoStreaming from "../hooks/useVideoStreaming";
 
 import styles from "./styles/Main.module.css";
 import InputButton from "./shared/InputButton";
@@ -33,6 +34,7 @@ const Main = () => {
           </HeaderBoard>
           <Navigation />
         </header>
+        <Video />
         <Canvas />
         <img
           className={styles.grassGroundImage}
@@ -218,8 +220,20 @@ const Canvas = () => {
   useCanvasDraw(canvasRef);
 
   return (
-    <canvas className={styles.canvas} ref={canvasRef} width={1080} height={1000}></canvas>
+    <canvas
+      className={styles.canvas}
+      ref={canvasRef}
+      width={1080}
+      height={1000}
+    />
   );
+};
+
+const Video = () => {
+  const videoRef = useRef(null);
+  useVideoStreaming(videoRef);
+
+  return <video className={styles.video} ref={videoRef} autoPlay />;
 };
 
 const volunteerTimeBoardStyle = { width: "20vh", height: "6vh" };

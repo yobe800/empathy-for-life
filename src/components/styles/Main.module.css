@@ -147,9 +147,11 @@
   color: mainWhite;
   text-decoration: none;
 }
+
 .anchor:visited {
   color: mainWhite;
 }
+
 .canvas {
   width: 91vh;
   height: 84vh;
@@ -159,6 +161,12 @@
   position: absolute;
   bottom: 4vh;
   z-index: 1;
+}
+
+.video {
+  position: fixed;
+  left: 5vh;
+  background-color: yellowgreen;
 }
 
 .grassGroundImage {
