@@ -5,6 +5,7 @@ import { IMAGE_URLS, CHATS } from "../constants/constants";
 import { ReducerContext, selectors } from "../features/rootSlice";
 import socket from "../socket/socket";
 import useCanvasDraw from "../hooks/useCanvasDraw";
+import useVideoStreaming from "../hooks/useVideoStreaming";
 
 import styles from "./styles/Main.module.css";
 import InputButton from "./shared/InputButton";
@@ -24,7 +25,10 @@ const Main = () => {
 
   return (
     <div className={styles.container}>
-      <ChatContainer />
+      <div className={styles.leftSideContainer}>
+        <Video />
+        <ChatContainer />
+      </div>
       <main className={styles.main}>
         <header className={styles.header}>
           <HeaderBoard style={volunteerTimeBoardStyle}>
@@ -134,6 +138,11 @@ const ChatContainer = () => {
         setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
       }
     );
+
+    return () => {
+      ["connected user", "disconnected user", "chat"]
+        .forEach((eventName) => socket.off(eventName));
+    };
   }, [setChatDatum]);
 
   useEffect(() => {
@@ -173,6 +182,8 @@ const ChatContainer = () => {
         </li>
       );
     }
+
+    return null;
   });
 
   return (
@@ -218,7 +229,34 @@ const Canvas = () => {
   useCanvasDraw(canvasRef);
 
   return (
-    <canvas className={styles.canvas} ref={canvasRef} width={1080} height={1000}></canvas>
+    <canvas
+      className={styles.canvas}
+      ref={canvasRef}
+      width={1080}
+      height={1000}
+    />
+  );
+};
+
+const Video = () => {
+  const videoRef = useRef(null);
+  const navRef = useRef(null);
+  useVideoStreaming(videoRef, navRef);
+
+  return (
+    <div className={styles.videoContainer}>
+      <video
+        ref={videoRef}
+        className={styles.video}
+        autoPlay
+      />
+      <nav ref={navRef} className={styles.videoController}>
+        <select id="cameraSelect" name="cameraSelect">
+          <option>카메라 선택</option>
+        </select>
+        <button name="streamingOn">방송 시작</button>
+      </nav>
+    </div>
   );
 };
 
