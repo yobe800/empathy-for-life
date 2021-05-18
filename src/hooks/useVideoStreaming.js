@@ -25,8 +25,6 @@ const useVideoStreaming = (videoRef, navRef) => {
       }
     }
 
-    console.log($cameraSelect);
-
     let isOnStreaming = false;
     const $video = videoRef.current;
     const iceServers = {
@@ -42,6 +40,7 @@ const useVideoStreaming = (videoRef, navRef) => {
       $streamingOnBtn.onclick = () => {
         if (!isOnStreaming) {
           isOnStreaming = true;
+          $streamingOnBtn.innerText = "방송 종료";
           navigator?.mediaDevices
           .getUserMedia(streamConstraints)
           .then((stream) => {
@@ -51,6 +50,21 @@ const useVideoStreaming = (videoRef, navRef) => {
           .catch((error) => {
             console.log(error);
           });
+        } else {
+          isOnStreaming = false;
+          $streamingOnBtn.innerText = "방송 시작";
+          Object
+            .keys(rtcPeerConnections)
+            .forEach((key) => {
+              rtcPeerConnections[key].close();
+              delete rtcPeerConnections[key];
+            });
+          const stream = $video.srcObject;
+          stream
+            .getTracks()
+            .forEach((track) => track.stop());
+            $video.srcObject = null;
+          socket.emit("stop streaming", socket.id);
         }
       };
 
@@ -80,7 +94,10 @@ const useVideoStreaming = (videoRef, navRef) => {
               }
             };
             rtcPeerConnections[id]
-              .createOffer()
+              .createOffer({
+                offerToReceiveAudio: 1,
+                offerToReceiveVideo: 1,
+              })
               .then((sessionDescription) => {
                 rtcPeerConnections[id].setLocalDescription(sessionDescription);
                 socket.emit(
@@ -103,6 +120,13 @@ const useVideoStreaming = (videoRef, navRef) => {
         (viewerId, sdp) => {
           rtcPeerConnections[viewerId]
             .setRemoteDescription(new RTCSessionDescription(sdp));
+        },
+      );
+      socket.on(
+        "left viewer",
+        (viewerId) => {
+          rtcPeerConnections[viewerId].close();
+          delete rtcPeerConnections[viewerId];
         },
       );
     }
@@ -155,10 +179,29 @@ const useVideoStreaming = (videoRef, navRef) => {
         rtcPeerConnections[id].addIceCandidate(candidate);
       },
     );
+    socket.on(
+      "close streaming",
+      (broadcasterId) => {
+        rtcPeerConnections[broadcasterId].close();
+        delete rtcPeerConnections[broadcasterId];
+      },
+    );
 
     if (!isAdministrator) {
       socket.emit("register as viewer");
     }
+
+    return () => {
+      Object
+        .keys(rtcPeerConnections)
+        .forEach((key) => {
+          rtcPeerConnections[key].close();
+          delete rtcPeerConnections[key];
+        });
+
+      ["new viewers", "answer", "offer", "candidate"]
+        .forEach((socketEvent) => socket.off(socketEvent));
+    };
   }, [videoRef, isAdministrator, navRef]);
 
 };

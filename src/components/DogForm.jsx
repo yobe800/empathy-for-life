@@ -6,7 +6,6 @@ import { LIMIT_FILE_SIZE, DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import getBase64FromImageAsync from "../utils/getBase64FromImageAsync";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
-
 import styles from "./styles/DogForm.module.css";
 import Container from "./shared/Container";
 import Input from "./shared/Input";
