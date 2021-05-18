@@ -58,7 +58,7 @@ const App = () => {
           signal,
         );
         const { message, result } = await response.json();
-console.log(message);
+
         if (message === "ok") {
           const userSession = {
             id: result._id,
