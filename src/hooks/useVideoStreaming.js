@@ -21,8 +21,11 @@ const useVideoStreaming = (videoRef, navRef) => {
         case "streamingOn":
           $streamingOnBtn = element;
           break;
+        default:
       }
     }
+
+    console.log($cameraSelect);
 
     let isOnStreaming = false;
     const $video = videoRef.current;
@@ -156,7 +159,7 @@ const useVideoStreaming = (videoRef, navRef) => {
     if (!isAdministrator) {
       socket.emit("register as viewer");
     }
-  }, [videoRef]);
+  }, [videoRef, isAdministrator, navRef]);
 
 };
 

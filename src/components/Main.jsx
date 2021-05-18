@@ -182,6 +182,8 @@ const ChatContainer = () => {
         </li>
       );
     }
+
+    return null;
   });
 
   return (
