@@ -25,7 +25,10 @@ const Main = () => {
 
   return (
     <div className={styles.container}>
-      <ChatContainer />
+      <div className={styles.leftSideContainer}>
+        <Video />
+        <ChatContainer />
+      </div>
       <main className={styles.main}>
         <header className={styles.header}>
           <HeaderBoard style={volunteerTimeBoardStyle}>
@@ -34,7 +37,6 @@ const Main = () => {
           </HeaderBoard>
           <Navigation />
         </header>
-        <Video />
         <Canvas />
         <img
           className={styles.grassGroundImage}
@@ -136,6 +138,11 @@ const ChatContainer = () => {
         setChatDatum((lastChatContents) => [...lastChatContents, chatData]);
       }
     );
+
+    return () => {
+      ["connected user", "disconnected user", "chat"]
+        .forEach((eventName) => socket.off(eventName));
+    };
   }, [setChatDatum]);
 
   useEffect(() => {
@@ -231,9 +238,24 @@ const Canvas = () => {
 
 const Video = () => {
   const videoRef = useRef(null);
-  useVideoStreaming(videoRef);
+  const navRef = useRef(null);
+  useVideoStreaming(videoRef, navRef);
 
-  return <video className={styles.video} ref={videoRef} autoPlay />;
+  return (
+    <div className={styles.videoContainer}>
+      <video
+        ref={videoRef}
+        className={styles.video}
+        autoPlay
+      />
+      <nav ref={navRef} className={styles.videoController}>
+        <select id="cameraSelect" name="cameraSelect">
+          <option>카메라 선택</option>
+        </select>
+        <button name="streamingOn">방송 시작</button>
+      </nav>
+    </div>
+  );
 };
 
 const volunteerTimeBoardStyle = { width: "20vh", height: "6vh" };

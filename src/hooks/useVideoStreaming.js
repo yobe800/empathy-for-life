@@ -6,13 +6,26 @@ import {
   selectors,
 } from "../features/rootSlice";
 
-const useVideoStreaming = (videoRef) => {
+const useVideoStreaming = (videoRef, navRef) => {
   const { state } = useContext(ReducerContext);
   const isAdministrator = selectors.getIsAdministrator(state);
 
   useEffect(() => {
+    let $cameraSelect, $streamingOnBtn;
+
+    for (const element of navRef.current.children) {
+      switch (element.name) {
+        case "cameraSelect":
+          $cameraSelect = element;
+          break;
+        case "streamingOn":
+          $streamingOnBtn = element;
+          break;
+      }
+    }
+
     let isOnStreaming = false;
-    const videoElement = videoRef.current;
+    const $video = videoRef.current;
     const iceServers = {
       iceServers: [
         { urls: "stun:stun.services.mozilla.com" },
@@ -23,14 +36,13 @@ const useVideoStreaming = (videoRef) => {
     const rtcPeerConnections = {};
 
     if (isAdministrator) {
-      videoElement.onclick = () => {
-        isOnStreaming = !isOnStreaming;
-
+      $streamingOnBtn.onclick = () => {
         if (!isOnStreaming) {
-          navigator.mediaDevices
+          isOnStreaming = true;
+          navigator?.mediaDevices
           .getUserMedia(streamConstraints)
           .then((stream) => {
-            videoElement.srcObject = stream;
+            $video.srcObject = stream;
             socket.emit("start streaming", socket.id);
           })
           .catch((error) => {
@@ -45,7 +57,7 @@ const useVideoStreaming = (videoRef) => {
           viewers.forEach(({ id }) => {
             rtcPeerConnections[id] = new RTCPeerConnection(iceServers);
 
-            const stream = videoElement.srcObject;
+            const stream = $video.srcObject;
             stream
               .getTracks()
               .forEach((track) => rtcPeerConnections[id].addTrack(track, stream));
@@ -111,7 +123,7 @@ const useVideoStreaming = (videoRef) => {
           });
 
         rtcPeerConnections[broadcasterId].ontrack = (event) => {
-          videoElement.srcObject = event.streams[0];
+          $video.srcObject = event.streams[0];
         };
         rtcPeerConnections[broadcasterId].onicecandidate = (event) => {
           if (event.candidate) {
