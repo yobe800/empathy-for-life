@@ -182,6 +182,9 @@ const useVideoStreaming = (videoRef, navRef) => {
     socket.on(
       "close streaming",
       (broadcasterId) => {
+        const stream = $video.srcObject;
+        stream.getTracks().forEach((track) => track.stop());
+        $video.srcObject = null;
         rtcPeerConnections[broadcasterId].close();
         delete rtcPeerConnections[broadcasterId];
       },
