@@ -239,6 +239,8 @@ const Canvas = () => {
 };
 
 const Video = () => {
+  const { state } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
   const videoRef = useRef(null);
   const navRef = useRef(null);
   useVideoStreaming(videoRef, navRef);
@@ -249,13 +251,23 @@ const Video = () => {
         ref={videoRef}
         className={styles.video}
         autoPlay
+        preload="auto"
+        poster="/assets/images/streaming-off.png"
       />
-      <nav ref={navRef} className={styles.videoController}>
-        <select id="cameraSelect" name="cameraSelect">
-          <option>카메라 선택</option>
-        </select>
-        <button name="streamingOn">방송 시작</button>
-      </nav>
+      <div ref={navRef} className={styles.videoController}>
+        <select
+          id="cameraSelect"
+          className={styles.cameraSelect}
+          name="cameraSelect" />
+        {isAdministrator
+          ? <InputButton
+              type="button"
+              name="streamingOn"
+              value="방송 시작"
+            />
+          : null
+        }
+      </div>
     </div>
   );
 };
