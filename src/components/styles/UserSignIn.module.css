@@ -29,6 +29,12 @@
   cursor: pointer;
 }
 
+.mobileNotice {
+  margin-top: 1vh;
+  font-family: "neodgm", sans-serif;
+  font-size: 2vw;
+}
+
 .signInButton {
   width: 20vw;
   height: 4vw;

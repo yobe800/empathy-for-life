@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
+import detectMobileIs from "../utils/detectMobileIs"
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import {
   DEFAULT_ERROR_MESSAGE,
@@ -24,6 +25,7 @@ const UserSignIn = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { dispatch } = useContext(ReducerContext);
   const history = useHistory();
+  const isMobile = detectMobileIs();
 
   useEffect(() => {
     if (!isSigningIn) {
@@ -96,14 +98,17 @@ const UserSignIn = () => {
           )
         : null
       }
-      <button className={styles.signInButton} onClick={handleSignIn}>
-        <img
-          className={styles.googleIcon}
-          src={IMAGE_URLS.GOOGLE_ICON}
-          alt="Google Logo"
-        />
-        <span className={styles.signText}>Sign In with Google</span>
-      </button>
+      {isMobile
+        ? <span className={styles.mobileNotice}>"현재 모바일 환경은 지원하질 않습니다.😥"</span>
+        : <button className={styles.signInButton} onClick={handleSignIn}>
+            <img
+              className={styles.googleIcon}
+              src={IMAGE_URLS.GOOGLE_ICON}
+              alt="Google Logo"
+            />
+            <span className={styles.signText}>Sign In with Google</span>
+          </button>
+      }
     </Home>
   );
 };
