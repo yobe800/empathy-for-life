@@ -98,7 +98,14 @@ const useCanvasDraw = (ref) => {
     );
 
     humansElements.push(myCharacterDrawingObject);
-    document.addEventListener("keydown", throttle((event) => walkMyCharacter(event), 100, { leading: true, trailing: false }));
+    document.addEventListener(
+      "keydown",
+      throttle(
+        (event) => walkMyCharacter(event),
+        100,
+        { leading: true, trailing: false }
+      ),
+    );
     document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
 
@@ -136,12 +143,11 @@ const useCanvasDraw = (ref) => {
     socket.on(
       "current dogs",
       (dogs) => {
-        dogElements = dogs;
-        timeIds = dogElements.map((dog) => {
-          const { timeId } = getAutomaticMoveDog(dog);
-          return timeId;
-        });
-        timeIds.push(setInterval(() => socket.emit("update all dog")));
+        dogElements = dogs || [];
+        dogElements.map((dog) => getAutomaticMoveDog(dog));
+        timeIds.push(
+          setInterval(() => socket.emit("update all dogs"), 5000),
+        );
       },
     );
     socket.on(
@@ -150,15 +156,33 @@ const useCanvasDraw = (ref) => {
         const dogElement = dogElements.find(
           (dogEl) => dogEl._id === dog._id,
         );
-        dogElement.targetCoordinates = dog.targetCoordinates;
-        dogElement.hadRequest = false;
-        dogElement.shouldUpdate = false;
+        if (dogElement) {
+          dogElement.targetCoordinates = dog.targetCoordinates;
+          dogElement.hadRequest = false;
+          dogElement.shouldUpdate = false;
+        }
+      },
+    );
+    socket.on(
+      "update all dogs",
+      (dogs) => {
+        dogElements.forEach((dog) => dog.stop());
+        dogElements = dogs;
+        dogElements.map((dog) => getAutomaticMoveDog(dog));
       },
     );
 
     return () => {
       timeIds.forEach((timeId) => clearInterval(timeId));
-      socket.removeAllListeners();
+      dogElements.forEach((dog) => dog.stop());
+      humansElements = [];
+      [
+        "current users",
+        "another user draw element",
+        "disconnected user",
+        "current dogs",
+        "update a dog",
+      ].forEach((socketEvent) => socket.removeAllListeners(socketEvent));
     };
   }, [ref]);
 };

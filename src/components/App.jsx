@@ -49,7 +49,6 @@ const App = () => {
     const { signal } = controller;
 
     const fetchUser = async () => {
-
       try {
         const serverUrl = process.env.REACT_APP_SERVER_URL;
         const response = await fetch(

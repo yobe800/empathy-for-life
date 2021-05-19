@@ -85,8 +85,11 @@ const getAutomaticMoveDog = (dog) => {
   };
 
   const timeId = setInterval(moveDog, 100);
+  moveDog();
 
-  return { timeId };
+  dog.stop = () => {
+    clearInterval(timeId);
+  };
 };
 
 export default getAutomaticMoveDog;

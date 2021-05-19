@@ -168,17 +168,21 @@
 }
 
 .timeBoardText {
- font-size: 3vh;
- position: absolute;
- top: 40%;
- left: 25%;
+ font-size: 2.3vh;
+ width: fit-content;
+ display: block;
+ margin: 7% auto 0;
 }
 
 .navigation {
   width: 49vh;
-  margin-left: 3vh;
+  margin-left: 1vh;
   display: flex;
   justify-content: space-evenly;
+}
+
+.anchor {
+  font-size: 1.7vh;
 }
 
 .anchor:hover {

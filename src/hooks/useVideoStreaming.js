@@ -11,22 +11,7 @@ const useVideoStreaming = (videoRef, navRef) => {
   const isAdministrator = selectors.getIsAdministrator(state);
 
   useEffect(() => {
-    let $cameraSelect, $streamingOnBtn
     const $video = videoRef.current;
-    let isOnStreaming = false;
-
-    for (const element of navRef.current.children) {
-      switch (element.name) {
-        case "cameraSelect":
-          $cameraSelect = element;
-          break;
-        case "streamingOn":
-          $streamingOnBtn = element;
-          break;
-        default:
-      }
-    }
-
     const iceServers = {
       iceServers: [
         { urls: "stun:stun.services.mozilla.com" },
@@ -36,6 +21,21 @@ const useVideoStreaming = (videoRef, navRef) => {
     const rtcPeerConnections = {};
 
     if (isAdministrator) {
+      let $cameraSelect, $streamingOnBtn
+      let isOnStreaming = false;
+
+      for (const element of navRef.current.children) {
+        switch (element.name) {
+          case "cameraSelect":
+            $cameraSelect = element;
+            break;
+          case "streamingOn":
+            $streamingOnBtn = element;
+            break;
+          default:
+        }
+      }
+
       const streamConstraints = { audio: true, video: true };
       $streamingOnBtn.onclick = () => {
         if (!isOnStreaming) {
