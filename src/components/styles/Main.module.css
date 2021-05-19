@@ -1,4 +1,9 @@
-@value mainWhite, mainBlack, defaultBorderRadius from "./variables.css";
+@value (
+  mainWhite,
+  mainBlack,
+  defaultBorderWidth,
+  defaultBorderRadius
+ ) from "./variables.css";
 
 .container {
   padding: 2vh;
@@ -19,22 +24,36 @@
 .videoContainer {
   width: 28vw;
   position: relative;
-}
-
-.videoController {
-  width: 100%;
-  padding: 1%;
-  background-color: rgba(250, 250, 250, 0.7);
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "neodgm", sans-serif;
 }
 
 .video {
   width: 100%;
   height: 100%;
+  background-color: mainBlack;
   border-radius: defaultBorderRadius;
+}
+
+.videoController {
+  width: 100%;
+  padding: 2%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+}
+
+.cameraSelect {
+  display: none;
+  width: 50%;
+  border: defaultBorderWidth solid mainBlack;
+  border-radius: defaultBorderRadius;
+  font-family: "neodgm", sans-serif;
 }
 
 .chatContainer {
