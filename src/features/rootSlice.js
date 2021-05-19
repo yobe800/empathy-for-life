@@ -60,6 +60,9 @@ const selectors = {
   getAccessTime: (state) => {
     return state.user.accessTime;
   },
+  getUserCharacter: (state) => {
+    return state.user.character;
+  },
   getIsAdministrator: (state) => {
     return state.user.isAdministrator;
   },
