@@ -7,12 +7,13 @@
 
 .container {
   padding: 2vh;
-  background-image: url("../../assets/images/sky-background.jpg");
-  background-size: cover;
   display: flex;
   justify-content: center;
   position: relative;
-  background-color: mainWhite;
+  /* background-color: #151515; */
+  background-image: url("../../assets/images/sky02.jpg");
+  background-size: 68%;
+  background-repeat: repeat;
 }
 
 .leftSideContainer {
@@ -44,13 +45,13 @@
 
 .volunteerTimeBar {
   height: 1vh;
-  margin-bottom: 2vh;
+  margin-bottom: 1.7vh;
 }
 
 .timeBoardTitle {
   font-size: 1.1vh;
   position: absolute;
-  top: 10%;
+  top: 4%;
   left: 5%;
 }
 
@@ -63,5 +64,5 @@
   height: 96vh;
   border-radius: 0.7vw;
   position: absolute;
-  filter: blur(0.2px) brightness(0.8);
+  filter: brightness(1) hue-rotate(-10deg);
 }

@@ -1,16 +1,19 @@
 @value (
   mainBlack,
+  mainWhite,
   defaultBorderWidth,
   defaultBorderRadius
  ) from "./variables.css";
 
 .videoContainer {
   width: 28vw;
+  border-radius: defaultBorderRadius;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "neodgm", sans-serif;
+  box-sizing: border-box;
 }
 
 .video {
@@ -23,11 +26,11 @@
 .videoController {
   width: 100%;
   padding: 2%;
-  position: absolute;
-  bottom: 0;
   display: flex;
   justify-content: space-around;
   box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
   z-index: 10;
 }
 

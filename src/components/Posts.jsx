@@ -14,6 +14,7 @@ import CloseButton from "./shared/CloseButton";
 import PopUpWindow from "./shared/PopUpWindow";
 
 const Posts = () => {
+  const [search, setSearch] = useState("");
   const [postDatum, setPostDatum] = useState([]);
   const [shouldFetch, setShouldFetch] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,9 +31,10 @@ const Posts = () => {
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const fetchPosts = async () => {
+      console.log(search);
       try {
         const response = await fetch(
-          `${serverUrl}/posts`,
+          `${serverUrl}/posts?search=${search}`,
           { signal },
         );
 
@@ -51,10 +53,13 @@ const Posts = () => {
       }
     };
 
-    fetchPosts();
+    const timeId = setTimeout(fetchPosts, 300);
 
-    return () => controller.abort();
-  }, [shouldFetch]);
+    return () => {
+      controller.abort();
+      clearTimeout(timeId);
+    };
+  }, [shouldFetch, search]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -62,8 +67,18 @@ const Posts = () => {
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
+  const handleSearch = (event) => {
+    setShouldFetch(true);
+    setSearch(event.target.value);
+  };
 
-  const posts = postDatum.map(({ _id, writer: { user_name }, content, photo: { url }, updated_at }) => {
+  const posts = postDatum.map(({
+    _id,
+    writer: { user_name },
+    content,
+    photo: { url },
+    updated_at
+  }) => {
     const writtenDate = new Date(updated_at).toDateString();
 
     return (
@@ -102,13 +117,17 @@ const Posts = () => {
             }}
           >
             <InputButton
+              className={styles.writingButton}
               type="button"
               text={"글쓰기"}
             />
           </Link>
           <Input
             inputClassName={styles.search}
-            inputAttr={{ placeholder: "검색" }}
+            inputAttr={{
+              placeholder: "검색",
+              onInput: handleSearch,
+            }}
           />
         </div>
       </ModalHeader>

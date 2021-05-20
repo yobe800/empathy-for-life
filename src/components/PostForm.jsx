@@ -248,7 +248,7 @@ const PostForm = () => {
   });
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
         ? <div className={styles.popUpContainer}>
             <PopUpWindow
@@ -258,13 +258,15 @@ const PostForm = () => {
           </div>
         : null
       }
-      <div className={styles.CloseButtonContainer}>
-        <CloseButton onClick={handleModalClose} />
-      </div>
-      <ModalHeader text="글쓰기">
+
+      <ModalHeader className={styles.header} text="글쓰기">
+        <CloseButton
+          className={styles.CloseButtonContainer}
+          onClick={handleModalClose}
+        />
         <div className={styles.inputButtonsContainer}>
-          <InputButton text={id ? "수정" : "추가"} form="postForm" />
-          <InputButton text="취소" type="button" onClick={handlePostCancel}/>
+          <InputButton className={styles.button} text={id ? "수정" : "추가"} form="postForm" />
+          <InputButton className={styles.button} text="취소" type="button" onClick={handlePostCancel}/>
         </div>
       </ModalHeader>
       <form id="postForm"className={styles.form} onSubmit={handlePostSubmit}>

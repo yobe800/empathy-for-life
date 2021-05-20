@@ -1,6 +1,7 @@
 @value (
   mainWhite,
   mainBlack,
+  mainBrown,
   defaultBorderWidth,
   defaultBorderRadius
  ) from "./variables.css";
@@ -8,14 +9,13 @@
 .chatContainer {
   width: 28vw;
   height: 100%;
-  margin-top: 1vh;
-  border: 4px dashed mainBlack;
   border-radius: defaultBorderRadius;
+  margin-top: 1vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  /* background-color: rgba(250, 250, 250, 0.7); */
+  background-color: rgba(250, 250, 250, 0.8);
   color: mainBlack;
   overflow: auto;
   box-sizing: border-box;
@@ -41,7 +41,7 @@
 
 .otherMessageContainer {
   width: 50%;
-  margin: 2%;
+  margin: 1%;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -49,7 +49,7 @@
 
 .myMessageContainer {
   width: 50%;
-  margin: 2%;
+  margin: 1%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -57,13 +57,13 @@
 }
 
 .userName {
-  font-size: 1.5vh;
+  font-size: 1.7vh;
   padding-left: 3%;
 }
 
 .myMessage {
   padding: 5%;
-  margin: 5% 0;
+  margin: 3% 0;
   border-radius: defaultBorderRadius;
   background-color: #FEE80F;
   align-self: flex-end;
@@ -75,30 +75,32 @@
   width: fit-content;
   padding: 5%;
   margin: 2% 0 3% 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: defaultBorderRadius;
-  background-color: #E8E9EB;
+  background-color: mainWhite;
   font-size: 1.7vh;
   line-height: 110%;
 }
 
 .messageDate {
-  font-size: 70%;
+  font-size: 1.2vh;
 }
 
 .formContainer {
   width: 100%;
+  padding: 0.5vh 1vh 1vh 1vh;
   margin-top: 3%;
-  margin-bottom: 5%;
   margin-left: 1%;
   display: flex;
   align-items: center;
+  background-color: mainWhite;
 }
 
 .chatInput {
   width: 15vw;
   height: 2vh;
   background-color: mainWhite;
-  border: 1px solid lightgray;
+  border: defaultBorderWidth solid lightgray;
   font-size: 1.8vh;
 }
 
@@ -107,9 +109,10 @@
 }
 
 .submitButton {
-  width: 4vw;
-  height: 4.5vh;
-  margin-left: 2vw;
-  Border: 1px solid lightgray;
+  width: 3.5vw;
+  height: 4.2vh;
+  margin-left: 2.5vw;
+  margin-bottom: 0.3vh;
+  Border: defaultBorderWidth solid lightgray;
   font-size: 1.5vh;
 }

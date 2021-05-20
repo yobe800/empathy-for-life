@@ -13,6 +13,7 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   const { pathname, state: { modal } } = history.location;
+
   useEffect(() => {
     if (!shouldDeletePost) {
       return;
@@ -70,9 +71,9 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
             {errorMessage
               ? null
               : <InputButton
+                  className={styles.deletionConfirmButton}
                   type="button"
                   text="확인"
-                  style={{ ...buttonStyle, position: "absolute", left: "40%", bottom: "15%"}}
                   onClick={handlePostDelete}
                 />
             }
@@ -82,26 +83,25 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
       <img className={styles.photo} src={imageSrc} alt="post" />
       <p className={styles.content}>{content}</p>
       <div className={styles.footer}>
-        <div className={styles.buttons}>
-          <Link to={{ pathname: `${pathname}/edit/${postId}`, state: { modal }}}>
+        <div className={styles.buttonContainer}>
+          <Link className={styles.anchor} to={{ pathname: `${pathname}/edit/${postId}`, state: { modal }}}>
             <InputButton
+              className={styles.button}
               type="button"
               text="편집"
-              style={buttonStyle}
             />
           </Link>
-            <InputButton type="button" text="삭제" style={buttonStyle} onClick={handleConfirm}/>
+            <InputButton
+              className={styles.button}
+              type="button"
+              text="삭제"
+              onClick={handleConfirm}
+            />
         </div>
         <span className={styles.footerText}>글쓴이 {writer} {writtenDate}</span>
       </div>
     </div>
   );
-};
-
-const buttonStyle = {
-  padding: "0.5vh",
-  marginTop: 0,
-  fontSize: "1.3vh",
 };
 
 export default Post;

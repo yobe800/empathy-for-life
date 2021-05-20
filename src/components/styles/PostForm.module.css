@@ -1,23 +1,39 @@
 @value mainBlack from "./variables.css";
 
+.container {
+  width: 100%;
+  font-family: "neodgm";
+  color: mainBlack;
+}
+
 .popUpContainer {
-  position: absolute;
   top: 25vh;
   left: 12%;
   color: mainBlack;
 }
 
+.header {
+  position: relative;
+}
+
 .CloseButtonContainer {
   position: absolute;
-  right: 1.5vw;
-  top: 2vh;
+  top: 5%;
+  right: 3%;
 }
 
 .inputButtonsContainer {
-  display: flex;
   width: 80%;
-  justify-content: space-around;
+  height: 4vh;
   margin: 0.5vh 0 1vh 0;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+.button {
+  width: 6vh;
+  font-size: 1.5vh;
 }
 
 .form {
@@ -46,6 +62,12 @@
   width: 8vw;
   height: 10vh;
   margin-left: 4vh;
+  padding: 1%;
+  font-family: "neodgm";
+}
+
+.select:focus {
+  outline: none;
 }
 
 .photo {
@@ -66,4 +88,10 @@
   border-radius: defaultBorderRadius;
   margin-top: 2%;
   box-sizing: border-box;
+  font-family: "neodgm";
+  line-height: 140%;
+}
+
+.textarea:focus {
+  outline: none;
 }

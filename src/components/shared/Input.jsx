@@ -9,11 +9,12 @@ const Input = ({
   labelAttr = {},
   inputAttr = {},
 }) => {
+  const id = title + Date.now()
   return (
     <div className={styles.container}>
       {title
         ? <label
-            htmlFor={title}
+            htmlFor={id}
             className={`${styles.title} ${labelClassName}`}
             {...labelAttr}
           >
@@ -22,7 +23,7 @@ const Input = ({
         : null
       }
       <input
-        id={title}
+        id={id}
         className={`${styles.textInput} ${inputClassName}`}
         type="text"
         {...inputAttr}
