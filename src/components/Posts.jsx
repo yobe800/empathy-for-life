@@ -79,36 +79,36 @@ const Posts = () => {
   });
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
-      <div className={styles.CloseButtonContainer}>
-        <CloseButton onClick={handleModalClose}/>
-      </div>
+      <CloseButton
+        className={styles.CloseButton}
+        onClick={handleModalClose}
+      />
       <ModalHeader text={"게시글"}>
         <div className={styles.inputsContainer}>
-          <Link to={{
-            pathname: "/posts/new",
-            state: { modal },
-          }}>
+          <Link
+            className={styles.anchor}
+            to={{
+              pathname: "/posts/new",
+              state: { modal },
+            }}
+          >
             <InputButton
               type="button"
               text={"글쓰기"}
-              style={{ fontSize }}
             />
           </Link>
           <Input
-            inputAttr={{
-              style: { fontSize },
-              placeholder: "검색하기",
-            }}
+            inputClassName={styles.search}
+            inputAttr={{ placeholder: "검색" }}
           />
         </div>
       </ModalHeader>
@@ -118,7 +118,5 @@ const Posts = () => {
     </Container>
   );
 };
-
-const fontSize = "1.5vh";
 
 export default Posts;

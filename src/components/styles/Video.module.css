@@ -1,0 +1,40 @@
+@value (
+  mainBlack,
+  defaultBorderWidth,
+  defaultBorderRadius
+ ) from "./variables.css";
+
+.videoContainer {
+  width: 28vw;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "neodgm", sans-serif;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  background-color: mainBlack;
+  border-radius: defaultBorderRadius;
+}
+
+.videoController {
+  width: 100%;
+  padding: 2%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.cameraSelect {
+  width: 50%;
+  border: defaultBorderWidth solid mainBlack;
+  border-radius: defaultBorderRadius;
+  display: none;
+  font-family: "neodgm", sans-serif;
+}

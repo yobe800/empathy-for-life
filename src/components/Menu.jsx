@@ -62,12 +62,12 @@ const Menu = () => {
       >
         로그아웃
       </HeaderBoard>
-      <HeaderBoard
+      {/* <HeaderBoard
         boardClassName={styles.board}
         barClassName={styles.bar}
       >
         내 정보
-      </HeaderBoard>
+      </HeaderBoard> */}
     </Container>
   );
 };

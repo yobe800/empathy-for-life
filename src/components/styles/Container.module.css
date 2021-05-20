@@ -20,7 +20,7 @@
 } */
 
 .border {
-  max-width: 100%;
+  max-width: 95%;
   max-height: 76vh;
   overflow: auto;
   border: defaultBorderWidth solid mainWhite;

@@ -3,7 +3,6 @@ import React from "react";
 import styles from "../styles/HeaderBoard.module.css";
 
 const HeaderBoard = ({ boardClassName = "", barClassName = "", children, ...rest }) => {
-  const boardWidth = rest.style?.width;
 
   return (
     <div
@@ -12,7 +11,6 @@ const HeaderBoard = ({ boardClassName = "", barClassName = "", children, ...rest
     >
       <div
         className={`${styles.bar} ${barClassName}`}
-        style={{width: boardWidth}}
       />
       {children}
     </div>

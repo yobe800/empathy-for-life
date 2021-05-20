@@ -20,7 +20,11 @@
 }
 
 .bar {
-  width: 100%;
+  width: 101%;
   height: 15%;
+  border-radius: defaultBorderWidth defaultBorderWidth 0 0;
+  position: relative;
+  top: -1px;
+  left: -1px;
   background-color: mainLightBrown;
 }

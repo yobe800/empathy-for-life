@@ -21,128 +21,6 @@
  flex-direction: column;
 }
 
-.videoContainer {
-  width: 28vw;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "neodgm", sans-serif;
-}
-
-.video {
-  width: 100%;
-  height: 100%;
-  background-color: mainBlack;
-  border-radius: defaultBorderRadius;
-}
-
-.videoController {
-  width: 100%;
-  padding: 2%;
-  position: absolute;
-  bottom: 0;
-  z-index: 10;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-around;
-}
-
-.cameraSelect {
-  display: none;
-  width: 50%;
-  border: defaultBorderWidth solid mainBlack;
-  border-radius: defaultBorderRadius;
-  font-family: "neodgm", sans-serif;
-}
-
-.chatContainer {
-  width: 28vw;
-  height: 90vh;;
-  margin-top: 1vh;
-  border-radius: defaultBorderRadius;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: rgba(250, 250, 250, 0.7);
-  color: mainBlack;
-  overflow: auto;
-}
-
-.chatBorder {
-  width: 90%;
-  height: 84%;
-  margin-top: 2vh;
-  padding: 2% 0;
-  display: flex;
-  flex-direction: column;
-  font-family: "neodgm", sans-serif;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-.connection {
-  margin-bottom: 2%;
-  align-self: center;
-  font-size: 70%;
-}
-
-.otherMessageContainer {
-  width: 50%;
-  margin: 2%;
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-}
-
-.myMessageContainer {
-  width: 50%;
-  margin: 2%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  align-self: flex-end;
-}
-
-.userName {
-  font-size: 80%;
-  padding-left: 3%;
-}
-
-.myMessage {
-  padding: 5%;
-  margin: 5% 0;
-  border-radius: defaultBorderRadius;
-  background-color: #FEE80F;
-  align-self: flex-end;
-  font-size: 100%;
-  line-height: 110%;
-}
-
-.otherMessage {
-  width: fit-content;
-  padding: 5%;
-  margin: 2% 0 3% 0;
-  border-radius: defaultBorderRadius;
-  background-color: #E8E9EB;
-  font-size: 100%;
-  line-height: 110%;
-}
-
-.messageDate {
-  font-size: 70%;
-}
-
-.formContainer {
-  width: 100%;
-  margin-top: 3%;
-  margin-bottom: 5%;
-  margin-left: 1%;
-  display: flex;
-  align-items: center;
-}
-
 .main {
   width: 100vh;
   margin-left: 2vw;
@@ -150,66 +28,35 @@
 }
 
 .header {
-  width: 70vh;
   margin-top: 1vh;
   margin-left: 1vh;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   position: absolute;
   left: 12.8vh;
   z-index: 2;
 }
 
-.timeBoardHeading {
+.volunteerTimeBoard {
+  width: 10vw;
+  height: 6vh;
+}
+
+.volunteerTimeBar {
+  height: 1vh;
+  margin-bottom: 2vh;
+}
+
+.timeBoardTitle {
   font-size: 1.1vh;
   position: absolute;
-  top: 0;
+  top: 10%;
   left: 5%;
 }
 
-.timeBoardText {
- font-size: 2.3vh;
- width: fit-content;
- display: block;
- margin: 7% auto 0;
-}
-
-.navigation {
-  width: 49vh;
-  margin-left: 1vh;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.anchor {
-  font-size: 1.7vh;
-}
-
-.anchor:hover {
-  cursor: pointer;
-}
-
-.anchor:active {
-  opacity: 0.7;
-}
-
-.anchor:link {
-  color: mainWhite;
-  text-decoration: none;
-}
-
-.anchor:visited {
-  color: mainWhite;
-}
-
-.canvas {
-  width: 91vh;
-  height: 84vh;
-  margin-left: 3vh;
-  border-radius: defaultBorderRadius;
-  position: absolute;
-  bottom: 4vh;
-  z-index: 1;
+.timeBoardTimeText {
+ font-size: 1.2vw;
+ line-height:  150%;
 }
 
 .grassGroundImage {

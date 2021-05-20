@@ -2,9 +2,9 @@ import React from "react";
 import styles from "../styles/PopUpWindow.module.css";
 import CloseButton from "../shared/CloseButton";
 
-const PopUpWindow = ({ text, onClick, children }) => {
+const PopUpWindow = ({ className, text, onClick, children }) => {
   return (
-    <div className={styles.popUpContainer}>
+    <div className={`${styles.popUpContainer} ${className}`}>
       <div className={styles.buttonContainer}>
         <CloseButton onClick={onClick} />
       </div>

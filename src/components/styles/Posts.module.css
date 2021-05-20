@@ -1,8 +1,22 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.CloseButtonContainer {
+.popUp {
+  max-width: 50%;
+  padding: 10%;
+  margin-top: 50%;
   position: absolute;
-  top: 2.5vh;
-  right: 3vh;
+  overflow-wrap: break-word;
+}
+
+.CloseButton {
+  position: absolute;
+  top: 1%;
+  right: 3%;
 }
 
 .inputsContainer {
@@ -10,7 +24,26 @@
   justify-content: space-between;
 }
 
+.anchor {
+  font-size: 2vh;
+  color: mainWhite;
+}
+
+.anchor:link {
+  color: mainWhite;
+  text-decoration: none;
+}
+
+.anchor:visited {
+  color: mainWhite;
+}
+
+.search:focus {
+  outline: none;
+}
+
 .postsContainer {
   height: 65vh;
+  margin-top: 1vh;
   overflow: auto;
 }
