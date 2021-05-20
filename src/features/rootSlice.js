@@ -21,6 +21,8 @@ const reducer = (state, action) => {
       return { ...state, isPassedAdminAuth: true };
     case "userAdded":
       return { ...state, user: { ...state.user, ...payload }};
+    case "userDeleted":
+      return payload;
     default:
       logWarnOrErrInDevelopment(
         new Error("There is no match action type"),
@@ -47,6 +49,10 @@ const actionCreators = {
   },
   userAdded: (user) => {
     return { type: "userAdded", payload: user };
+  },
+  userDeleted: () => {
+    console.log(initiateState);
+    return { type: "userDeleted", payload: initiateState };
   },
 };
 

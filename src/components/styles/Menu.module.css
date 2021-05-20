@@ -1,0 +1,29 @@
+.Container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 3%;
+  right: 5%;
+}
+
+.board {
+  width: 50%;
+  height: 6vh;
+  margin: 1vh 0;
+  font-size: 2vh;
+}
+
+.board:last-child {
+  margin-bottom: 2vh;
+}
+
+.bar {
+  width: 100%;
+  margin-bottom: 1vh;
+}

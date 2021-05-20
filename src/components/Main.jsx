@@ -48,7 +48,10 @@ const Main = () => {
     window.addEventListener("beforeunload", saveUserAccessTime);
 
     return () => {
-      window.removeEventListener("beforeunload", saveUserAccessTime);
+      window.removeEventListener(
+        "beforeunload",
+        saveUserAccessTime,
+      );
       clearInterval(timeId);
     };
   }, [accessTime, userId]);
@@ -84,8 +87,7 @@ const Navigation = () => {
     { en: "posts", ko:"게시글" },
     { en: "dogs", ko: "강아지들" },
     { en: "menu", ko: "메뉴" },
-  ]
-    .map(({ en, ko }, index) => {
+  ].map(({ en, ko }, index) => {
       return (
         <HeaderBoard key={index} style={{ width: "12vh"}}>
           <Link

@@ -250,7 +250,7 @@ const DogForm = () => {
       setShouldFetch(true);
     }
   };
-  const handleClosePopUp = () => {
+  const handlePopUpClose = () => {
     setErrorMessage("");
     setDeleteMessage("");
   };
@@ -302,7 +302,7 @@ const DogForm = () => {
         ? <div className={styles.popUpContainer}>
             <PopUpWindow
               text={errorMessage}
-              onClick={handleClosePopUp}
+              onClick={handlePopUpClose}
             />
           </div>
         : null
@@ -311,7 +311,7 @@ const DogForm = () => {
         ? <div className={styles.popUpContainer}>
             <PopUpWindow
               text={deleteMessage}
-              onClick={handleClosePopUp}
+              onClick={handlePopUpClose}
             />
             <InputButton text="확인" type="button" onClick={handleDogDelete} />
           </div>

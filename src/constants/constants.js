@@ -33,6 +33,7 @@ const AXIS_CORRECTION = {
   x: 1.56,
   y: 1.58,
 };
+const ID_TOKEN_KEY = "empathyForLifeIdToken";
 
 export {
   CHATS,
@@ -42,4 +43,5 @@ export {
   DIRECTIONS,
   LIMIT_FILE_SIZE,
   AXIS_CORRECTION,
+  ID_TOKEN_KEY,
 };
