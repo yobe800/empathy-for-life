@@ -135,6 +135,32 @@ const AdminSignUp = () => {
     return <Redirect to="/" />;
   }
 
+  const inputs = [
+    "ID",
+    "Password",
+    "Confirm Password",
+    "User name",
+    "Email"
+  ].map((title, index) => {
+    const inputType = title.includes("Password")
+      ? "password"
+      : "text";
+
+    return (
+      <Input
+        key={index}
+        type={inputType}
+        title={title}
+        inputAttr={{
+          style: { marginTop: "1vh" },
+          type: inputType,
+          name: title,
+          required: true,
+        }}
+      />
+    );
+  });
+
   return (
     <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
@@ -150,27 +176,5 @@ const AdminSignUp = () => {
     </Home>
   );
 };
-
-const inputAttribute = {
-  style: { marginTop: "1vh" },
-  required: true,
-};
-
-const inputs = ["ID", "Password", "Confirm Password", "User name", "Email"]
-  .map((title, index) => {
-    const inputType = title.includes("Password")
-      ? "password"
-      : "text";
-
-    return (
-      <Input
-        key={index}
-        type={inputType}
-        title={title}
-        inputAttr={{ ...inputAttribute, name: title }}
-      />
-    );
-  });
-
 
 export default AdminSignUp;
