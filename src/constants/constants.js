@@ -30,8 +30,8 @@ const DIRECTIONS = {
 };
 const LIMIT_FILE_SIZE = 5 * 1048576;
 const AXIS_CORRECTION = {
-  x: 1.56,
-  y: 1.58,
+  x: 1.3,
+  y: 1.3,
 };
 const ID_TOKEN_KEY = "empathyForLifeIdToken";
 

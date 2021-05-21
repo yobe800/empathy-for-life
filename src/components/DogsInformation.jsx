@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import throttle from "lodash.throttle";
 
+import { ReducerContext, selectors } from "../features/rootSlice";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+
 
 import styles from "./styles/DogsInformation.module.css";
 import Container from "./shared/Container";
@@ -12,13 +15,19 @@ import Input from "./shared/Input";
 import DogInformationCard from "./shared/DogInformationCard";
 import CloseButton from "./shared/CloseButton";
 import PopUpWindow from "./shared/PopUpWindow";
+import Loading from "./shared/Loading";
 
 const DogsInformation = () => {
-  const [nextPage, setNextPage] = useState(0);
-  const [search, setSeartch] = useState("");
-  const [dogInformations, setDogInformations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [search, setSeartch] = useState("");
+  const [
+    dogInformations,
+    setDogInformations,
+  ] = useState({ dogDatum: [], next: null });
+  const { state } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
   const history = useHistory();
   const { modal } = history.location.state;
 
@@ -34,13 +43,14 @@ const DogsInformation = () => {
           `${serverUrl}/dog?search=${search}`,
           {
             credentials: "include",
-            signal
+            signal,
           },
         );
         const {
           message,
           result: { dogs, next }
         } = await response.json();
+
         if (message === "ok") {
           const filteredDogs = dogs.map(({ _id, name, breed, gender, age, character }) => ({
             id: _id,
@@ -50,13 +60,14 @@ const DogsInformation = () => {
             age,
             character,
           }));
-          setDogInformations(filteredDogs);
-          setNextPage(next);
+          setDogInformations({ dogDatum: filteredDogs, next });
         } else {
           setErrorMessage(message);
         }
       } catch (error) {
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setIsLoading(false);
       }
     }, 300);
     return () => {
@@ -66,7 +77,7 @@ const DogsInformation = () => {
   }, [search]);
 
   useEffect(() => {
-    if (!shouldFetch) {
+    if (!shouldFetch || !dogInformations.next) {
       return;
     }
 
@@ -78,8 +89,11 @@ const DogsInformation = () => {
       try {
         const serverUrl = process.env.REACT_APP_SERVER_URL;
         const response = await fetch(
-          `${serverUrl}/dog?search=${search}&next=${nextPage}`,
-          { signal },
+          `${serverUrl}/dog?search=${search}&next=${dogInformations.next}`,
+          {
+            credentials: "include",
+            signal,
+          },
         );
 
         const { message, result: { dogs, next } } = await response.json();
@@ -93,18 +107,22 @@ const DogsInformation = () => {
             age,
             character,
           }));
-          setDogInformations((lastDogInfos) => lastDogInfos.concat(filteredDogs));
-          setNextPage(next);
+
+          setDogInformations({
+            dogDatum: dogInformations.dogDatum.concat(filteredDogs),
+            next,
+          });
         } else {
           setErrorMessage(message);
         }
       } catch (error) {
+        logWarnOrErrInDevelopment(error);
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
     fetchNextDogInformations();
-  }, [shouldFetch, nextPage, search]);
+  }, [shouldFetch, search, dogInformations]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -125,40 +143,50 @@ const DogsInformation = () => {
     }
   }, 500);
 
-  const dogInformationList = dogInformations.map((dogInfo) => (
-    <DogInformationCard key={dogInfo.id} {...dogInfo} />
+  const dogInformationList = dogInformations.dogDatum.map((dogInfo) => (
+    <DogInformationCard key={dogInfo.id} isAdmin={isAdministrator} {...dogInfo} />
   ));
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
-      <div className={styles.closeButtonContainer}>
-        <CloseButton onClick={handleModalClose}/>
-      </div>
-      <ModalHeader text={"강아지들"}>
+      <ModalHeader
+        className={styles.modalHeader}
+        text={"강아지들"}
+      >
+        <CloseButton
+          className={styles.closeButton}
+          onClick={handleModalClose}
+        />
         <div className={styles.inputsContainer}>
-          <Link to={{
-            pathname: "/dogs/new",
-            state: { modal },
-          }}>
-            <InputButton
-              type="button"
-              text={"추가"}
-              style={inputStyle}
-            />
-          </Link>
+          { isAdministrator
+            ? <Link
+                className={styles.anchor}
+                to={{
+                  pathname: "/dogs/new",
+                  state: { modal },
+                }}
+              >
+                <InputButton
+                  className={styles.addButton}
+                  type="button"
+                  text={"추가"}
+                />
+              </Link>
+            : null
+          }
           <Input
+            inputClassName={styles.search}
             inputAttr={{
-              ...inputAttribute,
               value: search,
+              placeholder: "검색",
               onInput: handleSearchInput,
             }}
           />
@@ -168,13 +196,13 @@ const DogsInformation = () => {
         className={styles.cardContainer}
         onScroll={handleNextDogInfoFetch}
       >
-        {dogInformationList}
+        {isLoading
+          ? <Loading className={styles.loading} />
+          : dogInformationList
+        }
       </div>
     </Container>
   );
 };
-
-const inputStyle = { fontSize: "1.5vh" };
-const inputAttribute = { style: inputStyle, placeholder: "검색" };
 
 export default DogsInformation;

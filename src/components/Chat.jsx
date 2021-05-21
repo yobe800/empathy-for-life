@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import socket from "../socket/socket";
 
 import { CHATS } from "../constants/constants";
+import getTimeString from "../utils/getTimeString";
 
 import styles from "./styles/Chat.module.css";
 import Input from "./shared/Input";
@@ -107,7 +108,7 @@ const Chat = () => {
           >
             {message}
           </p>
-          <span className={styles.messageDate}>{createdAt}</span>
+          <span className={styles.messageDate}>{getTimeString(createdAt)}</span>
         </li>
       );
     } else if (type === CHATS.DISCONNECTED_USER) {

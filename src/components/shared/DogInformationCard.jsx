@@ -5,7 +5,15 @@ import { IMAGE_URLS } from "../../constants/constants";
 import styles from "../styles/dogsInformationCard.module.css";
 import InputButton from "./InputButton";
 
-const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
+const DogInformationCard = ({
+  id,
+  name,
+  breed,
+  gender,
+  age,
+  character,
+  isAdmin,
+}) => {
   const { pathname, state } = useLocation();
   const { modal } = state;
   return (
@@ -31,30 +39,35 @@ const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
           나이: {`${age}살`}
         </li>
       </ul>
-      <nav>
-        <Link to={{
-          pathname: `${pathname}/edit/${id}`,
-          state: { modal },
-        }}>
+      <div className={styles.buttonContainer}>
+        {isAdmin
+          ? <Link
+              className={styles.anchor}
+              to={{
+                pathname: `${pathname}/edit/${id}`,
+                state: { modal },
+              }}
+            >
+              <InputButton
+                className={styles.button}
+                text="편집"
+              />
+            </Link>
+          : null
+        }
+        <Link
+          className={styles.anchor}
+          to={{
+            pathname: `${pathname}/${id}`,
+            state: { modal },
+          }}
+        >
           <InputButton
-            text="편집"
-            style={{ padding: "0.7vh 1vh", fontSize: "1.6vh" }}
-          />
-        </Link>
-        <Link to={{
-          pathname: `${pathname}/${id}`,
-          state: { modal },
-        }}>
-          <InputButton
+            className={styles.button}
             text="세부정보"
-            style={{
-              marginTop: "1vh",
-              padding: "0.7vh 1vh",
-              fontSize: "1.6vh",
-            }}
           />
         </Link>
-      </nav>
+      </div>
     </div>
   );
 };

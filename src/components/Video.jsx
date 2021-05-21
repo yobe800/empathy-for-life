@@ -26,7 +26,7 @@ const Video = () => {
         muted
         autoPlay
         preload="auto"
-        poster="/assets/images/streaming-off.png"
+        poster="/assets/images/standby.png"
       />
       {isAdministrator
         ? <div ref={videoControllerRef} className={styles.videoController}>

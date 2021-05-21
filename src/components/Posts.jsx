@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
+import throttle from "lodash.throttle";
+
+import { ReducerContext, selectors } from "../features/rootSlice";
 
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
@@ -12,20 +15,21 @@ import Input from "./shared/Input";
 import Post from "./shared/Post";
 import CloseButton from "./shared/CloseButton";
 import PopUpWindow from "./shared/PopUpWindow";
+import Loading from "./shared/Loading";
 
 const Posts = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [postDatum, setPostDatum] = useState([]);
-  const [shouldFetch, setShouldFetch] = useState(true);
+  const [postDatum, setPostDatum] = useState({ posts: [], next: null });
+  const [shouldFetch, setShouldFetch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { state } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
+  const userId = selectors.getUserId(state);
   const history = useHistory();
   const { modal } = history.location.state;
 
   useEffect(() => {
-    if (!shouldFetch) {
-      return;
-    }
-
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -40,12 +44,56 @@ const Posts = () => {
           },
         );
 
-        const { message, result } = await response.json();
-
-        setShouldFetch(false);
+        const { message, result: { posts, next } } = await response.json();
 
         if (message === "ok") {
-          setPostDatum(result);
+          setPostDatum({ posts, next });
+        } else {
+          setErrorMessage(message);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const timeId = setTimeout(fetchPosts, 300);
+
+    return () => {
+      clearTimeout(timeId);
+      controller.abort();
+    };
+  }, [search]);
+
+  useEffect(() => {
+    if (!shouldFetch || !postDatum.next) {
+      return;
+    }
+
+    setShouldFetch(false);
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const fetchNextPosts = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/posts?search=${search}&next=${postDatum.next}`,
+          {
+            credentials: "include",
+            signal,
+          },
+        );
+
+        const { message, result: { posts, next } } = await response.json();
+
+        if (message === "ok") {
+          setPostDatum({
+            posts: postDatum.posts.concat(posts),
+            next,
+          });
         } else {
           setErrorMessage(message);
         }
@@ -55,13 +103,8 @@ const Posts = () => {
       }
     };
 
-    const timeId = setTimeout(fetchPosts, 300);
-
-    return () => {
-      controller.abort();
-      clearTimeout(timeId);
-    };
-  }, [shouldFetch, search]);
+    fetchNextPosts();
+  }, [shouldFetch, postDatum, search]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -73,15 +116,25 @@ const Posts = () => {
     setShouldFetch(true);
     setSearch(event.target.value);
   };
+  const handleNextPostsFetch = throttle((event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.target;
+    const scrollBottomPostion = scrollTop + clientHeight;
+    const isNearBottom = scrollHeight <= scrollBottomPostion + 1;
 
-  const posts = postDatum.map(({
+    if (isNearBottom) {
+     setShouldFetch(true);
+    }
+  }, 500);
+
+  const postComponents = postDatum.posts.map(({
     _id,
-    writer: { user_name },
+    writer: { user_name, _id: writerId },
     content,
     photo: { url },
     updated_at
   }) => {
     const writtenDate = new Date(updated_at).toDateString();
+    const hasEditRight = isAdministrator || writerId === userId;
 
     return (
       <Post
@@ -91,9 +144,17 @@ const Posts = () => {
         content={content}
         imageSrc={url}
         writtenDate={writtenDate}
+        fetchPost={() => setShouldFetch(true)}
+        hasEditRight={hasEditRight}
       />
     );
   });
+
+  if (!postComponents.length) {
+    postComponents.push(
+      <p key="notice" className={styles.notice}>게시글이 없습니다 😥</p>,
+    );
+  }
 
   return (
     <Container className={styles.container}>
@@ -133,8 +194,14 @@ const Posts = () => {
           />
         </div>
       </ModalHeader>
-        <div className={styles.postsContainer}>
-          {posts}
+        <div
+          className={styles.postsContainer}
+          onScroll={handleNextPostsFetch}
+        >
+          {isLoading
+            ? <Loading className={styles.loading} />
+            : postComponents
+          }
         </div>
     </Container>
   );
