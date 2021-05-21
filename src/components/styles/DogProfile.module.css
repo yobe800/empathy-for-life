@@ -8,10 +8,17 @@
   display: flex;
 }
 
-.closeButtonContainer {
+.container {
+  width: 100%;
+  position: relative;
+  font-family: "neodgm", sans-serif;
+  color: mainWhite;
+}
+
+.closeButton {
   position: absolute;
-  right: 2vh;
-  top: 1.7vh;
+  right: 3%;
+  top: 2%;
 }
 
 .popUpContainer {
@@ -49,7 +56,7 @@
   width: 25vh;
   height: 38%;
   position: absolute;
-  left: 6%;
+  left: 2.5%;
   bottom: 5%;
   overflow: auto;
   font-size: 2vh;

@@ -61,10 +61,8 @@ const DogProfile = () => {
   };
 
   return (
-    <Container>
-      <div className={styles.closeButtonContainer}>
-        <CloseButton onClick={handleModalClose}/>
-      </div>
+    <Container className={styles.container}>
+    <CloseButton className={styles.closeButton} onClick={handleModalClose}/>
       {errorMessage
         ? <div className={styles.popUpContainer}>
             <PopUpWindow
