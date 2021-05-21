@@ -6,3 +6,5 @@
 @value defaultBorderRadius: 0.3vw;
 @value defaultBorderWidth: 0.2vw;
 @value defaultBorderHeight: 1vh;
+
+@value modalContentWidth: 47vh;

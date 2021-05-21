@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/constants";
 
@@ -7,12 +7,19 @@ import styles from "../styles/Post.module.css";
 import InputButton from "./InputButton";
 import PopUpWindow from "./PopUpWindow";
 
-const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
+const Post = ({
+  postId,
+  imageSrc,
+  content,
+  writer,
+  writtenDate,
+  fetchPost,
+  hasEditRight,
+}) => {
   const [hasConfirmDeletion, setHasConfirmDeletion] = useState(false);
   const [shouldDeletePost, setShouldDeletePost] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useHistory();
-  const { pathname, state: { modal } } = history.location;
+  const { pathname, state: { modal } } = useLocation();
 
   useEffect(() => {
     if (!shouldDeletePost) {
@@ -36,7 +43,7 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
         const { message } = await response.json();
 
         if (message === "ok") {
-          return history.push("/");
+          fetchPost();
         } else {
           setErrorMessage(message);
         }
@@ -49,7 +56,7 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
 
     deletePost();
 
-  }, [shouldDeletePost, postId, history, modal]);
+  }, [shouldDeletePost, postId, fetchPost]);
 
   const handlePostDelete = () => {
     if (shouldDeletePost) {
@@ -87,21 +94,30 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
       <img className={styles.photo} src={imageSrc} alt="post" />
       <p className={styles.content}>{content}</p>
       <div className={styles.footer}>
-        <div className={styles.buttonContainer}>
-          <Link className={styles.anchor} to={{ pathname: `${pathname}/edit/${postId}`, state: { modal }}}>
-            <InputButton
-              className={styles.button}
-              type="button"
-              text="편집"
-            />
-          </Link>
-            <InputButton
-              className={styles.button}
-              type="button"
-              text="삭제"
-              onClick={handleConfirm}
-            />
-        </div>
+        {hasEditRight
+          ? <div className={styles.buttonContainer}>
+              <Link
+                className={styles.anchor}
+                to={{
+                  pathname: `${pathname}/edit/${postId}`,
+                  state: { modal }
+                }}
+              >
+                <InputButton
+                  className={styles.button}
+                  type="button"
+                  text="편집"
+                />
+              </Link>
+                <InputButton
+                  className={styles.button}
+                  type="button"
+                  text="삭제"
+                  onClick={handleConfirm}
+                />
+            </div>
+          : null
+        }
         <span className={styles.footerText}>글쓴이 {writer} {writtenDate}</span>
       </div>
     </div>
