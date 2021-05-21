@@ -12,9 +12,9 @@ const removeCookie = (cookieKey = "") => {
     .join(";");
 
     document.cookie = cookieRemovedSpecificKey;
-    const hasRemoved
-      = cookie !== cookieRemovedSpecificKey
-        && !document.cookie.includes(cookieKey);
+    // const hasRemoved
+    //   = cookie !== cookieRemovedSpecificKey
+    //     && !document.cookie.includes(cookieKey);
     return true;
     // return hasRemoved;
 };
