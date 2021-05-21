@@ -87,11 +87,6 @@ const AdminAuth = () => {
     setErrorMessage("");
   };
 
-  const inputAttribute = {
-    value: password,
-    onInput: handleInput,
-  };
-
   return (
     <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
@@ -107,7 +102,13 @@ const AdminAuth = () => {
         the password for access to administrator
       </span>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input type="password" inputAttr={inputAttribute} />
+        <Input
+          inputAttr={{
+            type: "password",
+            value: password,
+            onInput: handleInput,
+          }}
+        />
         <div className={styles.inputButtonContainer}>
           <InputButton text="확인" disabled={!!isDetecting}/>
         </div>
