@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory, Link } from "react-router-dom";
+import throttle from "lodash.throttle";
 
 import { ReducerContext, selectors } from "../features/rootSlice";
 
@@ -20,7 +21,7 @@ const Posts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [postDatum, setPostDatum] = useState({ posts: [], next: null });
-  const [shouldFetch, setShouldFetch] = useState(true);
+  const [shouldFetch, setShouldFetch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { state } = useContext(ReducerContext);
   const isAdministrator = selectors.getIsAdministrator(state);
@@ -29,10 +30,6 @@ const Posts = () => {
   const { modal } = history.location.state;
 
   useEffect(() => {
-    if (!shouldFetch) {
-      return;
-    }
-
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -47,12 +44,10 @@ const Posts = () => {
           },
         );
 
-        const { message, result, next } = await response.json();
-
-        setShouldFetch(false);
+        const { message, result: { posts, next } } = await response.json();
 
         if (message === "ok") {
-          setPostDatum({ posts: result, next });
+          setPostDatum({ posts, next });
         } else {
           setErrorMessage(message);
         }
@@ -67,10 +62,49 @@ const Posts = () => {
     const timeId = setTimeout(fetchPosts, 300);
 
     return () => {
-      controller.abort();
       clearTimeout(timeId);
+      controller.abort();
     };
-  }, [shouldFetch, search]);
+  }, [search]);
+
+  useEffect(() => {
+    if (!shouldFetch || !postDatum.next) {
+      return;
+    }
+
+    setShouldFetch(false);
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const fetchNextPosts = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/posts?search=${search}&next=${postDatum.next}`,
+          {
+            credentials: "include",
+            signal,
+          },
+        );
+
+        const { message, result: { posts, next } } = await response.json();
+
+        if (message === "ok") {
+          setPostDatum({
+            posts: postDatum.posts.concat(posts),
+            next,
+          });
+        } else {
+          setErrorMessage(message);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      }
+    };
+
+    fetchNextPosts();
+  }, [shouldFetch, postDatum, search]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -82,6 +116,15 @@ const Posts = () => {
     setShouldFetch(true);
     setSearch(event.target.value);
   };
+  const handleNextPostsFetch = throttle((event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.target;
+    const scrollBottomPostion = scrollTop + clientHeight;
+    const isNearBottom = scrollHeight <= scrollBottomPostion + 1;
+
+    if (isNearBottom) {
+     setShouldFetch(true);
+    }
+  }, 500);
 
   const postComponents = postDatum.posts.map(({
     _id,
@@ -151,7 +194,10 @@ const Posts = () => {
           />
         </div>
       </ModalHeader>
-        <div className={styles.postsContainer}>
+        <div
+          className={styles.postsContainer}
+          onScroll={handleNextPostsFetch}
+        >
           {isLoading
             ? <Loading className={styles.loading} />
             : postComponents
