@@ -234,7 +234,7 @@ const useVideoStreaming = (videoRef, navRef) => {
         $video.style.zIndex = 0;
         $video.controls = false;
         const stream = $video.srcObject;
-        stream.getTracks().forEach((track) => track.stop());
+        stream?.getTracks().forEach((track) => track.stop());
         $video.srcObject = null;
         rtcPeerConnections[broadcasterId]?.close();
         delete rtcPeerConnections[broadcasterId];

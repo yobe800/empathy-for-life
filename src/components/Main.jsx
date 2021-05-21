@@ -73,12 +73,12 @@ const Main = () => {
           </HeaderBoard>
           <MainNavigation />
         </header>
-        <Canvas />
-        <img
-          className={styles.grassGroundImage}
-          src={IMAGE_URLS.GRASS_GROUND}
-          alt="grass ground"
-        />
+          <Canvas />
+          <img
+            className={styles.grassGroundImage}
+            src={IMAGE_URLS.GRASS_GROUND}
+            alt="grass ground"
+          />
       </main>
     </div>
   );

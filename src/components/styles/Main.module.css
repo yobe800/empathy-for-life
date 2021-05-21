@@ -8,23 +8,25 @@
 .container {
   padding: 2vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
-  /* background-color: #151515; */
   background-image: url("../../assets/images/sky02.jpg");
   background-size: 68%;
   background-repeat: repeat;
 }
 
 .leftSideContainer {
- height: 96vh;
- display: flex;
- flex-direction: column;
+  width: 100%;
+  height: 96vh;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
-  width: 100vh;
-  margin-left: 2vw;
+  width: 100vw;
+  margin-right: 8%;
   position: relative;
 }
 
@@ -63,6 +65,18 @@
 .grassGroundImage {
   height: 96vh;
   border-radius: 0.7vw;
-  position: absolute;
+  position: relative;
   filter: brightness(1) hue-rotate(-10deg);
+}
+
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .leftSideContainer {
+    margin: 0;
+  }
 }
