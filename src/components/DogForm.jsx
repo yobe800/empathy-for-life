@@ -267,8 +267,8 @@ const DogForm = () => {
   const handleFormCancel = () => {
     history.goBack();
   };
-  const handleImageLoad = (event) => {
-    event.target.style.display = "block";
+  const handleImageLoad = ({target: $img }) => {
+    $img.style.display = "block";
   };
   const handlePhotoInput = (event) => {
     const photo = event.target.files[0];
