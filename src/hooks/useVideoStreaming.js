@@ -44,7 +44,12 @@ const useVideoStreaming = (videoRef, navRef) => {
       };
 
       $streamingOnBtn.onclick = () => {
+
         if (!isOnStreaming) {
+          if ($video.srcObject) {
+            return;
+          }
+
           $cameraSelect.style.display = "block";
           isOnStreaming = true;
           $streamingOnBtn.value = "방송 종료";
