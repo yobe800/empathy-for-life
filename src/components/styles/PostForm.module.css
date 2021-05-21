@@ -2,17 +2,25 @@
 
 .container {
   width: 100%;
+  position: relative;
   font-family: "neodgm";
   color: mainBlack;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
 }
 
-.popUpContainer {
-  top: 25vh;
-  left: 12%;
-  color: mainBlack;
+.popUp {
+  max-width: 50%;
+  padding: 10%;
+  margin-top: 50%;
+  position: absolute;
+  overflow-wrap: break-word;
 }
 
 .header {
+  width: 100%;
   position: relative;
 }
 
@@ -37,6 +45,7 @@
 }
 
 .form {
+  width: 100%;
   margin-top: 1%;
   margin-left: 5%;
   margin-bottom: 3%;
@@ -45,15 +54,10 @@
   align-items: flex-start;
 }
 
-.photoContainer {
-  width: 95%;
-  display: flex;
-  justify-content: center;
-}
-
 .selectLabel {
   width: 100%;
   margin-top: 1vh;
+  margin-left: 10%;
   display: flex;
   font-size: 1.3vw;
 }
@@ -68,6 +72,23 @@
 
 .select:focus {
   outline: none;
+}
+
+.photoInput {
+  border: none;
+  position: relative;
+  right: 8%;
+}
+
+.photoInputLabel {
+  width: 20%;
+  margin-left: 13%;
+}
+
+.photoContainer {
+  width: 95%;
+  display: flex;
+  justify-content: center;
 }
 
 .photo {
@@ -86,7 +107,7 @@
   padding: 1vw;
   border: defaultBorderWidth solid mainBlack;
   border-radius: defaultBorderRadius;
-  margin-top: 2%;
+  margin-top: 5%;
   box-sizing: border-box;
   font-family: "neodgm";
   line-height: 140%;

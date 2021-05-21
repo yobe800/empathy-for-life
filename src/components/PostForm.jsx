@@ -43,7 +43,7 @@ const PostForm = () => {
       try {
         const response = await fetch(
           `${serverUrl}/dog/names`,
-          { signal },
+          { signal, credentials: "include" },
         );
         const { message, result } = await response.json();
 
@@ -80,6 +80,7 @@ const PostForm = () => {
     });
     const fetchOptions = {
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body,
       signal,
     };
@@ -150,7 +151,10 @@ const PostForm = () => {
       try {
         const response = await fetch(
           `${serverUrl}/posts/${id}`,
-          { signal },
+          {
+            credentials: "include",
+            signal,
+          },
         );
 
         const { message, result } = await response.json();
@@ -250,12 +254,11 @@ const PostForm = () => {
   return (
     <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
 
@@ -277,9 +280,12 @@ const PostForm = () => {
           </select>
         </label>
         <Input
+          inputClassName={styles.photoInput}
+          labelClassName={styles.photoInputLabel}
           title="사진"
           inputAttr={{
-            ...fileInputAttribute,
+            type: "file",
+            accept: "image/png, image/jpeg, image/jpg",
             onChange: handlePhotoInput,
           }}
         />
@@ -295,17 +301,6 @@ const PostForm = () => {
       </form>
     </Container>
   );
-};
-
-const fileInputAttribute = {
-  type: "file",
-  accept: "image/png, image/jpeg, image/jpg",
-  style: {
-    width: "16vh",
-    marginTop: "1vh",
-    padding: "0.5vh 0",
-    border: "none",
-  },
 };
 
 export default PostForm;
