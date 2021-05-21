@@ -204,7 +204,7 @@ const useCanvasDraw = (ref) => {
         dogElements = dogs || [];
         dogElements.map((dog) => getAutomaticMoveDog(dog));
         timeIds.push(
-          setInterval(() => socket.emit("update all dogs"),  3 * 60 * 1000),
+          setInterval(() => socket.emit("update all dogs"),  10 * 1000),
         );
       },
     );
