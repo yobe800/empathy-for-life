@@ -4,6 +4,8 @@ import throttle from "lodash.throttle";
 
 import { ReducerContext, selectors } from "../features/rootSlice";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+
 
 import styles from "./styles/DogsInformation.module.css";
 import Container from "./shared/Container";
@@ -114,6 +116,7 @@ const DogsInformation = () => {
           setErrorMessage(message);
         }
       } catch (error) {
+        logWarnOrErrInDevelopment(error);
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };

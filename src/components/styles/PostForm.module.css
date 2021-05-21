@@ -17,6 +17,7 @@
   margin-top: 50%;
   position: absolute;
   overflow-wrap: break-word;
+  z-index: 1;
 }
 
 .header {

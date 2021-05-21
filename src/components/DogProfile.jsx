@@ -59,10 +59,16 @@ const DogProfile = () => {
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
+  const handleImageLoad = ({ target: $img }) => {
+    $img.style.visibility = "visible";
+  };
 
   return (
     <Container className={styles.container}>
-    <CloseButton className={styles.closeButton} onClick={handleModalClose}/>
+      <CloseButton
+        className={styles.closeButton}
+        onClick={handleModalClose}
+      />
       {errorMessage
         ? <div className={styles.popUpContainer}>
             <PopUpWindow
@@ -74,6 +80,7 @@ const DogProfile = () => {
       }
       <div className={styles.informationContainer}>
         <img
+          onLoad={handleImageLoad}
           className={styles.profilePhoto}
           src={dogInformation?.photo.url}
           alt="a dog"
@@ -86,6 +93,7 @@ const DogProfile = () => {
         {dogInformation?.description}
       </p>
     </Container>
+
   );
 };
 

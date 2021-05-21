@@ -268,14 +268,32 @@ const PostForm = () => {
           onClick={handleModalClose}
         />
         <div className={styles.inputButtonsContainer}>
-          <InputButton className={styles.button} text={id ? "수정" : "추가"} form="postForm" />
-          <InputButton className={styles.button} text="취소" type="button" onClick={handlePostCancel}/>
+          <InputButton
+            className={styles.button}
+            text={id ? "수정" : "추가"}
+            form="postForm"
+          />
+          <InputButton
+            className={styles.button}
+            text="취소"
+            type="button"
+            onClick={handlePostCancel}
+          />
         </div>
       </ModalHeader>
-      <form id="postForm"className={styles.form} onSubmit={handlePostSubmit}>
+      <form
+        id="postForm"
+        className={styles.form}
+        onSubmit={handlePostSubmit}
+      >
         <label className={styles.selectLabel}>
           선택
-          <select multiple className={styles.select} value={dogIds} onChange={handleDogNameSelect}>
+          <select
+            className={styles.select}
+            value={dogIds}
+            onChange={handleDogNameSelect}
+            multiple
+          >
             {options}
           </select>
         </label>
@@ -290,7 +308,12 @@ const PostForm = () => {
           }}
         />
         <div className={styles.photoContainer}>
-          <img className={styles.photo} src={photo} alt="post" style={{ display: photo ? "" : "none"}}/>
+          <img
+            className={styles.photo}
+            src={photo}
+            alt="post"
+            style={{ display: photo ? "" : "none"}}
+          />
         </div>
         <textarea
           className={styles.textarea}
