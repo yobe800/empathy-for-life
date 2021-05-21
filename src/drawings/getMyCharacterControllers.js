@@ -1,15 +1,16 @@
-import getHumanCharacter from "../utils/getHumanCharacter";
+import getPersonCharacter from "../utils/getPersonCharacter";
 import { DIRECTIONS } from "../constants/constants";
 
-function getMyCharacterControllers(canvasWidth, canvasHeight, character = "human0") {
-  const myCharacter = getHumanCharacter(character);
+function getMyCharacterControllers(canvasWidth, canvasHeight, character = "person0", userName = "") {
+  const myCharacter = getPersonCharacter(character);
   const drawSize = myCharacter.drawSize;
   let destinationX = 0;
   let destinationY = 0;
   const MOVE_DISTANCE = 12;
 
   const myCharacterDrawingObject = {
-    type: "human",
+    type: "person",
+    name: userName,
     sx: myCharacter.walk.down.x,
     sy: myCharacter.walk.down.y,
     sWidth: myCharacter.walk.down.width,

@@ -8,8 +8,6 @@
 ) from "./variables.css";
 
 .board {
-  width: 10vh;
-  height: 4vh;
   border: defaultBorderWidth solid mainBlack;
   border-radius: defaultBorderRadius;
   position: relative;
@@ -22,7 +20,11 @@
 }
 
 .bar {
-  width: 10vh;
-  height: 0.7vh;
+  width: 101%;
+  height: 15%;
+  border-radius: defaultBorderWidth defaultBorderWidth 0 0;
+  position: relative;
+  top: -1px;
+  left: -1px;
   background-color: mainLightBrown;
 }

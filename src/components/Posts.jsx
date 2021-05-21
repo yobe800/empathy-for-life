@@ -14,6 +14,7 @@ import CloseButton from "./shared/CloseButton";
 import PopUpWindow from "./shared/PopUpWindow";
 
 const Posts = () => {
+  const [search, setSearch] = useState("");
   const [postDatum, setPostDatum] = useState([]);
   const [shouldFetch, setShouldFetch] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,8 +33,11 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(
-          `${serverUrl}/posts`,
-          { signal },
+          `${serverUrl}/posts?search=${search}`,
+          {
+            credentials: "include",
+            signal
+          },
         );
 
         const { message, result } = await response.json();
@@ -51,10 +55,13 @@ const Posts = () => {
       }
     };
 
-    fetchPosts();
+    const timeId = setTimeout(fetchPosts, 300);
 
-    return () => controller.abort();
-  }, [shouldFetch]);
+    return () => {
+      controller.abort();
+      clearTimeout(timeId);
+    };
+  }, [shouldFetch, search]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -62,8 +69,18 @@ const Posts = () => {
   const handleClosePopUp = () => {
     setErrorMessage("");
   };
+  const handleSearch = (event) => {
+    setShouldFetch(true);
+    setSearch(event.target.value);
+  };
 
-  const posts = postDatum.map(({ _id, writer: { user_name }, content, photo: { url }, updated_at }) => {
+  const posts = postDatum.map(({
+    _id,
+    writer: { user_name },
+    content,
+    photo: { url },
+    updated_at
+  }) => {
     const writtenDate = new Date(updated_at).toDateString();
 
     return (
@@ -79,35 +96,39 @@ const Posts = () => {
   });
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
-      <div className={styles.CloseButtonContainer}>
-        <CloseButton onClick={handleModalClose}/>
-      </div>
+      <CloseButton
+        className={styles.CloseButton}
+        onClick={handleModalClose}
+      />
       <ModalHeader text={"게시글"}>
         <div className={styles.inputsContainer}>
-          <Link to={{
-            pathname: "/posts/new",
-            state: { modal },
-          }}>
+          <Link
+            className={styles.anchor}
+            to={{
+              pathname: "/posts/new",
+              state: { modal },
+            }}
+          >
             <InputButton
+              className={styles.writingButton}
               type="button"
               text={"글쓰기"}
-              style={{ fontSize }}
             />
           </Link>
           <Input
+            inputClassName={styles.search}
             inputAttr={{
-              style: { fontSize },
-              placeholder: "검색하기",
+              placeholder: "검색",
+              onInput: handleSearch,
             }}
           />
         </div>
@@ -118,7 +139,5 @@ const Posts = () => {
     </Container>
   );
 };
-
-const fontSize = "1.5vh";
 
 export default Posts;

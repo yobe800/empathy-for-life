@@ -2,13 +2,11 @@ import React from "react";
 
 import styles from "../styles/Container.module.css";
 
-const Container = ({ children }) => {
+const Container = ({ className, children }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.border}>
+      <div className={`${styles.border} ${className}`}>
         {children}
       </div>
-    </div>
   );
 };
 

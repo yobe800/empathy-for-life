@@ -28,6 +28,7 @@ import Posts from "./Posts";
 import DogsInformation from "./DogsInformation";
 import DogForm from "./DogForm";
 import PostForm from "./PostForm";
+import Menu from "./Menu";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,11 +48,10 @@ const App = () => {
 
     const controller = new AbortController();
     const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const fetchUser = async () => {
-
       try {
-        const serverUrl = process.env.REACT_APP_SERVER_URL;
         const response = await fetch(
           `${serverUrl}/user`,
           { credentials: "include" },
@@ -153,6 +153,9 @@ const App = () => {
               </Route>
               <Route path="/dogs/:id">
                 <DogProfile />
+              </Route>
+              <Route path="/menu">
+                <Menu />
               </Route>
             </Switch>
           </Modal>

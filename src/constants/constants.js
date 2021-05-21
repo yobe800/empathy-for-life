@@ -20,7 +20,7 @@ const IMAGE_URLS = {
   DOGS_SPRITE: "/assets/images/dogs-sprite.png",
   GOOGLE_ICON: "/assets/images/google-icon.png",
   GRASS_GROUND: "/assets/images/grass-ground.png",
-  HUMAN_SPRITE: "/assets/images/human-sprite.png",
+  PERSON_SPRITE: "/assets/images/person-sprite.png",
 };
 const DIRECTIONS = {
   38: "up",
@@ -29,6 +29,11 @@ const DIRECTIONS = {
   37: "left",
 };
 const LIMIT_FILE_SIZE = 5 * 1048576;
+const AXIS_CORRECTION = {
+  x: 1.56,
+  y: 1.58,
+};
+const ID_TOKEN_KEY = "empathyForLifeIdToken";
 
 export {
   CHATS,
@@ -37,4 +42,6 @@ export {
   IMAGE_URLS,
   DIRECTIONS,
   LIMIT_FILE_SIZE,
+  AXIS_CORRECTION,
+  ID_TOKEN_KEY,
 };

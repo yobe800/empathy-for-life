@@ -1,10 +1,16 @@
-import { useEffect } from "react";
-import { IMAGE_URLS } from "../constants/constants";
+import { useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import throttle from "lodash.throttle";
+
+import {
+  ReducerContext,
+  selectors,
+} from "../features/rootSlice";
+import { IMAGE_URLS, AXIS_CORRECTION } from "../constants/constants";
 import socket from "../socket/socket";
 import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
 import getThrottleEmit from "../utils/getThrottleEmit";
-import throttle from "lodash.throttle";
 
 const emitMyCharacterDrawing = getThrottleEmit(
   60,
@@ -16,43 +22,80 @@ const drawCanvas = throttle(
 );
 
 const useCanvasDraw = (ref) => {
+  const history = useHistory();
+  const { state } = useContext(ReducerContext);
+  let userName = selectors.getUserName(state);
+  const userCharacter = selectors.getUserCharacter(state);
+  const isAdmin = selectors.getIsAdministrator(state);
+
+  if (isAdmin) {
+    userName += "(관리자)";
+  }
+
   useEffect(() => {
+    const modal = history.location;
     const ctx = ref.current.getContext("2d");
+    ctx.font = "3vh neodgm";
+    ctx.fillStyle = "white";
     const { canvas } = ctx;
-    const humansImage = new Image();
+    const personImage = new Image();
     const dogsImage = new Image();
-    humansImage.src = IMAGE_URLS.HUMAN_SPRITE;
+    personImage.src = IMAGE_URLS.PERSON_SPRITE;
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
-    const images = [humansImage, dogsImage];
+    const images = [personImage, dogsImage];
     let timeIds = [];
     let dogElements = [];
-    let humansElements = [];
+    let personElements = [];
+
+    canvas.addEventListener("click", (event) => {
+      const clickedX = Math.trunc(event.offsetX * AXIS_CORRECTION.x);
+      const clickedY = Math.trunc(event.offsetY * AXIS_CORRECTION.y);
+
+      const clickedDog = dogElements.find((dog) => {
+        const isClickedDog
+          = dog.dx <= clickedX
+            && clickedX <= dog.dx + dog.dWidth
+            && dog.dy <= clickedY
+            && clickedY <= dog.dy + dog.dHeight;
+
+        return isClickedDog;
+      });
+
+      if (clickedDog) {
+        history.push(`/dogs/${clickedDog._id}`, { modal });
+      }
+    });
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      humansElements.forEach((humanElement, index) => {
+      personElements.forEach((personElement, index) => {
         if (!index) {
           const shouldEmit
-          = humanElement.lastDx !== humanElement.dx
-          || humanElement.lastDy !== humanElement.dy;
+          = personElement.lastDx !== personElement.dx
+          || personElement.lastDy !== personElement.dy;
           if (shouldEmit) {
             emitMyCharacterDrawing(
               "user canvas image",
-              humanElement,
+              personElement,
             );
           }
         }
 
         ctx.drawImage(
-          humansImage,
-          humanElement.sx,
-          humanElement.sy,
-          humanElement.sWidth,
-          humanElement.sHeight,
-          humanElement.dx,
-          humanElement.dy,
-          humanElement.dWidth,
-          humanElement.dHeight,
+          personImage,
+          personElement.sx,
+          personElement.sy,
+          personElement.sWidth,
+          personElement.sHeight,
+          personElement.dx,
+          personElement.dy,
+          personElement.dWidth,
+          personElement.dHeight,
+        );
+        ctx.fillText(
+          personElement.name,
+          personElement.dx,
+          personElement.dy + personElement.dHeight + 20,
         );
       });
 
@@ -73,6 +116,11 @@ const useCanvasDraw = (ref) => {
           dogElement.dWidth,
           dogElement.dHeight,
         );
+        ctx.fillText(
+          dogElement.name,
+          dogElement.dx,
+          dogElement.dy + dogElement.dHeight + 20,
+        );
       });
 
       drawCanvas(draw);
@@ -90,29 +138,46 @@ const useCanvasDraw = (ref) => {
       myCharacterDrawingObject,
       walkMyCharacter,
       stopMyCharacter,
-    } = getMyCharacterControllers(canvas.width, canvas.height, "human7");
+    } = getMyCharacterControllers(
+          canvas.width,
+          canvas.height,
+          userCharacter,
+          userName,
+        );
+
+    const throttledStopMyCharacter = throttle(
+      (event) => walkMyCharacter(event),
+      100,
+      { leading: true, trailing: false }
+    );
 
     emitMyCharacterDrawing(
       "user canvas image",
       myCharacterDrawingObject,
     );
+    personElements.push(myCharacterDrawingObject);
+    document.addEventListener(
+      "keydown",
+      throttledStopMyCharacter,
+    );
+    document.addEventListener(
+      "keyup",
+      stopMyCharacter
+    );
 
-    humansElements.push(myCharacterDrawingObject);
-    document.addEventListener("keydown", throttle((event) => walkMyCharacter(event), 100, { leading: true, trailing: false }));
-    document.addEventListener("keyup", stopMyCharacter);
     checkImageLoad();
 
     socket.on(
       "current users",
       (otherDrawElements) => {
-        humansElements = humansElements.concat(otherDrawElements);
+        personElements = personElements.concat(otherDrawElements);
       },
     );
     socket.on(
       "another user draw element",
       (anotherUserDrawElement) => {
         let hasUser = false;
-        for (const element of humansElements) {
+        for (const element of personElements) {
           if (element.id === anotherUserDrawElement.id) {
             hasUser = true;
             Object.assign(element, anotherUserDrawElement);
@@ -121,14 +186,14 @@ const useCanvasDraw = (ref) => {
         }
 
         if (!hasUser) {
-          humansElements.push(anotherUserDrawElement);
+          personElements.push(anotherUserDrawElement);
         }
       },
     );
     socket.on(
       "disconnected user",
       ({ id: anotherUserId }) => {
-        humansElements = humansElements.filter(
+        personElements = personElements.filter(
           (element) => element.id !== anotherUserId,
         );
       },
@@ -136,12 +201,11 @@ const useCanvasDraw = (ref) => {
     socket.on(
       "current dogs",
       (dogs) => {
-        dogElements = dogs;
-        timeIds = dogElements.map((dog) => {
-          const { timeId } = getAutomaticMoveDog(dog);
-          return timeId;
-        });
-        timeIds.push(setInterval(() => socket.emit("update all dog")));
+        dogElements = dogs || [];
+        dogElements.map((dog) => getAutomaticMoveDog(dog));
+        timeIds.push(
+          setInterval(() => socket.emit("update all dogs"), 5000),
+        );
       },
     );
     socket.on(
@@ -150,17 +214,37 @@ const useCanvasDraw = (ref) => {
         const dogElement = dogElements.find(
           (dogEl) => dogEl._id === dog._id,
         );
-        dogElement.targetCoordinates = dog.targetCoordinates;
-        dogElement.hadRequest = false;
-        dogElement.shouldUpdate = false;
+        if (dogElement) {
+          dogElement.targetCoordinates = dog.targetCoordinates;
+          dogElement.hadRequest = false;
+          dogElement.shouldUpdate = false;
+        }
+      },
+    );
+    socket.on(
+      "update all dogs",
+      (dogs) => {
+        dogElements.forEach((dog) => dog.stop());
+        dogElements = dogs;
+        dogElements.map((dog) => getAutomaticMoveDog(dog));
       },
     );
 
     return () => {
       timeIds.forEach((timeId) => clearInterval(timeId));
-      socket.removeAllListeners();
+      dogElements.forEach((dog) => dog.stop());
+      document.removeEventListener("keydown", throttledStopMyCharacter);
+      document.removeEventListener("keyup", stopMyCharacter);
+      personElements = [];
+      [
+        "current users",
+        "another user draw element",
+        "disconnected user",
+        "current dogs",
+        "update a dog",
+      ].forEach((socketEvent) => socket.removeAllListeners(socketEvent));
     };
-  }, [ref]);
+  }, [ref, history, userCharacter, userName]);
 };
 
 export default useCanvasDraw;

@@ -46,6 +46,7 @@ const AdminSignUp = () => {
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body,
             signal,
           },

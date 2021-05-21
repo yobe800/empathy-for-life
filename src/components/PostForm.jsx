@@ -43,7 +43,7 @@ const PostForm = () => {
       try {
         const response = await fetch(
           `${serverUrl}/dog/names`,
-          { signal },
+          { signal, credentials: "include" },
         );
         const { message, result } = await response.json();
 
@@ -80,6 +80,7 @@ const PostForm = () => {
     });
     const fetchOptions = {
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body,
       signal,
     };
@@ -150,7 +151,10 @@ const PostForm = () => {
       try {
         const response = await fetch(
           `${serverUrl}/posts/${id}`,
-          { signal },
+          {
+            credentials: "include",
+            signal,
+          },
         );
 
         const { message, result } = await response.json();
@@ -248,23 +252,24 @@ const PostForm = () => {
   });
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
-      <div className={styles.CloseButtonContainer}>
-        <CloseButton onClick={handleModalClose} />
-      </div>
-      <ModalHeader text="글쓰기">
+
+      <ModalHeader className={styles.header} text="글쓰기">
+        <CloseButton
+          className={styles.CloseButtonContainer}
+          onClick={handleModalClose}
+        />
         <div className={styles.inputButtonsContainer}>
-          <InputButton text={id ? "수정" : "추가"} form="postForm" />
-          <InputButton text="취소" type="button" onClick={handlePostCancel}/>
+          <InputButton className={styles.button} text={id ? "수정" : "추가"} form="postForm" />
+          <InputButton className={styles.button} text="취소" type="button" onClick={handlePostCancel}/>
         </div>
       </ModalHeader>
       <form id="postForm"className={styles.form} onSubmit={handlePostSubmit}>
@@ -275,9 +280,12 @@ const PostForm = () => {
           </select>
         </label>
         <Input
+          inputClassName={styles.photoInput}
+          labelClassName={styles.photoInputLabel}
           title="사진"
           inputAttr={{
-            ...fileInputAttribute,
+            type: "file",
+            accept: "image/png, image/jpeg, image/jpg",
             onChange: handlePhotoInput,
           }}
         />
@@ -293,17 +301,6 @@ const PostForm = () => {
       </form>
     </Container>
   );
-};
-
-const fileInputAttribute = {
-  type: "file",
-  accept: "image/png, image/jpeg, image/jpg",
-  style: {
-    width: "16vh",
-    marginTop: "1vh",
-    padding: "0.5vh 0",
-    border: "none",
-  },
 };
 
 export default PostForm;

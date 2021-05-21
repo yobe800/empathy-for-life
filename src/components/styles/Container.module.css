@@ -5,7 +5,7 @@
   defaultBorderWidth,
   defaultBorderRadius
 ) from "./variables.css";
-
+/*
 .container {
   width: 100%;
   padding: 1vh 0;
@@ -17,13 +17,14 @@
   background-color: mainLightBrown;
   font-family: "neodgm", sans-serif;
   color: mainWhite;
-}
+} */
 
 .border {
-  width: 94%;
+  max-width: 95%;
   max-height: 76vh;
   overflow: auto;
   border: defaultBorderWidth solid mainWhite;
   border-radius: defaultBorderRadius;
+  outline: 1vh solid mainLightBrown;
   background-color: mainBrown;
 }
