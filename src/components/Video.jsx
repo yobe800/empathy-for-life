@@ -37,6 +37,7 @@ const Video = () => {
               disabled
             />
             <InputButton
+              className={styles.streamingButton}
               type="button"
               name="streamingOn"
               value={buttonValue || "방송시작"}

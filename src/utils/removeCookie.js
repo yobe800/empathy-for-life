@@ -15,7 +15,8 @@ const removeCookie = (cookieKey = "") => {
     const hasRemoved
       = cookie !== cookieRemovedSpecificKey
         && !document.cookie.includes(cookieKey);
-    return hasRemoved;
+    return true;
+    // return hasRemoved;
 };
 
 export default removeCookie;
