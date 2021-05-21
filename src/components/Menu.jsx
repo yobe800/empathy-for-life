@@ -51,7 +51,7 @@ const Menu = () => {
     <Container className={styles.Container}>
       <CloseButton className={styles.closeButton} onClick={handleModalClose} />
       {errorMessage
-        ? <PopUpWindow text={errorMessage} onClick={handlePopUpClose}/>
+        ? <PopUpWindow className={styles.popUp} text={errorMessage} onClick={handlePopUpClose}/>
         : null
       }
       <ModalHeader text="메뉴" />
@@ -62,12 +62,6 @@ const Menu = () => {
       >
         로그아웃
       </HeaderBoard>
-      {/* <HeaderBoard
-        boardClassName={styles.board}
-        barClassName={styles.bar}
-      >
-        내 정보
-      </HeaderBoard> */}
     </Container>
   );
 };
