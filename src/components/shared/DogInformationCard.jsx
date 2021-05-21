@@ -5,7 +5,15 @@ import { IMAGE_URLS } from "../../constants/constants";
 import styles from "../styles/dogsInformationCard.module.css";
 import InputButton from "./InputButton";
 
-const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
+const DogInformationCard = ({
+  id,
+  name,
+  breed,
+  gender,
+  age,
+  character,
+  isAdmin,
+}) => {
   const { pathname, state } = useLocation();
   const { modal } = state;
   return (
@@ -32,18 +40,21 @@ const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
         </li>
       </ul>
       <div className={styles.buttonContainer}>
-        <Link
-          className={styles.anchor}
-          to={{
-            pathname: `${pathname}/edit/${id}`,
-            state: { modal },
-          }}
-        >
-          <InputButton
-            className={styles.button}
-            text="편집"
-          />
-        </Link>
+        {isAdmin
+          ? <Link
+              className={styles.anchor}
+              to={{
+                pathname: `${pathname}/edit/${id}`,
+                state: { modal },
+              }}
+            >
+              <InputButton
+                className={styles.button}
+                text="편집"
+              />
+            </Link>
+          : null
+        }
         <Link
           className={styles.anchor}
           to={{

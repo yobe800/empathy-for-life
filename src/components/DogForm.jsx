@@ -5,6 +5,7 @@ import validator from "validator";
 import { LIMIT_FILE_SIZE, DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import getBase64FromImageAsync from "../utils/getBase64FromImageAsync";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
+import concatStrings from "../utils/concatStrings";
 
 import styles from "./styles/DogForm.module.css";
 import Container from "./shared/Container";
@@ -266,6 +267,9 @@ const DogForm = () => {
   const handleFormCancel = () => {
     history.goBack();
   };
+  const handleImageLoad = (event) => {
+    event.target.style.display = "block";
+  };
   const handlePhotoInput = (event) => {
     const photo = event.target.files[0];
 
@@ -293,7 +297,6 @@ const DogForm = () => {
     setDeleteMessage("");
     setShouldDelete(true);
   };
-
   const handleDeletionPopUp = () => {
     if (shouldDelete) {
       return;
@@ -303,57 +306,142 @@ const DogForm = () => {
   };
 
   return (
-    <Container>
+    <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handlePopUpClose}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handlePopUpClose}
+          />
         : null
       }
       {deleteMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={deleteMessage}
-              onClick={handlePopUpClose}
+        ? <PopUpWindow
+            className={styles.popUpContainer}
+            text={deleteMessage}
+            onClick={handlePopUpClose}
+          >
+            <InputButton
+              text="확인"
+              type="button"
+              onClick={handleDogDelete}
             />
-            <InputButton text="확인" type="button" onClick={handleDogDelete} />
-          </div>
+          </PopUpWindow>
         : null
       }
-      <div className={styles.closeButtonContainer}>
-        <CloseButton onClick={handleModalClose} />
-      </div>
-      <ModalHeader text="강아지 추가">
+      <ModalHeader className={styles.modalHeader} text="강아지 추가">
+        <CloseButton
+          className={styles.closeButton}
+          onClick={handleModalClose}
+        />
         <div className={styles.inputButtonsContainer}>
-          <InputButton text={id ? "수정" : "추가"} form="dogForm" />
-          {id ? <InputButton text="삭제" type="button" onClick={handleDeletionPopUp} /> : null}
-          <InputButton text="취소" type="button" onClick={handleFormCancel} />
+          <InputButton className={styles.editButton} text={id ? "수정" : "추가"} form="dogForm" />
+          {id
+            ? <InputButton
+                className={styles.editButton}
+                text="삭제"
+                type="button"
+                onClick={handleDeletionPopUp}
+              />
+            : null
+          }
+          <InputButton
+            className={styles.editButton}
+            text="취소"
+            type="button"
+            onClick={handleFormCancel}
+          />
         </div>
       </ModalHeader>
       <form id="dogForm" className={styles.form} onSubmit={handleSubmit}>
-        <Input title="이름" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "name", defaultValue: dogForm?.name }} />
-        <div className={styles.selectContainer}>
-          <label className={styles.selectLabel} htmlFor="gender">
+        <Input
+          labelClassName={styles.fontSize}
+          title="이름"
+          inputAttr={{
+            name: "name",
+            defaultValue: dogForm?.name,
+          }}
+        />
+        <div
+          className={concatStrings(styles.selectContainer, styles.marginTop)}
+        >
+          <label className={styles.fontSize} htmlFor="gender">
             성별
           </label>
-          <select className={styles.select} id="gender" name="gender" ref={genderRef}>
+          <select
+            id="gender"
+            className={styles.select}
+            name="gender"
+            ref={genderRef}
+          >
             <option value="male">수컷</option>
             <option value="female">암컷</option>
           </select>
         </div>
-        <Input title="견종" headingAttr={headingAttribute} inputAttr={{ ...inputAttribute, name: "breed", defaultValue: dogForm?.breed }} />
-        <Input title="나이" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "age", defaultValue: dogForm?.age }} />
-        <Input title="무게(Kg)" headingAttr={headingAttribute} inputAttr={{ ...numberInputAttribute, name: "weight", defaultValue: dogForm?.weight }} />
+        <Input
+          title="견종"
+          labelClassName={styles.fontSize}
+          inputClassName={styles.marginTop}
+          inputAttr={{
+            name: "breed",
+            defaultValue: dogForm?.breed
+          }}
+        />
+        <Input
+          title="나이"
+          inputClassName={styles.marginTop}
+          labelClassName={styles.fontSize}
+          inputAttr={{
+            name: "age",
+            defaultValue: dogForm?.age
+          }}
+        />
+        <Input
+          title="무게(Kg)"
+          inputClassName={styles.marginTop}
+          labelClassName={styles.fontSize}
+          inputAttr={{
+            name: "weight",
+            defaultValue: dogForm?.weight
+          }}
+        />
         <div className={styles.checkboxesContainer}>
-          <Input title="심장사상충" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "heartWorm", defaultValue: dogForm?.heartWorm }} />
-          <Input title="중성화" headingAttr={headingAttribute} inputAttr={{ ...checkboxInputAttribute, name: "neutering", defaultValue: dogForm?.neutering }}/>
+          <Input
+            title="심장사상충"
+            labelClassName={styles.fontSize}
+            inputAttr={{
+              name: "heartWorm",
+              type: "checkbox",
+              defaultValue: dogForm?.heartWorm,
+            }}
+          />
+          <Input
+            title="중성화"
+            labelClassName={styles.fontSize}
+            inputAttr={{
+              name: "neutering",
+              type: "checkbox",
+              defaultValue: dogForm?.neutering
+            }}
+          />
         </div>
-        <Input title="입소일" headingAttr={headingAttribute} inputAttr={{ ...dateInputAttribute, name: "entrancedAt", defaultValue: dogForm?.entrancedAt}} />
+        <Input
+          title="입소일"
+          labelClassName={styles.fontSize}
+          inputClassName={concatStrings(styles.marginTop,styles.dateInput)}
+          inputAttr={{
+            name: "entrancedAt",
+            type: "date",
+            defaultValue: dogForm?.entrancedAt
+          }}
+        />
         <div className={styles.selectContainer}>
-          <label className={styles.selectLabel} htmlFor="adoptionStatus">입양 상태</label>
+          <label
+            className={styles.fontSize}
+            htmlFor="adoptionStatus"
+          >
+            입양 상태
+          </label>
           <select
             id="adoptionStatus"
             className={styles.select}
@@ -373,21 +461,29 @@ const DogForm = () => {
         </div>
         <Input
           title="사진"
-          headingAttr={headingAttribute}
+          labelClassName={concatStrings(styles.photoLabel, styles.fontSize)}
+          inputClassName={concatStrings(styles.photoInput, styles.marginTop)}
           inputAttr={{
-            ...fileInputAttribute,
+            type: "file",
+            accept: "image/png, image/jpeg, image/jpg",
             name: "photo",
             required: id ? false : true,
             onChange: handlePhotoInput,
           }}
         />
         <img
-          className={styles.thumnail}
+          onLoad={handleImageLoad}
+          className={concatStrings(styles.thumnail, styles.marginTop)}
           ref={imgRef}
           alt="dog profile thumnail"
         />
         <div className={styles.selectContainer}>
-          <label className={styles.selectLabel} htmlFor="dogCharacter">캐릭터</label>
+          <label
+            className={concatStrings(styles.selectLabel, styles.fontSize)} 
+            htmlFor="dogCharacter"
+          >
+            캐릭터
+          </label>
           <select
             id="dogCharacter"
             className={styles.select}
@@ -406,67 +502,22 @@ const DogForm = () => {
           </select>
         </div>
         <div className={styles.textareaContainer}>
-          <label className={styles.textareaLabel} htmlFor="description">설명</label>
+          <label
+            className={styles.textareaLabel}
+            htmlFor="description"
+          >
+            설명
+          </label>
           <textarea
             id="description"
             className={styles.textarea}
             name="description"
             defaultValue={dogForm?.description}
-            placeholder="창을 아래로 늘릴 수 있어요. :)"
           />
         </div>
       </form>
     </Container>
   );
-};
-
-const fontSize = "1.7vh";
-
-const headingAttribute = {
-  style: { fontSize: fontSize },
-};
-
-const inputAttribute = {
-  style: {
-    width: "16vh",
-    marginTop: "0.3vh",
-  },
-  required: true,
-};
-
-const numberInputAttribute = {
-  style: inputAttribute.style,
-  type: "number",
-  min: 0,
-  max: 99,
-  required: true,
-};
-
-const dateInputAttribute = {
-  ...inputAttribute,
-  type: "date",
-  style: {
-    width: "16vh",
-    padding: "0.5vh 0",
-    fontSize: fontSize,
-    marginRight: "2vw",
-  },
-  required: true,
-};
-
-const checkboxInputAttribute = {
-  type: "checkbox",
-};
-
-const fileInputAttribute = {
-  type: "file",
-  accept: "image/png, image/jpeg, image/jpg",
-  style: {
-    width: "16vh",
-    padding: "0.5vh 0",
-    marginRight: "2.3vw",
-    border: "none",
-  },
 };
 
 export default DogForm;

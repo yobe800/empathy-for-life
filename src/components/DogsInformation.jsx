@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import throttle from "lodash.throttle";
 
+import { ReducerContext, selectors } from "../features/rootSlice";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 
 import styles from "./styles/DogsInformation.module.css";
@@ -16,10 +17,15 @@ import Loading from "./shared/Loading";
 
 const DogsInformation = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [search, setSeartch] = useState("");
-  const [dogInformations, setDogInformations] = useState({ dogDatum: [], next: null });
   const [shouldFetch, setShouldFetch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [search, setSeartch] = useState("");
+  const [
+    dogInformations,
+    setDogInformations,
+  ] = useState({ dogDatum: [], next: null });
+  const { state } = useContext(ReducerContext);
+  const isAdministrator = selectors.getIsAdministrator(state);
   const history = useHistory();
   const { modal } = history.location.state;
 
@@ -135,7 +141,7 @@ const DogsInformation = () => {
   }, 500);
 
   const dogInformationList = dogInformations.dogDatum.map((dogInfo) => (
-    <DogInformationCard key={dogInfo.id} {...dogInfo} />
+    <DogInformationCard key={dogInfo.id} isAdmin={isAdministrator} {...dogInfo} />
   ));
 
   return (
@@ -157,19 +163,22 @@ const DogsInformation = () => {
           onClick={handleModalClose}
         />
         <div className={styles.inputsContainer}>
-          <Link
-            className={styles.anchor}
-            to={{
-              pathname: "/dogs/new",
-              state: { modal },
-            }}
-          >
-            <InputButton
-              className={styles.addButton}
-              type="button"
-              text={"추가"}
-            />
-          </Link>
+          { false
+            ? <Link
+                className={styles.anchor}
+                to={{
+                  pathname: "/dogs/new",
+                  state: { modal },
+                }}
+              >
+                <InputButton
+                  className={styles.addButton}
+                  type="button"
+                  text={"추가"}
+                />
+              </Link>
+            : null
+          }
           <Input
             inputClassName={styles.search}
             inputAttr={{

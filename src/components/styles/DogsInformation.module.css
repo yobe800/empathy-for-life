@@ -17,9 +17,9 @@
   padding: 2vh;
   justify-self: center;
   align-self: center;
-  color: mainBlack;
   overflow-wrap: break-word;
   z-index: 10;
+  color: mainBlack;
 }
 
 .modalHeader {
