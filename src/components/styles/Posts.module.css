@@ -1,3 +1,5 @@
+@value modalContentWidth, mainWhite from "./variables.css";
+
 .container {
   position: relative;
   display: flex;
@@ -49,7 +51,22 @@
 }
 
 .postsContainer {
-  height: 65vh;
   margin-top: 1vh;
   overflow: auto;
+}
+
+.notice {
+  width: modalContentWidth;
+  margin: 10% 0;
+  text-align: center;
+  font-size: 2.5vh;
+  font-family: "neodgm", sans-serif;
+  color: mainWhite;
+}
+
+.loading {
+  width: modalContentWidth;
+  object-fit: scale-down;
+  padding-left: 2vh;
+  box-sizing: border-box;
 }
