@@ -48,7 +48,6 @@ const useCanvasDraw = (ref) => {
     let personElements = [];
 
     canvas.addEventListener("click", (event) => {
-      console.log(window.screen);
       const clickedX = Math.trunc(event.offsetX * AXIS_CORRECTION.x);
       const clickedY = Math.trunc(event.offsetY * AXIS_CORRECTION.y);
 
