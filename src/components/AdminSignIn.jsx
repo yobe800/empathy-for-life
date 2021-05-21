@@ -100,12 +100,11 @@ const AdminSignIn = () => {
   const handleClick = () => {
     history.push("/admin/sign-up");
   };
-
-  const idInputAttr = {
-    onInput: (event) => setIdValue(event.target.value),
+  const handleId = (event) => {
+    setIdValue(event.target.value);
   };
-  const passwordInputAttr = {
-    onInput: (event) => setPasswordValue(event.target.value),
+  const handlePassword = (event) => {
+    setPasswordValue(event.target.value);
   };
 
   if (isAdministrator) {
@@ -119,11 +118,18 @@ const AdminSignIn = () => {
         : null
       }
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input title={"ID"} inputAttr={idInputAttr} />
+        <Input title={"ID"} inputAttr={{
+          type: "text",
+          value: idValue,
+          onInput: handleId,
+        }} />
         <Input
           title={"Password"}
-          type="password"
-          inputAttr={passwordInputAttr}
+          inputAttr={{
+            type: "password",
+            value: passwordValue,
+            onInput: handlePassword,
+          }}
         />
         <div className={styles.buttonsContainer}>
           <InputButton
