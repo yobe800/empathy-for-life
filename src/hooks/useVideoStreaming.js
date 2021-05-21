@@ -36,7 +36,13 @@ const useVideoStreaming = (videoRef, navRef) => {
         }
       }
 
-      const streamConstraints = { audio: true, video: true };
+      const streamConstraints = {
+        audio: true,
+        video: {
+          facingMode: "environment",
+        },
+      };
+
       $streamingOnBtn.onclick = () => {
         if (!isOnStreaming) {
           $cameraSelect.style.display = "block";
