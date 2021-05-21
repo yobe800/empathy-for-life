@@ -51,7 +51,6 @@ const actionCreators = {
     return { type: "userAdded", payload: user };
   },
   userDeleted: () => {
-    console.log(initiateState);
     return { type: "userDeleted", payload: initiateState };
   },
 };

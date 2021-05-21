@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react";
 
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import socket from "../socket/socket";
 import {
   ReducerContext,
@@ -89,7 +90,7 @@ const useVideoStreaming = (videoRef, navRef) => {
                   $video.srcObject = stream;
                 })
                 .catch((error) => {
-                  console.log(error);
+                  logWarnOrErrInDevelopment(error);
                 });
 
             }
@@ -162,7 +163,7 @@ const useVideoStreaming = (videoRef, navRef) => {
                 );
               })
               .catch((error) => {
-                console.log(error);
+                logWarnOrErrInDevelopment(error);
               });
           });
         },
