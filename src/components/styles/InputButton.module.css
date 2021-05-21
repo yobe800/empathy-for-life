@@ -8,7 +8,6 @@
 
 .inputButton {
   padding: 1vh;
-  border: 3vh 3vw solid;
   border-color: mainBlack;
   border-radius: defaultBorderRadius;
   display: flex;
