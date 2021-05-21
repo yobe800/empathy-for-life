@@ -34,6 +34,7 @@ const Video = () => {
               id="cameraSelect"
               className={styles.cameraSelect}
               name="cameraSelect"
+              disabled
             />
             <InputButton
               type="button"

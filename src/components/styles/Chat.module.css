@@ -116,3 +116,18 @@
   Border: defaultBorderWidth solid lightgray;
   font-size: 1.5vh;
 }
+
+@media (max-width: 800px) {
+  .chatContainer {
+    width: 100%;
+  }
+  .chatInput {
+    width: 50vw;
+    margin: 1vh 0 1vh 10vw;
+  }
+
+  .submitButton {
+    width: 10vw;
+    height: 3.5vh;
+  }
+}
