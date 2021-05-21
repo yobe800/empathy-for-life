@@ -9,6 +9,8 @@
   width: 100%;
   font-family: "neodgm", sans-serif;
   color: mainWhite;
+  display: flex;
+  flex-direction: column;
 }
 
 .inputButtonsContainer {
@@ -19,18 +21,25 @@
 }
 
 .popUp {
-  max-width: 15%;
-  padding: 2vh;
+  min-width: 10%;
+  max-width: 20%;
+  padding: 4vh 1vh 1vh 1vh;
+  margin-top: 15vh;
   justify-self: center;
   align-self: center;
-  overflow-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   z-index: 10;
   color: mainBlack;
 }
 
-.popUpContainer input {
-  position: absolute;
+.confirmButton {
+  width: 25%;
+  height: 3.5vh;
   padding: 0.3vh;
+  margin-top: 1vh;
   top: 7vh;
   left: 13vh;
 }
@@ -74,6 +83,7 @@
   width: 15vh;
   height: 15vh;
   margin-left: 17vh;
+  margin-bottom: 1vh;
   object-fit: cover;
   object-position: center;
   background-color: mainWhite;

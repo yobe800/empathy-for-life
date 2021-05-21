@@ -45,13 +45,13 @@ const Main = () => {
         },
       );
     };
-    window.addEventListener("beforeunload", saveUserAccessTime);
+    // window.addEventListener("beforeunload", saveUserAccessTime);
 
     return () => {
-      window.removeEventListener(
-        "beforeunload",
-        saveUserAccessTime,
-      );
+      // window.removeEventListener(
+      //   "beforeunload",
+      //   saveUserAccessTime,
+      // );
       clearInterval(timeId);
     };
   }, [accessTime, userId]);
