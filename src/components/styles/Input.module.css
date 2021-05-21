@@ -22,3 +22,7 @@
   font-family: "neodgm", sans-serif;
   font-size: 1.6vh;
 }
+
+.textInput:focus {
+  outline: none;
+}
