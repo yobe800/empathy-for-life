@@ -21,7 +21,8 @@ const Posts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [postDatum, setPostDatum] = useState({ posts: [], next: null });
-  const [shouldFetch, setShouldFetch] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(true);
+  const [isBottom, setIsBottom] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { state } = useContext(ReducerContext);
   const isAdministrator = selectors.getIsAdministrator(state);
@@ -35,6 +36,10 @@ const Posts = () => {
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const fetchPosts = async () => {
+      if (!shouldFetch) {
+        return;
+      }
+
       try {
         const response = await fetch(
           `${serverUrl}/posts?search=${search}`,
@@ -55,6 +60,7 @@ const Posts = () => {
         logWarnOrErrInDevelopment(error);
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
       } finally {
+        setShouldFetch(false);
         setIsLoading(false);
       }
     };
@@ -65,14 +71,13 @@ const Posts = () => {
       clearTimeout(timeId);
       controller.abort();
     };
-  }, [search]);
+  }, [search, shouldFetch]);
 
   useEffect(() => {
-    if (!shouldFetch || !postDatum.next) {
+    if (!isBottom || !postDatum.next) {
       return;
     }
 
-    setShouldFetch(false);
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -87,7 +92,12 @@ const Posts = () => {
           },
         );
 
-        const { message, result: { posts, next } } = await response.json();
+        const {
+          message,
+          result: { posts, next },
+        } = await response.json();
+
+        setIsBottom(false);
 
         if (message === "ok") {
           setPostDatum({
@@ -99,12 +109,13 @@ const Posts = () => {
         }
       } catch (error) {
         logWarnOrErrInDevelopment(error);
+        setIsBottom(false);
         setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
     fetchNextPosts();
-  }, [shouldFetch, postDatum, search]);
+  }, [shouldFetch, postDatum, search, isBottom]);
 
   const handleModalClose = () => {
     history.push("/");
@@ -122,7 +133,7 @@ const Posts = () => {
     const isNearBottom = scrollHeight <= scrollBottomPostion + 1;
 
     if (isNearBottom) {
-     setShouldFetch(true);
+     setIsBottom(true);
     }
   }, 500);
 

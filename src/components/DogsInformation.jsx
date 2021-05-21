@@ -147,6 +147,12 @@ const DogsInformation = () => {
     <DogInformationCard key={dogInfo.id} isAdmin={isAdministrator} {...dogInfo} />
   ));
 
+  if (!dogInformationList.length) {
+    dogInformationList.push(
+      <p key="notice" className={styles.notice}>등록된 개가 없습니다 😥</p>,
+    )
+  }
+
   return (
     <Container className={styles.container}>
       {errorMessage

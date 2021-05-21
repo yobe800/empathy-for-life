@@ -1,4 +1,5 @@
 @value (
+  mainWhite,
   mainBlack,
   defaultBorderRadius,
   modalContentWidth
@@ -63,4 +64,13 @@
   object-fit: scale-down;
   padding-left: 2vh;
   box-sizing: border-box;
+}
+
+.notice {
+  width: modalContentWidth;
+  margin: 10% 0;
+  text-align: center;
+  font-size: 2.5vh;
+  font-family: "neodgm", sans-serif;
+  color: mainWhite;
 }
