@@ -51,12 +51,14 @@
 }
 
 .buttonContainer {
-  width: 22%;
+  width: 30%;
   display: flex;
   justify-content: space-between;
 }
 
 .button {
+  width: 5vh;
+  height: 3.5vh;
   font-size: 1.4vh;
   padding: 0.7vh;
 }
@@ -76,7 +78,8 @@
 }
 
 .footerText {
+  width: 100%;
   font-size: 1.3vh;
-  align-self: flex-end;
+  text-align: end;
   margin-bottom: 0.7vh;
 }

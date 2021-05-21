@@ -163,7 +163,7 @@ const DogsInformation = () => {
           onClick={handleModalClose}
         />
         <div className={styles.inputsContainer}>
-          { false
+          { isAdministrator
             ? <Link
                 className={styles.anchor}
                 to={{

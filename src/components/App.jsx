@@ -5,6 +5,7 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
+import styles from "./styles/App.module.css";
 
 import "./styles/reset.css";
 import "./styles/font.css";
@@ -29,6 +30,7 @@ import DogsInformation from "./DogsInformation";
 import DogForm from "./DogForm";
 import PostForm from "./PostForm";
 import Menu from "./Menu";
+import Loading from "./shared/Loading";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +83,7 @@ const App = () => {
       } catch (error) {
         logWarnOrErrInDevelopment(error);
       } finally {
-        setIsLoading(false);
+        setTimeout(() =>setIsLoading(false), 500);
       }
 
     };
@@ -92,7 +94,7 @@ const App = () => {
   }, [hasUserSignedIn, isLoading, dispatch, userAdded, adminAuthPassed]);
 
   if (isLoading) {
-    return <h1>로딩 중</h1>;
+    return <Loading className={styles.loading}/>;
   }
 
   return (
