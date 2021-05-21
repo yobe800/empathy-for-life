@@ -149,8 +149,14 @@ const DogsInformation = () => {
           </div>
         : null
       }
-      <ModalHeader className={styles.modalHeader} text={"강아지들"}>
-        <CloseButton className={styles.closeButton} onClick={handleModalClose}/>
+      <ModalHeader
+        className={styles.modalHeader}
+        text={"강아지들"}
+      >
+        <CloseButton
+          className={styles.closeButton}
+          onClick={handleModalClose}
+        />
         <div className={styles.inputsContainer}>
           <Link
             className={styles.anchor}
@@ -180,7 +186,7 @@ const DogsInformation = () => {
         onScroll={handleNextDogInfoFetch}
       >
         {isLoading
-          ? <Loading className={styles.loading}/>
+          ? <Loading className={styles.loading} />
           : dogInformationList
         }
       </div>
