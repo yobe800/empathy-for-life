@@ -26,8 +26,6 @@ const Post = ({
       return;
     }
 
-    setShouldDeletePost(false);
-
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -43,6 +41,8 @@ const Post = ({
           },
         );
         const { message } = await response.json();
+
+        setShouldDeletePost(false);
 
         if (message === "ok") {
           fetchPost();
