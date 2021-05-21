@@ -48,6 +48,7 @@ const DogForm = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(copiedDogForm),
+            credentials: "include",
             signal,
           },
         );
@@ -77,6 +78,7 @@ const DogForm = () => {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(copiedDogForm),
+            credentials: "include",
             signal,
           },
         );
@@ -117,7 +119,10 @@ const DogForm = () => {
       try {
         const response = await fetch(
           `${serverUrl}/dog/${id}`,
-          { signal },
+          {
+            credentials: "include",
+            signal
+          },
         );
 
         const { message, result } = await response.json();
@@ -182,6 +187,7 @@ const DogForm = () => {
           `${serverUrl}/dog/${id}`,
           {
             method: "DELETE",
+            credentials: "include",
             signal,
           },
         );
