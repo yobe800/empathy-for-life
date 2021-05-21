@@ -26,6 +26,8 @@ const Post = ({
       return;
     }
 
+    setShouldDeletePost(false);
+
     const controller = new AbortController();
     const { signal } = controller;
     const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -48,9 +50,8 @@ const Post = ({
           setErrorMessage(message);
         }
       } catch (error) {
-        setErrorMessage(DEFAULT_ERROR_MESSAGE);
-      } finally {
         setShouldDeletePost(false);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
