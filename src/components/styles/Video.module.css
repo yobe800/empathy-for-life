@@ -46,4 +46,7 @@
   .videoContainer {
     width: 100%;
   }
+  .streamingButton {
+    font-size: 70%;
+  }
 }
