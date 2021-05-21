@@ -6,13 +6,19 @@
 
 .container {
   width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.popUpContainer {
-  position: absolute;
-  top: 30%;
-  left: 10%;
+.popUp {
+  max-width: 15%;
+  padding: 2vh;
+  justify-self: center;
+  align-self: center;
   color: mainBlack;
+  overflow-wrap: break-word;
   z-index: 10;
 }
 

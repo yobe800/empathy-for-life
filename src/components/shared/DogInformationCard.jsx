@@ -31,30 +31,32 @@ const DogInformationCard = ({ id, name, breed, gender, age, character }) => {
           나이: {`${age}살`}
         </li>
       </ul>
-      <nav>
-        <Link to={{
-          pathname: `${pathname}/edit/${id}`,
-          state: { modal },
-        }}>
+      <div className={styles.buttonContainer}>
+        <Link
+          className={styles.anchor}
+          to={{
+            pathname: `${pathname}/edit/${id}`,
+            state: { modal },
+          }}
+        >
           <InputButton
+            className={styles.button}
             text="편집"
-            style={{ padding: "0.7vh 1vh", fontSize: "1.6vh" }}
           />
         </Link>
-        <Link to={{
-          pathname: `${pathname}/${id}`,
-          state: { modal },
-        }}>
+        <Link
+          className={styles.anchor}
+          to={{
+            pathname: `${pathname}/${id}`,
+            state: { modal },
+          }}
+        >
           <InputButton
+            className={styles.button}
             text="세부정보"
-            style={{
-              marginTop: "1vh",
-              padding: "0.7vh 1vh",
-              fontSize: "1.6vh",
-            }}
           />
         </Link>
-      </nav>
+      </div>
     </div>
   );
 };

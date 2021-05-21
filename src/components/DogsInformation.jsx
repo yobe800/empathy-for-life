@@ -141,12 +141,11 @@ const DogsInformation = () => {
   return (
     <Container className={styles.container}>
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUpWindow
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
       <ModalHeader
