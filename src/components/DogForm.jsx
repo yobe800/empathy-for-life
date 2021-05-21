@@ -317,11 +317,12 @@ const DogForm = () => {
       }
       {deleteMessage
         ? <PopUpWindow
-            className={styles.popUpContainer}
+            className={styles.popUp}
             text={deleteMessage}
             onClick={handlePopUpClose}
           >
             <InputButton
+              className={styles.confirmButton}
               text="확인"
               type="button"
               onClick={handleDogDelete}
