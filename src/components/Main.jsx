@@ -31,20 +31,20 @@ const Main = () => {
       () => setAccessTime(accessTime + 1),
       1000,
     );
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    // const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-    const saveUserAccessTime = async () => {
-      const body = JSON.stringify({ id: userId, access_time: accessTime });
-      await fetch(
-        `${serverUrl}/user`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body,
-        },
-      );
-    };
+    // const saveUserAccessTime = async () => {
+    //   const body = JSON.stringify({ id: userId, access_time: accessTime });
+    //   await fetch(
+    //     `${serverUrl}/user`,
+    //     {
+    //       method: "PUT",
+    //       headers: { "Content-Type": "application/json" },
+    //       credentials: "include",
+    //       body,
+    //     },
+    //   );
+    // };
     // window.addEventListener("beforeunload", saveUserAccessTime);
 
     return () => {
