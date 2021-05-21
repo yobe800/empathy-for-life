@@ -25,7 +25,10 @@ const DogProfile = () => {
       try {
         const response = await fetch(
           `${serverUrl}/dog/${id}`,
-          { signal },
+          {
+            credentials: "include",
+            signal
+          },
         );
         const { message, result } = await response.json();
         if (message === "ok") {

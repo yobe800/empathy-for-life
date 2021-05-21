@@ -39,7 +39,10 @@ const AdminAuth = () => {
           `${serverUrl}/admin/authentication`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
             body,
             signal,
           },

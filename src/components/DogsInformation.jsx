@@ -32,7 +32,10 @@ const DogsInformation = () => {
         const serverUrl = process.env.REACT_APP_SERVER_URL;
         const response = await fetch(
           `${serverUrl}/dog?search=${search}`,
-          { signal },
+          {
+            credentials: "include",
+            signal
+          },
         );
         const {
           message,

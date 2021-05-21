@@ -31,11 +31,13 @@ const Posts = () => {
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const fetchPosts = async () => {
-      console.log(search);
       try {
         const response = await fetch(
           `${serverUrl}/posts?search=${search}`,
-          { signal },
+          {
+            credentials: "include",
+            signal
+          },
         );
 
         const { message, result } = await response.json();

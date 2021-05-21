@@ -27,7 +27,11 @@ const Post = ({ postId, imageSrc, content, writer, writtenDate }) => {
       try {
         const response = await fetch(
           `${serverUrl}/posts/${postId}`,
-          { method: "DELETE", signal },
+          {
+            method: "DELETE",
+            credentials: "include",
+            signal
+          },
         );
         const { message } = await response.json();
 
