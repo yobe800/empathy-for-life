@@ -26,7 +26,7 @@ const Menu = () => {
 
     if (removeCookie(ID_TOKEN_KEY)) {
       dispatch(actionCreators.userDeleted());
-      history.go(0);
+      history.replace("/");
     } else {
       setErrorMessage(DEFAULT_ERROR_MESSAGE);
       setShouldLogOut(false);
