@@ -1,6 +1,7 @@
 @value modalContentWidth, mainWhite from "./variables.css";
 
 .container {
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -66,6 +67,7 @@
 
 .loading {
   width: modalContentWidth;
+  height: 15vh;
   object-fit: scale-down;
   padding-left: 2vh;
   box-sizing: border-box;

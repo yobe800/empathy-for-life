@@ -1,7 +1,12 @@
 @value (
   mainBlack,
-  defaultBorderRadius
+  defaultBorderRadius,
+  modalContentWidth
 ) from "./variables.css";
+
+.container {
+  width: 100%;
+}
 
 .popUpContainer {
   position: absolute;
@@ -11,10 +16,14 @@
   z-index: 10;
 }
 
-.closeButtonContainer {
+.modalHeader {
+  position: relative;
+}
+
+.closeButton {
   position: absolute;
-  right: 6%;
-  top: 3%;
+  right: 3%;
+  top: 5%;
 }
 
 .inputsContainer {
@@ -23,8 +32,29 @@
   justify-content: space-between;
 }
 
+.addButton {
+  width: 6vh;
+  font-size: 1.5vh;
+}
+
+.anchor:link {
+  text-decoration: none;
+}
+
+.search:focus {
+  outline: none;
+}
+
 .cardContainer {
   max-height: 65vh;
   margin-top: 1vh;
   overflow: auto;
+}
+
+.loading {
+  width: modalContentWidth;
+  height: 15vh;
+  object-fit: scale-down;
+  padding-left: 2vh;
+  box-sizing: border-box;
 }

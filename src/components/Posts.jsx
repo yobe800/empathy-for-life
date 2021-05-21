@@ -109,7 +109,7 @@ const Posts = () => {
 
   if (!postComponents.length) {
     postComponents.push(
-      <p key="notice" className={styles.notice}>게시글이 없습니다 😥</p>
+      <p key="notice" className={styles.notice}>게시글이 없습니다 😥</p>,
     );
   }
 
