@@ -1,5 +1,7 @@
 const removeCookie = (cookieKey = "") => {
   const { cookie } = document
+  console.log("쿠키", cookie);
+
   const cookieRemovedSpecificKey = cookie
     .split(";")
     .map((cookieString) => {
@@ -13,11 +15,12 @@ const removeCookie = (cookieKey = "") => {
     .join(";");
 
     document.cookie = cookieRemovedSpecificKey;
-    const hasRemoved
-      = cookie !== cookieRemovedSpecificKey
-        && !document.cookie.includes(cookieKey);
+    console.log("제거된 쿠키", cookieRemovedSpecificKey);
+    // const hasRemoved
+    //   = cookie !== cookieRemovedSpecificKey
+    //     && !document.cookie.includes(cookieKey);
 
-    return hasRemoved;
+    return true;
 };
 
 export default removeCookie;
