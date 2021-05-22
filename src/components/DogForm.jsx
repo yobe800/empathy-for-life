@@ -58,12 +58,16 @@ const DogForm = () => {
 
         if (message === "ok") {
           history.push("/dogs", { modal });
+        } else {
+          setDogForm(null);
+          setShouldFetch(false);
+          setErrorMessage(message);
         }
       } catch (error) {
         logWarnOrErrInDevelopment(error);
-        setErrorMessage(DEFAULT_ERROR_MESSAGE);
         setDogForm(null);
         setShouldFetch(false);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
@@ -88,11 +92,15 @@ const DogForm = () => {
 
         if (message === "ok") {
           history.push("/dogs", { modal });
+        } else {
+          setDogForm(null);
+          setShouldFetch(false);
+          setErrorMessage(message);
         }
       } catch (error) {
         logWarnOrErrInDevelopment(error);
-        setErrorMessage(DEFAULT_ERROR_MESSAGE);
         setDogForm(null);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
       }
     };
 
@@ -394,6 +402,7 @@ const DogForm = () => {
           labelClassName={styles.fontSize}
           inputAttr={{
             name: "age",
+            type: "number",
             defaultValue: dogForm?.age
           }}
         />
@@ -402,6 +411,7 @@ const DogForm = () => {
           inputClassName={styles.marginTop}
           labelClassName={styles.fontSize}
           inputAttr={{
+            type: "number",
             name: "weight",
             defaultValue: dogForm?.weight
           }}
