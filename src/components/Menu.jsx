@@ -3,8 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { ReducerContext, actionCreators } from "../features/rootSlice";
-import removeCookie from "../utils/removeCookie";
-import { ID_TOKEN_KEY, DEFAULT_ERROR_MESSAGE } from "../constants/constants";
+import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 
 import styles from "./styles/Menu.module.css";
 import Container from "./shared/Container";
@@ -12,6 +11,7 @@ import ModalHeader from "./shared/ModalHeader";
 import HeaderBoard from "./shared/HeaderBoard";
 import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton";
+import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 const Menu = () => {
   const { dispatch } = useContext(ReducerContext);
@@ -24,13 +24,38 @@ const Menu = () => {
       return;
     }
 
-    if (removeCookie(ID_TOKEN_KEY)) {
-      dispatch(actionCreators.userDeleted());
-      history.replace("/");
-    } else {
-      setErrorMessage(DEFAULT_ERROR_MESSAGE);
-      setShouldLogOut(false);
-    }
+    const controller = new AbortController();
+    const { signal } = controller;
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+
+    const signOutUser = async () => {
+      try {
+        const response = await fetch(
+          `${serverUrl}/user/sign-out`,
+          {
+            credentials: "include",
+            signal,
+          },
+        );
+
+        const { message } = await response.json();
+
+        if (message === "ok") {
+          dispatch(actionCreators.userDeleted());
+          history.push("/");
+        } else {
+          setErrorMessage(message);
+          setShouldLogOut(false);
+        }
+      } catch (error) {
+        logWarnOrErrInDevelopment(error);
+        setErrorMessage(DEFAULT_ERROR_MESSAGE);
+      }
+    };
+
+    signOutUser();
+
+    return () => controller.abort();
   }, [shouldLogOut, dispatch, history]);
 
   const handleLogOut = () => {
