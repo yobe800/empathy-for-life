@@ -4,7 +4,8 @@ const removeCookie = (cookieKey = "") => {
     .split(";")
     .map((cookieString) => {
       if(cookieString.includes(cookieKey)) {
-       return `${cookieString}; expires=${new Date(2000, 2, 1).toUTCString()};`
+
+       return `${cookieKey}=; expires=${new Date(0).toUTCString()};`
       }
 
       return cookieString;
@@ -12,11 +13,11 @@ const removeCookie = (cookieKey = "") => {
     .join(";");
 
     document.cookie = cookieRemovedSpecificKey;
-    // const hasRemoved
-    //   = cookie !== cookieRemovedSpecificKey
-    //     && !document.cookie.includes(cookieKey);
-    return true;
-    // return hasRemoved;
+    const hasRemoved
+      = cookie !== cookieRemovedSpecificKey
+        && !document.cookie.includes(cookieKey);
+
+    return hasRemoved;
 };
 
 export default removeCookie;
