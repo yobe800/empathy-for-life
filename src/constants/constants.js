@@ -16,7 +16,7 @@ const CHATS = {
 const DEFAULT_ERROR_MESSAGE = "오류가 발생했습니다.\n잠시후 다시 시도해 주세요.";
 const IMAGE_URLS = {
   DOGS_HANGING_FRONT: "/assets/images/dogs-hanging-front.png",
-  DOGS_HANGING_BACK: "/assets/images/dogs-hanging-front.png",
+  DOGS_HANGING_BACK: "/assets/images/dogs-hanging-back.png",
   DOGS_SPRITE: "/assets/images/dogs-sprite.png",
   GOOGLE_ICON: "/assets/images/google-icon.png",
   GRASS_GROUND: "/assets/images/grass-ground.png",
