@@ -11,17 +11,9 @@ P.S. 제가 봉사활동하고 있는 유기견 보호소 이름을 따와서 �
 
 ## 사람들과 유기견 보호소를 좀 더 가깝게 만들 순 없을까?
 여러 유기견 관련 사이트에서는 잘 정리된 유기견 분양글을 확인할 수 있습니다.  
-
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/abandoned_dog_shelter_site_example1.png" alt="abandoned dog shelter site" width="300" />  
-<figcaption>사설 유기견 보호소 사이트 분양 글</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/abandoned_dog_shelter_site_example2.png" alt="abandoned dog shelter site" width="240" />  
-<figcaption>국가 운영 유기견 분양 관련 글</figcaption>
-</figure>
-</div>
+<img src="./readme_assets/abandoned_dog_shelter_site_example1.png" alt="abandoned dog shelter site" width="300" /> | <img src="./readme_assets/abandoned_dog_shelter_site_example2.png" alt="abandoned dog shelter site" width="240" />
+:-: | :-:
+*사설 유기견 보호소 사이트 분양 글* | *국가 운영 유기견 분양 관련 글*
 
 하지만 분양 관련 글이 대부분을 차지하는 유기견 관련 사이트에서 유기견에 관한 관심을 높이고 입양으로 이어지도록 하기에는 부족하다고 느꼈습니다. 사람들을 좀 더 심리적으로 보호소와 유기견에 가깝게 다가갈 수 있도록 도와주는, 그런 상호작용할 수 있는 웹 애플리케이션이 필요하지 않을까 하는 생각이 들었습니다.  
 그렇게 생명공감을 만들게 됐습니다.
@@ -40,100 +32,37 @@ P.S. 제가 봉사활동하고 있는 유기견 보호소 이름을 따와서 �
   - 채팅
 
 # Sign-in
-<figure>
-<img src="./readme_assets/sign_in_user.png" alt="user sign in page" width="400" />
-<figcaption>
-사용자 sign-in 화면(구글 통한 sign-in 구현)
-</figcaption>
-</figure>
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/admin_auth.png" alt="administrator authentication page" width="400"/>
-<figcaption style="width: 400px;">
-관리자 authentication 화면(허가되지 않은 접근을 막기 위해 한 번의 접근 비밀번호 입력 필요)
-</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/admin_sign_in.png" alt="administrator sign-in and sign-up page" width="400" />
-<figcaption style="width: 400px;">
-관리자 sign-in 화면(Local sign-in 구현)
-</figcaption>
-</figure>
-</div>
+| <img src="./readme_assets/sign_in_user.png" alt="user sign in page" width="400" /> |
+:-:
+| *사용자 sign-in 화면(구글 통한 sign-in 구현)* |  
+
+<img src="./readme_assets/admin_auth.png" alt="administrator authentication page" width="400"/> | <img src="./readme_assets/admin_sign_in.png" alt="administrator sign-in and sign-up page" width="400" />
+:-: | :-:
+*관리자 authentication 화면(허가되지 않은 접근을 막기 위해*<br/>*한 번의 접근 비밀번호 입력 필요)* | *관리자 sign-in 화면(Local sign-in 구현)*
 
 # 개 정보 CRUD
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/create_dog.webp" alt="create dog information" width="400" />
-<figcaption>
-Create
-</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/update_dog.webp" alt="read and update dog information" width="400" />
-<figcaption>
-Read & update
-</figcaption>
-</figure>
-</div>
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/delete_dog.webp" alt="delete dog information" width="400" />
-<figcaption>
-Delete
-</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/dog_informations_by_user_side.png" width="360"/>
-<figcaption>
-일반 사용자 화면(Read only)
-</figcaption>
-</figure>
-</div>
+<img src="./readme_assets/create_dog.webp" alt="create dog information" width="400" /> | <img src="./readme_assets/update_dog.webp" alt="read and update dog information" width="400" />
+:-: | :-:
+*Create* | *Read & update*
+<img src="./readme_assets/delete_dog.webp" alt="delete dog information" width="400" /> | <img src="./readme_assets/dog_informations_by_user_side.png" width="360"/>
+*Delete* | *일반 사용자 화면(Read only)*
 
 # 게시글 CRUD
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/create_post.webp" alt="create post" width="400" />
-<figcaption>
-Create & read
-</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/update_post.webp" alt="update post" width="400"/>
-<figcaption>
-Update
-</figcaption>
-</figure>
-</div>
-<div style="display: flex;">
-<figure>
-<img src="./readme_assets/delete_post.webp" alt="delete a post" width="400" />
-<figcaption>Delete</figcaption>
-</figure>
-<figure>
-<img src="./readme_assets/user_post_CRUD.webp" alt="user CRUD a post" width="400" />
-<figcaption>
-User CRUD
-</figcaption>
-</figure>
-</div>
+<img src="./readme_assets/create_post.webp" alt="create post" width="400" /> | <img src="./readme_assets/update_post.webp" alt="update post" width="400"/>
+:-: | :-:
+*Create & read* | *Update*
+<img src="./readme_assets/delete_post.webp" alt="delete a post" width="400" /> | <img src="./readme_assets/user_post_CRUD.webp" alt="user CRUD a post" width="400" />
+*Delete* | *User CRUD*
 
 # 채팅
-<figure>
-<img src="./readme_assets/chat.webp" alt="chatting" width="400" />
-<figcaption>
-애플리케이션 시연 중 보호소 관계자와 진행된 실제 채팅 장면
-</figcaption>
-</figure>
+| <img src="./readme_assets/chat.webp" alt="chatting" width="400" /> |
+|:-:|
+| *애플리케이션 시연 중 보호소 관계자와 진행된 실제 채팅 장면* |
 
 # 실시간 방송
-<figure>
-<img src="./readme_assets/live_streaming.webp" alt="live straeming" width="400" />
-<figcaption>
-애플리케이션 시연 중 실제 유기견 보호소 라이브 방송 장면
-</figcaption>
-</figure>
+| <img src="./readme_assets/live_streaming.webp" alt="live straeming" width="400" /> |
+|:-:|
+*애플리케이션 시연 중 실제 유기견 보호소 라이브 방송 장면*
 
 # 프로젝트 발표 영상
 [![project presentation video](./readme_assets/project_presentation.png)](https://www.youtube.com/watch?v=F8OHnevCS30&t=3508s)
@@ -191,12 +120,11 @@ https://github.com/yobe800/empathy-for-life-backend
 UX를 향상시키기 위해서 Lazy loading을 구현했습니다.  
 Lazy loading이란 특정 상황(보통은 사용자가 화면 상하 스크롤로 화면의 특정 위치에 접근할 때)에서 필요한 데이터를 가져오는 것입니다. 이렇게 함으로써 로딩 속도를 개선시켜 UX를 향상시킵니다.  
 생명공감에서 게시글을 예로 들면, 처음 게시글 페이지를 열면 5개의 최신 게시글을 fetch 합니다. 이후 사용자가 스크롤을 통해 5 번째 게시글에 접근하면 그다음 5개 게시글을 fetch 해 옵니다.  
-<figure>
-<img src="./readme_assets/lazy_loading.webp" alt="lazy loading example" width="400" />
-<figcaption>
-게시글 Lazy loading 예제. 스크롤이 바닥에 닿으면 다음 5개 게시글을 fetch해 온다.
-</figcaption>
-</figure>
+
+| <img src="./readme_assets/lazy_loading.webp" alt="lazy loading example" width="400" /> |
+|:-:|
+| *게시글 Lazy loading 예제. 스크롤이 바닥에 닿으면 다음 5개 게시글을 fetch해 온다* |  
+
 이런 구현은 다음 코드를 이용해 완성시켰습니다.  
 
 ```js
