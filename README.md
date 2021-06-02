@@ -64,13 +64,13 @@ P.S. 제가 봉사활동하고 있는 유기견 보호소 이름을 따와서 �
 # 개 정보 CRUD
 <div style="display: flex;">
 <figure>
-<img src="https://media.giphy.com/media/lVon3Lum7OGoK3YsMO/giphy.gif" alt="create dog information" width="400" />
+<img src="./readme_assets/create_dog.webp" alt="create dog information" width="400" />
 <figcaption>
 Create
 </figcaption>
 </figure>
 <figure>
-<img src="https://media.giphy.com/media/8dylil1M8pTBsg3tCm/giphy.gif" alt="read and update dog information" width="400" />
+<img src="./readme_assets/update_dog.webp" alt="read and update dog information" width="400" />
 <figcaption>
 Read & update
 </figcaption>
@@ -78,7 +78,7 @@ Read & update
 </div>
 <div style="display: flex;">
 <figure>
-<img src="https://media.giphy.com/media/HgIDcGz7IBANwFKhiG/giphy.gif" alt="delete dog information" width="400" />
+<img src="./readme_assets/delete_dog.webp" alt="delete dog information" width="400" />
 <figcaption>
 Delete
 </figcaption>
@@ -94,13 +94,13 @@ Delete
 # 게시글 CRUD
 <div style="display: flex;">
 <figure>
-<img src="https://media.giphy.com/media/4HNPU9ZpdY3mtaYbGQ/giphy.gif" alt="create post" width="400" />
+<img src="./readme_assets/create_post.webp" alt="create post" width="400" />
 <figcaption>
 Create & read
 </figcaption>
 </figure>
 <figure>
-<img src="https://media.giphy.com/media/ebZgF5mLL05ECnaP9m/giphy.gif" alt="update post" width="400"/>
+<img src="./readme_assets/update_post.webp" alt="update post" width="400"/>
 <figcaption>
 Update
 </figcaption>
@@ -108,11 +108,11 @@ Update
 </div>
 <div style="display: flex;">
 <figure>
-<img src="https://media.giphy.com/media/eyVnXMISWTWFubwR6F/giphy.gif" alt="delete a post" width="400" />
+<img src="./readme_assets/delete_post.webp" alt="delete a post" width="400" />
 <figcaption>Delete</figcaption>
 </figure>
 <figure>
-<img src="https://media.giphy.com/media/kUjsc34tIw8yz2Wf3X/giphy.gif" alt="user CRUD a post" width="400" />
+<img src="./readme_assets/user_post_CRUD.webp" alt="user CRUD a post" width="400" />
 <figcaption>
 User CRUD
 </figcaption>
@@ -121,7 +121,7 @@ User CRUD
 
 # 채팅
 <figure>
-<img src="https://media.giphy.com/media/fC3n53dVtvXwsjSaWH/giphy.gif" alt="chatting" width="400" />
+<img src="./readme_assets/chat.webp" alt="chatting" width="400" />
 <figcaption>
 애플리케이션 시연 중 보호소 관계자와 진행된 실제 채팅 장면
 </figcaption>
@@ -129,7 +129,7 @@ User CRUD
 
 # 실시간 방송
 <figure>
-<img src="https://media.giphy.com/media/r1afxm4SUDQZbp8rIH/giphy.gif" alt="live straeming" width="400" />
+<img src="./readme_assets/live_streaming.webp" alt="live straeming" width="400" />
 <figcaption>
 애플리케이션 시연 중 실제 유기견 보호소 라이브 방송 장면
 </figcaption>
@@ -192,7 +192,7 @@ UX를 향상시키기 위해서 Lazy loading을 구현했습니다.
 Lazy loading이란 특정 상황(보통은 사용자가 화면 상하 스크롤로 화면의 특정 위치에 접근할 때)에서 필요한 데이터를 가져오는 것입니다. 이렇게 함으로써 로딩 속도를 개선시켜 UX를 향상시킵니다.  
 생명공감에서 게시글을 예로 들면, 처음 게시글 페이지를 열면 5개의 최신 게시글을 fetch 합니다. 이후 사용자가 스크롤을 통해 5 번째 게시글에 접근하면 그다음 5개 게시글을 fetch 해 옵니다.  
 <figure>
-<img src="https://media.giphy.com/media/eLRs7uX4PfVq6t0rRk/giphy.gif" alt="lazy loading example" width="400" />
+<img src="./readme_assets/lazy_loading.webp" alt="lazy loading example" width="400" />
 <figcaption>
 게시글 Lazy loading 예제. 스크롤이 바닥에 닿으면 다음 5개 게시글을 fetch해 온다.
 </figcaption>
