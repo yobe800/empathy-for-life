@@ -16,28 +16,27 @@ const DogInformationCard = ({
 }) => {
   const { pathname, state } = useLocation();
   const { modal } = state;
+
+  const DogCharacterImage = () => {
+    return (
+      <div className={styles.imageBox}>
+      <img
+        className={styles[character]}
+        src={IMAGE_URLS.DOGS_SPRITE}
+        alt="A dog character"
+      />
+    </div>
+    );
+  };
+
   return (
     <div className={styles.container}>
-      <div className={styles.imageBox}>
-        <img
-          className={styles[character]}
-          src={IMAGE_URLS.DOGS_SPRITE}
-          alt="A dog character"
-        />
-      </div>
+      <DogCharacterImage />
       <ul className={styles.descriptions}>
-        <li>
-          이름: {name}
-        </li>
-        <li>
-          견종: {breed}
-        </li>
-        <li>
-          성별: {gender === "male" ? "수컷" : "암컷"}
-        </li>
-        <li>
-          나이: {`${age}살`}
-        </li>
+        <li>이름: {name}</li>
+        <li>견종: {breed}</li>
+        <li>성별: {gender === "male" ? "수컷" : "암컷"}</li>
+        <li>나이: {`${age}살`}</li>
       </ul>
       <div className={styles.buttonContainer}>
         {isAdmin

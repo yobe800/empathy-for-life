@@ -13,7 +13,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import styles from "./styles/PostForm.module.css";
 import Container from "./shared/Container";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";

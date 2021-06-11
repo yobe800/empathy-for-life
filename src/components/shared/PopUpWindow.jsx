@@ -1,13 +1,13 @@
 import React from "react";
+
 import styles from "../styles/PopUpWindow.module.css";
-import CloseButton from "../shared/CloseButton";
+
+import CloseButton from "./CloseButton/";
 
 const PopUpWindow = ({ className, text, onClick, children }) => {
   return (
-    <div className={`${styles.popUpContainer} ${className}`}>
-      <div className={styles.buttonContainer}>
-        <CloseButton onClick={onClick} />
-      </div>
+    <div className={`${styles.container} ${className}`}>
+      <CloseButton className={styles.button} onClick={onClick} />
       <span className={styles.content}>{text}</span>
       {children}
     </div>

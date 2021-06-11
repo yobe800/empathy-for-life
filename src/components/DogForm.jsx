@@ -13,7 +13,7 @@ import Input from "./shared/Input";
 import InputButton from "./shared/InputButton";
 import ModalHeader from "./shared/ModalHeader";
 import PopUpWindow from "./shared/PopUpWindow";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 
 const DogForm = () => {
   const [dogForm, setDogForm] = useState(null);

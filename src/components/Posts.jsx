@@ -13,7 +13,7 @@ import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
 import Post from "./shared/Post";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 import PopUpWindow from "./shared/PopUpWindow";
 import Loading from "./shared/Loading";
 
@@ -23,7 +23,7 @@ const Posts = () => {
   const [postDatum, setPostDatum] = useState({ posts: [], next: null });
   const [shouldFetch, setShouldFetch] = useState(true);
   const [isBottom, setIsBottom] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("test");
   const { state } = useContext(ReducerContext);
   const isAdministrator = selectors.getIsAdministrator(state);
   const userId = selectors.getUserId(state);

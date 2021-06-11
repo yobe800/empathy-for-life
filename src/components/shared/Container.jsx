@@ -4,7 +4,7 @@ import styles from "../styles/Container.module.css";
 
 const Container = ({ className, children }) => {
   return (
-      <div className={`${styles.border} ${className}`}>
+      <div className={`${styles.container} ${className}`}>
         {children}
       </div>
   );

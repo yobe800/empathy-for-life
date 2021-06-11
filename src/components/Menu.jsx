@@ -10,7 +10,7 @@ import Container from "./shared/Container";
 import ModalHeader from "./shared/ModalHeader";
 import HeaderBoard from "./shared/HeaderBoard";
 import PopUpWindow from "./shared/PopUpWindow";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 const Menu = () => {

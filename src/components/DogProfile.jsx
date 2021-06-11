@@ -8,7 +8,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import styles from "./styles/DogProfile.module.css";
 import Container from "./shared/Container";
 import PopUpWindow from "./shared/PopUpWindow";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 
 const DogProfile = () => {
   const [errorMessage, setErrorMessage] = useState("");

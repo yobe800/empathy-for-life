@@ -5,7 +5,7 @@
   defaultBorderRadius
 ) from "./variables.css";
 
-.popUpContainer {
+.container {
   padding: 3%;
   border: defaultBorderRadius solid mainBlack;
   border-radius: defaultBorderWidth;
@@ -15,10 +15,10 @@
   color: mainBlack;
 }
 
-.buttonContainer {
+.button {
   position: absolute;
   right: 3%;
-  top: 10%;
+  top: 5%;
 }
 
 .content {

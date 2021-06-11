@@ -5,21 +5,8 @@
   defaultBorderWidth,
   defaultBorderRadius
 ) from "./variables.css";
-/*
-.container {
-  width: 100%;
-  padding: 1vh 0;
-  border-radius: defaultBorderRadius;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  background-color: mainLightBrown;
-  font-family: "neodgm", sans-serif;
-  color: mainWhite;
-} */
 
-.border {
+.container {
   max-width: 95%;
   max-height: 76vh;
   overflow: auto;
