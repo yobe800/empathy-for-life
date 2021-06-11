@@ -23,7 +23,7 @@ const Posts = () => {
   const [postDatum, setPostDatum] = useState({ posts: [], next: null });
   const [shouldFetch, setShouldFetch] = useState(true);
   const [isBottom, setIsBottom] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("test");
+  const [errorMessage, setErrorMessage] = useState("");
   const { state } = useContext(ReducerContext);
   const isAdministrator = selectors.getIsAdministrator(state);
   const userId = selectors.getUserId(state);

@@ -13,7 +13,7 @@ import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
 import DogInformationCard from "./shared/DogInformationCard";
-import CloseButton from "./shared/CloseButton";
+import CloseButton from "./shared/CloseButton/";
 import PopUpWindow from "./shared/PopUpWindow";
 import Loading from "./shared/Loading";
 
