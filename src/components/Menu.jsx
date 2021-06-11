@@ -6,7 +6,7 @@ import { ReducerContext, actionCreators } from "../features/rootSlice";
 import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 
 import styles from "./styles/Menu.module.css";
-import Container from "./shared/Container";
+import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
 import HeaderBoard from "./shared/HeaderBoard";
 import PopUpWindow from "./shared/PopUpWindow";
@@ -73,7 +73,7 @@ const Menu = () => {
   };
 
   return (
-    <Container className={styles.Container}>
+    <ModalContainer className={styles.container}>
       <CloseButton className={styles.closeButton} onClick={handleModalClose} />
       {errorMessage
         ? <PopUpWindow className={styles.popUp} text={errorMessage} onClick={handlePopUpClose}/>
@@ -87,7 +87,7 @@ const Menu = () => {
       >
         로그아웃
       </HeaderBoard>
-    </Container>
+    </ModalContainer>
   );
 };
 

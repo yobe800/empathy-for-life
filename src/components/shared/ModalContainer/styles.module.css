@@ -4,7 +4,7 @@
   mainLightBrown,
   defaultBorderWidth,
   defaultBorderRadius
-) from "./variables.css";
+) from "../../styles/variables.css";
 
 .container {
   max-width: 95%;

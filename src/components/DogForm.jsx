@@ -8,7 +8,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import concatStrings from "../utils/concatStrings";
 
 import styles from "./styles/DogForm.module.css";
-import Container from "./shared/Container";
+import ModalContainer from "./shared/ModalContainer/";
 import Input from "./shared/Input";
 import InputButton from "./shared/InputButton";
 import ModalHeader from "./shared/ModalHeader";
@@ -314,7 +314,7 @@ const DogForm = () => {
   };
 
   return (
-    <Container className={styles.container}>
+    <ModalContainer className={styles.container}>
       {errorMessage
         ? <PopUpWindow
             className={styles.popUp}
@@ -527,7 +527,7 @@ const DogForm = () => {
           />
         </div>
       </form>
-    </Container>
+    </ModalContainer>
   );
 };
 

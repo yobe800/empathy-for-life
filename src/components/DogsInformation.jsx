@@ -8,7 +8,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 
 import styles from "./styles/DogsInformation.module.css";
-import Container from "./shared/Container";
+import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import Input from "./shared/Input";
@@ -154,7 +154,7 @@ const DogsInformation = () => {
   }
 
   return (
-    <Container className={styles.container}>
+    <ModalContainer className={styles.container}>
       {errorMessage
         ? <PopUpWindow
             className={styles.popUp}
@@ -207,7 +207,7 @@ const DogsInformation = () => {
           : dogInformationList
         }
       </div>
-    </Container>
+    </ModalContainer>
   );
 };
 

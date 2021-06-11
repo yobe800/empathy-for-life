@@ -1,8 +1,8 @@
 import React from "react";
 
-import styles from "../styles/Container.module.css";
+import styles from "./styles.module.css";
 
-const Container = ({ className, children }) => {
+const ModalContainer = ({ className, children }) => {
   return (
       <div className={`${styles.container} ${className}`}>
         {children}
@@ -10,4 +10,4 @@ const Container = ({ className, children }) => {
   );
 };
 
-export default Container;
+export default ModalContainer;

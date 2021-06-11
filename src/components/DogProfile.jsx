@@ -6,7 +6,7 @@ import getDogDescriptions from "../utils/getDogDescriptionLists";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import styles from "./styles/DogProfile.module.css";
-import Container from "./shared/Container";
+import ModalContainer from "./shared/ModalContainer/";
 import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton/";
 
@@ -64,7 +64,7 @@ const DogProfile = () => {
   };
 
   return (
-    <Container className={styles.container}>
+    <ModalContainer className={styles.container}>
       <CloseButton
         className={styles.closeButton}
         onClick={handleModalClose}
@@ -92,7 +92,7 @@ const DogProfile = () => {
       <p className={styles.content}>
         {dogInformation?.description}
       </p>
-    </Container>
+    </ModalContainer>
 
   );
 };

@@ -12,7 +12,7 @@ import {
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import styles from "./styles/PostForm.module.css";
-import Container from "./shared/Container";
+import ModalContainer from "./shared/ModalContainer/";
 import CloseButton from "./shared/CloseButton/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
@@ -252,7 +252,7 @@ const PostForm = () => {
   });
 
   return (
-    <Container className={styles.container}>
+    <ModalContainer className={styles.container}>
       {errorMessage
         ? <PopUpWindow
             className={styles.popUp}
@@ -322,7 +322,7 @@ const PostForm = () => {
           onInput={handleContentInput}
         />
       </form>
-    </Container>
+    </ModalContainer>
   );
 };
 
