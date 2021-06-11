@@ -1,10 +1,11 @@
 import React from "react";
 
+import concatClassNames from "../../../utils/concatClassNames";
 import styles from "./styles.module.css";
 
 const ModalContainer = ({ className, children }) => {
   return (
-      <div className={`${styles.container} ${className}`}>
+      <div className={concatClassNames(styles.container, className)}>
         {children}
       </div>
   );

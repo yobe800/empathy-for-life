@@ -5,7 +5,7 @@ import validator from "validator";
 import { LIMIT_FILE_SIZE, DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 import getBase64FromImageAsync from "../utils/getBase64FromImageAsync";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
-import concatStrings from "../utils/concatStrings";
+import concatClassNames from "../utils/concatClassNames";
 
 import styles from "./styles/DogForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
@@ -372,7 +372,7 @@ const DogForm = () => {
           }}
         />
         <div
-          className={concatStrings(styles.selectContainer, styles.marginTop)}
+          className={concatClassNames(styles.selectContainer, styles.marginTop)}
         >
           <label className={styles.fontSize} htmlFor="gender">
             성별
@@ -439,7 +439,7 @@ const DogForm = () => {
         <Input
           title="입소일"
           labelClassName={styles.fontSize}
-          inputClassName={concatStrings(styles.marginTop,styles.dateInput)}
+          inputClassName={concatClassNames(styles.marginTop,styles.dateInput)}
           inputAttr={{
             name: "entrancedAt",
             type: "date",
@@ -472,8 +472,8 @@ const DogForm = () => {
         </div>
         <Input
           title="사진"
-          labelClassName={concatStrings(styles.photoLabel, styles.fontSize)}
-          inputClassName={concatStrings(styles.photoInput, styles.marginTop)}
+          labelClassName={styles.fontSize}
+          inputClassName={concatClassNames(styles.photoInput, styles.marginTop)}
           inputAttr={{
             type: "file",
             accept: "image/png, image/jpeg, image/jpg",
@@ -484,13 +484,13 @@ const DogForm = () => {
         />
         <img
           onLoad={handleImageLoad}
-          className={concatStrings(styles.thumnail, styles.marginTop)}
+          className={concatClassNames(styles.thumnail, styles.marginTop)}
           ref={imgRef}
           alt="dog profile thumnail"
         />
         <div className={styles.selectContainer}>
           <label
-            className={concatStrings(styles.selectLabel, styles.fontSize)} 
+            className={styles.fontSize}
             htmlFor="dogCharacter"
           >
             캐릭터

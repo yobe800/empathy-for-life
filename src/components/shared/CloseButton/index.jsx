@@ -1,11 +1,12 @@
 import React from "react";
 
+import concatClassNames from "../../../utils/concatClassNames";
 import styles from "./styles.module.css";
 
 const CloseButton = ({ className, onClick }) => {
   return (
     <button
-      className={`${styles.closeButton} ${className}`}
+      className={concatClassNames(styles.closeButton, className)}
       onClick={onClick}
     >
       X
