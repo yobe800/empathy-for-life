@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./styles/MainNavigation.module.css";
-import HeaderBoard from "./shared/HeaderBoard";
+import HeaderBoard from "./shared/HeaderBoard/";
 
 const MainNavigation = () => {
   const location = useLocation();

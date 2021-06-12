@@ -6,7 +6,7 @@ import { IMAGE_URLS } from "../constants/constants";
 import calculateTime from "../utils/calculateTime";
 
 import styles from "./styles/Main.module.css";
-import HeaderBoard from "./shared/HeaderBoard";
+import HeaderBoard from "./shared/HeaderBoard/";
 import Video from "./Video";
 import Chat from "./Chat"
 import MainNavigation from "./MainNavigation";

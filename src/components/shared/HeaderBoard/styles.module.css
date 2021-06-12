@@ -5,7 +5,7 @@
   mainLightBrown,
   defaultBorderWidth,
   defaultBorderRadius
-) from "./variables.css";
+) from "../../styles/variables.css";
 
 .board {
   border: defaultBorderWidth solid mainBlack;
