@@ -11,7 +11,7 @@ import { actionCreators, ReducerContext } from "../features/rootSlice";
 import styles from "./styles/AdminAuth.module.css";
 import Home from "./shared/Home/";
 import InputButton from "./shared/InputButton.jsx";
-import Input from "./shared/Input.jsx";
+import LabelableInput from "./shared/LabelableInput/";
 import PopUpWindow from "./shared/PopUpWindow";
 
 const AdminAuth = () => {
@@ -102,7 +102,7 @@ const AdminAuth = () => {
         the password for access to administrator
       </span>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input
+        <LabelableInput
           inputAttr={{
             type: "password",
             value: password,

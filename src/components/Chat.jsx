@@ -5,7 +5,7 @@ import { CHATS } from "../constants/constants";
 import getTimeString from "../utils/getTimeString";
 
 import styles from "./styles/Chat.module.css";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput/";
 import InputButton from "./shared/InputButton";
 
 const Chat = () => {
@@ -146,9 +146,9 @@ const Chat = () => {
         className={styles.formContainer}
         onSubmit={handleSubmitMessage}
       >
-        <Input
-          inputClassName={styles.chatInput}
+        <LabelableInput
           inputAttr={{
+            className: styles.chatInput,
             onInput: handleInput,
             value: chatMessage,
           }}

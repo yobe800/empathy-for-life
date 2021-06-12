@@ -11,7 +11,7 @@ import styles from "./styles/DogsInformation.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput/";
 import DogInformationCard from "./shared/DogInformationCard/";
 import CloseButton from "./shared/CloseButton/";
 import PopUpWindow from "./shared/PopUpWindow";
@@ -188,9 +188,9 @@ const DogsInformation = () => {
               </Link>
             : null
           }
-          <Input
-            inputClassName={styles.search}
+          <LabelableInput
             inputAttr={{
+              className: styles.search,
               value: search,
               placeholder: "검색",
               onInput: handleSearchInput,

@@ -13,7 +13,7 @@ import {
 
 import styles from "./styles/AdminSignIn.module.css";
 import Home from "./shared/Home/";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput/";
 import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
@@ -118,12 +118,12 @@ const AdminSignIn = () => {
         : null
       }
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input title={"ID"} inputAttr={{
+        <LabelableInput title={"ID"} inputAttr={{
           type: "text",
           value: idValue,
           onInput: handleId,
         }} />
-        <Input
+        <LabelableInput
           title={"Password"}
           inputAttr={{
             type: "password",

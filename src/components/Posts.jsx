@@ -11,7 +11,7 @@ import styles from "./styles/Posts.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput";
 import Post from "./shared/Post";
 import CloseButton from "./shared/CloseButton/";
 import PopUpWindow from "./shared/PopUpWindow";
@@ -196,9 +196,9 @@ const Posts = () => {
               text={"글쓰기"}
             />
           </Link>
-          <Input
-            inputClassName={styles.search}
+          <LabelableInput
             inputAttr={{
+              className: styles.search,
               placeholder: "검색",
               onInput: handleSearch,
             }}

@@ -12,7 +12,7 @@ import {
 
 import styles from "./styles/AdminSignUp.module.css";
 import Home from "./shared/Home/";
-import Input from "./shared/Input.jsx";
+import LabelableInput from "./shared/LabelableInput/";
 import InputButton from "./shared/InputButton.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
@@ -147,7 +147,7 @@ const AdminSignUp = () => {
       : "text";
 
     return (
-      <Input
+      <LabelableInput
         key={index}
         type={inputType}
         title={title}

@@ -9,7 +9,7 @@ import concatClassNames from "../utils/concatClassNames";
 
 import styles from "./styles/DogForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput";
 import InputButton from "./shared/InputButton";
 import ModalHeader from "./shared/ModalHeader";
 import PopUpWindow from "./shared/PopUpWindow";
@@ -363,9 +363,11 @@ const DogForm = () => {
         </div>
       </ModalHeader>
       <form id="dogForm" className={styles.form} onSubmit={handleSubmit}>
-        <Input
-          labelClassName={styles.fontSize}
+        <LabelableInput
           title="이름"
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
             name: "name",
             defaultValue: dogForm?.name,
@@ -387,48 +389,58 @@ const DogForm = () => {
             <option value="female">암컷</option>
           </select>
         </div>
-        <Input
+        <LabelableInput
           title="견종"
-          labelClassName={styles.fontSize}
-          inputClassName={styles.marginTop}
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
+            className: styles.marginTop,
             name: "breed",
             defaultValue: dogForm?.breed
           }}
         />
-        <Input
+        <LabelableInput
           title="나이"
-          inputClassName={styles.marginTop}
-          labelClassName={styles.fontSize}
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
+            className: styles.marginTop,
             name: "age",
             type: "number",
             defaultValue: dogForm?.age
           }}
         />
-        <Input
+        <LabelableInput
           title="무게(Kg)"
-          inputClassName={styles.marginTop}
-          labelClassName={styles.fontSize}
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
+            className: styles.marginTop,
             type: "number",
             name: "weight",
             defaultValue: dogForm?.weight
           }}
         />
         <div className={styles.checkboxesContainer}>
-          <Input
+          <LabelableInput
             title="심장사상충"
-            labelClassName={styles.fontSize}
+            labelAttr={{
+              className: styles.fontSize,
+            }}
             inputAttr={{
               name: "heartWorm",
               type: "checkbox",
               defaultValue: dogForm?.heartWorm,
             }}
           />
-          <Input
+          <LabelableInput
             title="중성화"
-            labelClassName={styles.fontSize}
+            labelAttr={{
+              className: styles.fontSize,
+            }}
             inputAttr={{
               name: "neutering",
               type: "checkbox",
@@ -436,11 +448,13 @@ const DogForm = () => {
             }}
           />
         </div>
-        <Input
+        <LabelableInput
           title="입소일"
-          labelClassName={styles.fontSize}
-          inputClassName={concatClassNames(styles.marginTop,styles.dateInput)}
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
+            className: concatClassNames(styles.marginTop, styles.dateInput),
             name: "entrancedAt",
             type: "date",
             defaultValue: dogForm?.entrancedAt
@@ -470,11 +484,13 @@ const DogForm = () => {
             </option>
           </select>
         </div>
-        <Input
+        <LabelableInput
           title="사진"
-          labelClassName={styles.fontSize}
-          inputClassName={concatClassNames(styles.photoInput, styles.marginTop)}
+          labelAttr={{
+            className: styles.fontSize,
+          }}
           inputAttr={{
+            className: concatClassNames(styles.photoInput, styles.marginTop),
             type: "file",
             accept: "image/png, image/jpeg, image/jpg",
             name: "photo",

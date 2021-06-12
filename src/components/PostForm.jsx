@@ -17,7 +17,7 @@ import CloseButton from "./shared/CloseButton/";
 import ModalHeader from "./shared/ModalHeader";
 import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";
-import Input from "./shared/Input";
+import LabelableInput from "./shared/LabelableInput/";
 
 const PostForm = () => {
   const [optionDatum, setOptionDatum] = useState([
@@ -297,11 +297,13 @@ const PostForm = () => {
             {options}
           </select>
         </label>
-        <Input
-          inputClassName={styles.photoInput}
-          labelClassName={styles.photoInputLabel}
+        <LabelableInput
           title="사진"
+          labelAttr={{
+            className: styles.photoInputLabel,
+          }}
           inputAttr={{
+            className: styles.photoInput,
             type: "file",
             accept: "image/png, image/jpeg, image/jpg",
             onChange: handlePhotoInput,
