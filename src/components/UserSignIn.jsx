@@ -17,7 +17,7 @@ import PopUpWindow from "./shared/PopUpWindow";
 import { signInWithGoogle } from "../auth/firebase";
 import getAuthHeaderByToken from "../utils/getAuthHeaderByToken"
 import styles from "./styles/UserSignIn.module.css";
-import Home from "./shared/Home.jsx";
+import Home from "./shared/Home/";
 
 
 const UserSignIn = () => {

@@ -9,7 +9,7 @@ import {
 import { actionCreators, ReducerContext } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
-import Home from "./shared/Home.jsx";
+import Home from "./shared/Home/";
 import InputButton from "./shared/InputButton.jsx";
 import Input from "./shared/Input.jsx";
 import PopUpWindow from "./shared/PopUpWindow";

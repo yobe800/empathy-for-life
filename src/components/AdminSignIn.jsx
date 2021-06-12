@@ -12,7 +12,7 @@ import {
 } from "../features/rootSlice";
 
 import styles from "./styles/AdminSignIn.module.css";
-import Home from "./shared/Home";
+import Home from "./shared/Home/";
 import Input from "./shared/Input";
 import InputButton from "./shared/InputButton";
 import PopUpWindow from "./shared/PopUpWindow";

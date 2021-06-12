@@ -11,7 +11,7 @@ import {
 } from "../features/rootSlice";
 
 import styles from "./styles/AdminSignUp.module.css";
-import Home from "./shared/Home.jsx";
+import Home from "./shared/Home/";
 import Input from "./shared/Input.jsx";
 import InputButton from "./shared/InputButton.jsx";
 import PopUpWindow from "./shared/PopUpWindow";
