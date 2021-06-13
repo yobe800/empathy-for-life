@@ -4,7 +4,7 @@
   defaultBorderHeight,
   mainBlack,
   mainWhite
-) from "./variables.css";
+) from "../../styles/variables.css";
 
 .inputButton {
   padding: 1vh;

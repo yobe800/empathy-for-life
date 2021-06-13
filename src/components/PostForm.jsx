@@ -15,7 +15,7 @@ import styles from "./styles/PostForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import CloseButton from "./shared/CloseButton/";
 import ModalHeader from "./shared/ModalHeader";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button";
 import PopUpWindow from "./shared/PopUpWindow";
 import LabelableInput from "./shared/LabelableInput/";
 
@@ -268,12 +268,12 @@ const PostForm = () => {
           onClick={handleModalClose}
         />
         <div className={styles.inputButtonsContainer}>
-          <InputButton
+          <Button
             className={styles.button}
             text={id ? "수정" : "추가"}
             form="postForm"
           />
-          <InputButton
+          <Button
             className={styles.button}
             text="취소"
             type="button"

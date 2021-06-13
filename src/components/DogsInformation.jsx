@@ -10,7 +10,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import styles from "./styles/DogsInformation.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput/";
 import DogInformationCard from "./shared/DogInformationCard/";
 import CloseButton from "./shared/CloseButton/";
@@ -180,7 +180,7 @@ const DogsInformation = () => {
                   state: { modal },
                 }}
               >
-                <InputButton
+                <Button
                   className={styles.addButton}
                   type="button"
                   text={"추가"}

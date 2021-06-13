@@ -10,7 +10,7 @@ import { actionCreators, ReducerContext } from "../features/rootSlice";
 
 import styles from "./styles/AdminAuth.module.css";
 import Home from "./shared/Home/";
-import InputButton from "./shared/InputButton.jsx";
+import Button from "./shared/Button/";
 import LabelableInput from "./shared/LabelableInput/";
 import PopUpWindow from "./shared/PopUpWindow";
 
@@ -109,9 +109,11 @@ const AdminAuth = () => {
             onInput: handleInput,
           }}
         />
-        <div className={styles.inputButtonContainer}>
-          <InputButton text="확인" disabled={!!isDetecting}/>
-        </div>
+        <Button
+          className={styles.button}
+          text="확인"
+          disabled={!!isDetecting}
+        />
       </form>
     </Home>
   );

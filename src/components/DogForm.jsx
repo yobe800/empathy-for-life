@@ -10,7 +10,7 @@ import concatClassNames from "../utils/concatClassNames";
 import styles from "./styles/DogForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import LabelableInput from "./shared/LabelableInput";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button/";
 import ModalHeader from "./shared/ModalHeader";
 import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton/";
@@ -329,7 +329,7 @@ const DogForm = () => {
             text={deleteMessage}
             onClick={handlePopUpClose}
           >
-            <InputButton
+            <Button
               className={styles.confirmButton}
               text="확인"
               type="button"
@@ -344,9 +344,9 @@ const DogForm = () => {
           onClick={handleModalClose}
         />
         <div className={styles.inputButtonsContainer}>
-          <InputButton className={styles.editButton} text={id ? "수정" : "추가"} form="dogForm" />
+          <Button className={styles.editButton} text={id ? "수정" : "추가"} form="dogForm" />
           {id
-            ? <InputButton
+            ? <Button
                 className={styles.editButton}
                 text="삭제"
                 type="button"
@@ -354,7 +354,7 @@ const DogForm = () => {
               />
             : null
           }
-          <InputButton
+          <Button
             className={styles.editButton}
             text="취소"
             type="button"

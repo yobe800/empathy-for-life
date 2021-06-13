@@ -13,7 +13,7 @@ import {
 import styles from "./styles/AdminSignUp.module.css";
 import Home from "./shared/Home/";
 import LabelableInput from "./shared/LabelableInput/";
-import InputButton from "./shared/InputButton.jsx";
+import Button from "./shared/Button/";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
@@ -169,9 +169,12 @@ const AdminSignUp = () => {
       }
       <form className={styles.form}>
         {inputs}
-        <div className={styles.buttonsContainer}>
-          <InputButton text={"sign up"} onClick={handleSubmit} disabled={!!signUpForm}/>
-        </div>
+        <Button
+          className={styles.button}
+          text={"sign up"}
+          onClick={handleSubmit}
+          disabled={!!signUpForm}
+        />
       </form>
     </Home>
   );

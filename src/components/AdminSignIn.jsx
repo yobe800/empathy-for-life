@@ -14,7 +14,7 @@ import {
 import styles from "./styles/AdminSignIn.module.css";
 import Home from "./shared/Home/";
 import LabelableInput from "./shared/LabelableInput/";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button/";
 import PopUpWindow from "./shared/PopUpWindow";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
@@ -132,13 +132,13 @@ const AdminSignIn = () => {
           }}
         />
         <div className={styles.buttonsContainer}>
-          <InputButton
+          <Button
             type="button"
             text={"sign up"}
             onClick={handleClick}
             disabled={!!isSigningIn}
           />
-          <InputButton text={"sign in"} disabled={!!isSigningIn} />
+          <Button text={"sign in"} disabled={!!isSigningIn} />
         </div>
       </form>
     </Home>

@@ -6,7 +6,7 @@ import getTimeString from "../utils/getTimeString";
 
 import styles from "./styles/Chat.module.css";
 import LabelableInput from "./shared/LabelableInput/";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button/";
 
 const Chat = () => {
   const [chatDatum, setChatDatum] = useState([]);
@@ -153,7 +153,7 @@ const Chat = () => {
             value: chatMessage,
           }}
         />
-        <InputButton
+        <Button
           className={styles.submitButton}
           text={"전송"}
         />

@@ -5,7 +5,7 @@ import { ReducerContext, selectors } from "../features/rootSlice";
 import useVideoStreaming from "../hooks/useVideoStreaming";
 
 import styles from "./styles/Video.module.css";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button";
 
 const Video = () => {
   const { state } = useContext(ReducerContext);
@@ -36,7 +36,7 @@ const Video = () => {
               name="cameraSelect"
               disabled
             />
-            <InputButton
+            <Button
               className={styles.streamingButton}
               type="button"
               name="streamingOn"

@@ -10,7 +10,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import styles from "./styles/Posts.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader";
-import InputButton from "./shared/InputButton";
+import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput";
 import Post from "./shared/Post";
 import CloseButton from "./shared/CloseButton/";
@@ -190,7 +190,7 @@ const Posts = () => {
               state: { modal },
             }}
           >
-            <InputButton
+            <Button
               className={styles.writingButton}
               type="button"
               text={"글쓰기"}

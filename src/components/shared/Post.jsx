@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { DEFAULT_ERROR_MESSAGE } from "../../constants/constants";
 
 import styles from "../styles/Post.module.css";
-import InputButton from "./InputButton";
+import Button from "./Button";
 import PopUpWindow from "./PopUpWindow";
 
 const Post = ({
@@ -82,7 +82,7 @@ const Post = ({
           >
             {errorMessage
               ? null
-              : <InputButton
+              : <Button
                   className={styles.deletionConfirmButton}
                   type="button"
                   text="확인"
@@ -104,13 +104,13 @@ const Post = ({
                   state: { modal }
                 }}
               >
-                <InputButton
+                <Button
                   className={styles.button}
                   type="button"
                   text="편집"
                 />
               </Link>
-                <InputButton
+                <Button
                   className={styles.button}
                   type="button"
                   text="삭제"
