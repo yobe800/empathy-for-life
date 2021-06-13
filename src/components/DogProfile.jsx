@@ -7,7 +7,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import styles from "./styles/DogProfile.module.css";
 import ModalContainer from "./shared/ModalContainer/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import CloseButton from "./shared/CloseButton/";
 
 const DogProfile = () => {
@@ -43,6 +43,7 @@ const DogProfile = () => {
     };
 
     getDogInformation();
+
     return () => controller.abort();
   }, [id]);
 
@@ -70,12 +71,11 @@ const DogProfile = () => {
         onClick={handleModalClose}
       />
       {errorMessage
-        ? <div className={styles.popUpContainer}>
-            <PopUpWindow
-              text={errorMessage}
-              onClick={handleClosePopUp}
-            />
-          </div>
+        ? <PopUp
+            className={styles.popUp}
+            text={errorMessage}
+            onClick={handleClosePopUp}
+          />
         : null
       }
       <div className={styles.informationContainer}>

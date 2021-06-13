@@ -13,7 +13,7 @@ import {
   ReducerContext,
 } from "../features/rootSlice";
 
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import { signInWithGoogle } from "../auth/firebase";
 import getAuthHeaderByToken from "../utils/getAuthHeaderByToken"
 import styles from "./styles/UserSignIn.module.css";
@@ -22,7 +22,7 @@ import Home from "./shared/Home/";
 
 const UserSignIn = () => {
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("asdfdsfas");
   const { dispatch } = useContext(ReducerContext);
   const history = useHistory();
   const isMobile = detectMobileIs();
@@ -91,7 +91,7 @@ const UserSignIn = () => {
     <Home imageSrc={IMAGE_URLS.DOGS_HANGING_FRONT}>
       {errorMessage
         ? (
-            <PopUpWindow
+            <PopUp
               text={`로그인 실패.\n잠시 후 다시 시도해 주세요.`}
               onClick={handleClosePopUp}
             />

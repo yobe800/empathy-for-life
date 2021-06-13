@@ -5,7 +5,7 @@ import { DEFAULT_ERROR_MESSAGE } from "../../constants/constants";
 
 import styles from "../styles/Post.module.css";
 import Button from "./Button";
-import PopUpWindow from "./PopUpWindow";
+import PopUp from "./PopUp/";
 
 const Post = ({
   postId,
@@ -76,7 +76,7 @@ const Post = ({
   return (
     <div className={styles.container}>
       {hasConfirmDeletion
-        ? <PopUpWindow
+        ? <PopUp
             text={errorMessage || "삭제하시겠습니까?"}
             onClick={handleClosePopUp}
           >
@@ -89,7 +89,7 @@ const Post = ({
                   onClick={handlePostDelete}
                 />
             }
-          </PopUpWindow>
+          </PopUp>
         : null
       }
       <img className={styles.photo} src={imageSrc} alt="post" />

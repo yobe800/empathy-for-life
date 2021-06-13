@@ -15,7 +15,7 @@ import styles from "./styles/AdminSignIn.module.css";
 import Home from "./shared/Home/";
 import LabelableInput from "./shared/LabelableInput/";
 import Button from "./shared/Button/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 const AdminSignIn = () => {
@@ -114,7 +114,7 @@ const AdminSignIn = () => {
   return (
     <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
-        ? <PopUpWindow text={errorMessage} onClick={handleClosePopUp} />
+        ? <PopUp text={errorMessage} onClick={handleClosePopUp} />
         : null
       }
       <form className={styles.form} onSubmit={handleSubmit}>

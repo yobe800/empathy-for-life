@@ -9,7 +9,7 @@ import styles from "./styles/Menu.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader/";
 import HeaderBoard from "./shared/HeaderBoard/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import CloseButton from "./shared/CloseButton/";
 import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
@@ -76,7 +76,7 @@ const Menu = () => {
     <ModalContainer className={styles.container}>
       <CloseButton className={styles.closeButton} onClick={handleModalClose} />
       {errorMessage
-        ? <PopUpWindow className={styles.popUp} text={errorMessage} onClick={handlePopUpClose}/>
+        ? <PopUp className={styles.popUp} text={errorMessage} onClick={handlePopUpClose}/>
         : null
       }
       <ModalHeader text="메뉴" />

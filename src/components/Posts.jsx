@@ -14,7 +14,7 @@ import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput";
 import Post from "./shared/Post";
 import CloseButton from "./shared/CloseButton/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import Loading from "./shared/Loading/";
 
 const Posts = () => {
@@ -170,7 +170,7 @@ const Posts = () => {
   return (
     <ModalContainer className={styles.container}>
       {errorMessage
-        ? <PopUpWindow
+        ? <PopUp
             className={styles.popUp}
             text={errorMessage}
             onClick={handleClosePopUp}

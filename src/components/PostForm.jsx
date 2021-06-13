@@ -16,7 +16,7 @@ import ModalContainer from "./shared/ModalContainer/";
 import CloseButton from "./shared/CloseButton/";
 import ModalHeader from "./shared/ModalHeader/";
 import Button from "./shared/Button";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import LabelableInput from "./shared/LabelableInput/";
 
 const PostForm = () => {
@@ -254,7 +254,7 @@ const PostForm = () => {
   return (
     <ModalContainer className={styles.container}>
       {errorMessage
-        ? <PopUpWindow
+        ? <PopUp
             className={styles.popUp}
             text={errorMessage}
             onClick={handleClosePopUp}

@@ -12,7 +12,7 @@ import ModalContainer from "./shared/ModalContainer/";
 import LabelableInput from "./shared/LabelableInput";
 import Button from "./shared/Button/";
 import ModalHeader from "./shared/ModalHeader/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp";
 import CloseButton from "./shared/CloseButton/";
 
 const DogForm = () => {
@@ -316,7 +316,7 @@ const DogForm = () => {
   return (
     <ModalContainer className={styles.container}>
       {errorMessage
-        ? <PopUpWindow
+        ? <PopUp
             className={styles.popUp}
             text={errorMessage}
             onClick={handlePopUpClose}
@@ -324,7 +324,7 @@ const DogForm = () => {
         : null
       }
       {deleteMessage
-        ? <PopUpWindow
+        ? <PopUp
             className={styles.popUp}
             text={deleteMessage}
             onClick={handlePopUpClose}
@@ -335,7 +335,7 @@ const DogForm = () => {
               type="button"
               onClick={handleDogDelete}
             />
-          </PopUpWindow>
+          </PopUp>
         : null
       }
       <ModalHeader className={styles.modalHeader} text="강아지 추가">

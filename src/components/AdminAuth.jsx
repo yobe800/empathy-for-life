@@ -12,7 +12,7 @@ import styles from "./styles/AdminAuth.module.css";
 import Home from "./shared/Home/";
 import Button from "./shared/Button/";
 import LabelableInput from "./shared/LabelableInput/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 
 const AdminAuth = () => {
   const [password, setPassword] = useState("");
@@ -91,7 +91,7 @@ const AdminAuth = () => {
     <Home imageSrc={IMAGE_URLS.DOGS_HANGING_BACK}>
       {errorMessage
         ? (
-            <PopUpWindow
+            <PopUp
               text={errorMessage}
               onClick={handleClosePopUp}
             />

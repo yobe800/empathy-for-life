@@ -3,7 +3,7 @@
   mainWhite,
   defaultBorderWidth,
   defaultBorderRadius
-) from "./variables.css";
+) from "../../styles/variables.css";
 
 .container {
   padding: 3%;

@@ -14,7 +14,7 @@ import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput/";
 import DogInformationCard from "./shared/DogInformationCard/";
 import CloseButton from "./shared/CloseButton/";
-import PopUpWindow from "./shared/PopUpWindow";
+import PopUp from "./shared/PopUp/";
 import Loading from "./shared/Loading/";
 
 const DogsInformation = () => {
@@ -156,7 +156,7 @@ const DogsInformation = () => {
   return (
     <ModalContainer className={styles.container}>
       {errorMessage
-        ? <PopUpWindow
+        ? <PopUp
             className={styles.popUp}
             text={errorMessage}
             onClick={handleClosePopUp}
