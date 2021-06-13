@@ -15,7 +15,7 @@ import LabelableInput from "./shared/LabelableInput";
 import Post from "./shared/Post";
 import CloseButton from "./shared/CloseButton/";
 import PopUpWindow from "./shared/PopUpWindow";
-import Loading from "./shared/Loading";
+import Loading from "./shared/Loading/";
 
 const Posts = () => {
   const [isLoading, setIsLoading] = useState(true);

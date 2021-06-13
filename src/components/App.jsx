@@ -30,7 +30,7 @@ import DogsInformation from "./DogsInformation";
 import DogForm from "./DogForm";
 import PostForm from "./PostForm";
 import Menu from "./Menu";
-import Loading from "./shared/Loading";
+import Loading from "./shared/Loading/";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
