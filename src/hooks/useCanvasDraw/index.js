@@ -8,6 +8,7 @@ import {
 } from "../../features/rootSlice";
 import { IMAGE_URLS } from "../../constants/constants";
 import popUpDogProfile from "./popUpDogProfile";
+import drawCanvas from "./drawCanvas";
 import socket from "../../socket/socket";
 import getMyCharacterControllers from "../../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../../drawings/getAutomaticMoveDog";
@@ -16,10 +17,6 @@ import getThrottleEmit from "../../utils/getThrottleEmit";
 const emitMyCharacterDrawing = getThrottleEmit(
   60,
   { leading: false, trailing: true },
-);
-const drawCanvas = throttle(
-  (drawingFunction) => requestAnimationFrame(drawingFunction),
-  1200,
 );
 
 const useCanvasDraw = (ref) => {
@@ -35,88 +32,14 @@ const useCanvasDraw = (ref) => {
 
   useEffect(() => {
     const ctx = ref.current.getContext("2d");
-    ctx.font = "3vh neodgm";
-    ctx.fillStyle = "white";
     const { canvas } = ctx;
-    const personImage = new Image();
-    const dogsImage = new Image();
-    personImage.src = IMAGE_URLS.PERSON_SPRITE;
-    dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
-    const images = [personImage, dogsImage];
     let timeIds = [];
     const dogElements = [];
     let personElements = [];
 
     const clickEventHandler = popUpDogProfile(history, dogElements);
     canvas.addEventListener("click", clickEventHandler);
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      personElements.forEach((personElement, index) => {
-        if (!index) {
-          const shouldEmit
-          = personElement.lastDx !== personElement.dx
-          || personElement.lastDy !== personElement.dy;
-          if (shouldEmit) {
-            emitMyCharacterDrawing(
-              "user canvas image",
-              personElement,
-            );
-          }
-        }
-
-        ctx.drawImage(
-          personImage,
-          personElement.sx,
-          personElement.sy,
-          personElement.sWidth,
-          personElement.sHeight,
-          personElement.dx,
-          personElement.dy,
-          personElement.dWidth,
-          personElement.dHeight,
-        );
-        ctx.fillText(
-          personElement.name,
-          personElement.dx,
-          personElement.dy + personElement.dHeight + 20,
-        );
-      });
-
-      dogElements.forEach((dogElement) => {
-        if (!dogElement.hadRequest && dogElement.shouldUpdate) {
-          dogElement.hadRequest = true;
-          socket.emit("update a dog for drawing", dogElement._id);
-        }
-
-        ctx.drawImage(
-          dogsImage,
-          dogElement.sx,
-          dogElement.sy,
-          dogElement.sWidth,
-          dogElement.sHeight,
-          dogElement.dx,
-          dogElement.dy,
-          dogElement.dWidth,
-          dogElement.dHeight,
-        );
-        ctx.fillText(
-          dogElement.name,
-          dogElement.dx,
-          dogElement.dy + dogElement.dHeight + 20,
-        );
-      });
-
-      drawCanvas(draw);
-    };
-
-    const checkImageLoad = () => {
-      if (images.every((image) => image.complete)) {
-        requestAnimationFrame(draw);
-      }
-
-      setTimeout(checkImageLoad, 100);
-    };
+    drawCanvas(ctx, personElements, dogElements);
 
     const {
       myCharacterDrawingObject,
@@ -149,7 +72,7 @@ const useCanvasDraw = (ref) => {
       stopMyCharacter
     );
 
-    checkImageLoad();
+    // checkImageLoad();
 
     socket.on(
       "current users",
