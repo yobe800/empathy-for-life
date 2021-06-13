@@ -1,15 +1,14 @@
 import socket from "../../socket/socket";
 import { IMAGE_URLS } from "../../constants/constants";
+import createImage from "../../utils/createImage";
 
 const drawCanvas = (ctx, persons, dogs) => {
   ctx.font = "3vh neodgm";
   ctx.fillStyle = "white";
   const { width, height } = ctx.canvas;
-  const personImage = new Image();
-  const dogsImage = new Image();
-  personImage.src = IMAGE_URLS.PERSON_SPRITE;
-  dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
-  const images = [personImage, dogsImage];
+  const personsSprite = createImage(IMAGE_URLS.PERSON_SPRITE);
+  const dogsSprite = createImage(IMAGE_URLS.DOGS_SPRITE);
+  const images = [personsSprite, dogsSprite];
 
   const draw = () => {
     ctx.clearRect(0, 0, width, height);
@@ -28,7 +27,7 @@ const drawCanvas = (ctx, persons, dogs) => {
      }
 
      ctx.drawImage(
-       personImage,
+      personsSprite,
        person.sx,
        person.sy,
        person.sWidth,
@@ -51,7 +50,7 @@ const drawCanvas = (ctx, persons, dogs) => {
       }
 
       ctx.drawImage(
-        dogsImage,
+        dogsSprite,
         dog.sx,
         dog.sy,
         dog.sWidth,
