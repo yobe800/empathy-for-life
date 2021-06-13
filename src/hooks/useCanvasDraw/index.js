@@ -5,12 +5,13 @@ import throttle from "lodash.throttle";
 import {
   ReducerContext,
   selectors,
-} from "../features/rootSlice";
-import { IMAGE_URLS, AXIS_CORRECTION } from "../constants/constants";
-import socket from "../socket/socket";
-import getMyCharacterControllers from "../drawings/getMyCharacterControllers";
-import getAutomaticMoveDog from "../drawings/getAutomaticMoveDog";
-import getThrottleEmit from "../utils/getThrottleEmit";
+} from "../../features/rootSlice";
+import { IMAGE_URLS } from "../../constants/constants";
+import popUpDogProfile from "./popUpDogProfile";
+import socket from "../../socket/socket";
+import getMyCharacterControllers from "../../drawings/getMyCharacterControllers";
+import getAutomaticMoveDog from "../../drawings/getAutomaticMoveDog";
+import getThrottleEmit from "../../utils/getThrottleEmit";
 
 const emitMyCharacterDrawing = getThrottleEmit(
   60,
@@ -33,7 +34,6 @@ const useCanvasDraw = (ref) => {
   }
 
   useEffect(() => {
-    const modal = history.location;
     const ctx = ref.current.getContext("2d");
     ctx.font = "3vh neodgm";
     ctx.fillStyle = "white";
@@ -44,27 +44,11 @@ const useCanvasDraw = (ref) => {
     dogsImage.src = IMAGE_URLS.DOGS_SPRITE;
     const images = [personImage, dogsImage];
     let timeIds = [];
-    let dogElements = [];
+    const dogElements = [];
     let personElements = [];
 
-    canvas.addEventListener("click", (event) => {
-      const clickedX = Math.trunc(event.offsetX * AXIS_CORRECTION.x);
-      const clickedY = Math.trunc(event.offsetY * AXIS_CORRECTION.y);
-
-      const clickedDog = dogElements.find((dog) => {
-        const isClickedDog
-          = dog.dx <= clickedX
-            && clickedX <= dog.dx + dog.dWidth
-            && dog.dy <= clickedY
-            && clickedY <= dog.dy + dog.dHeight;
-
-        return isClickedDog;
-      });
-
-      if (clickedDog) {
-        history.push(`/dogs/${clickedDog._id}`, { modal });
-      }
-    });
+    const clickEventHandler = popUpDogProfile(history, dogElements);
+    canvas.addEventListener("click", clickEventHandler);
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -201,7 +185,7 @@ const useCanvasDraw = (ref) => {
     socket.on(
       "current dogs",
       (dogs) => {
-        dogElements = dogs || [];
+        dogs.forEach((dog) => dogElements.push(dog));
         dogElements.map((dog) => getAutomaticMoveDog(dog));
         timeIds.push(
           setInterval(() => socket.emit("update all dogs"),  10 * 1000),
@@ -225,7 +209,8 @@ const useCanvasDraw = (ref) => {
       "update all dogs",
       (dogs) => {
         dogElements.forEach((dog) => dog.stop());
-        dogElements = dogs;
+        dogElements.length = 0;
+        dogs.forEach((dog) => dogElements.push(dog));
         dogElements.map((dog) => getAutomaticMoveDog(dog));
       },
     );

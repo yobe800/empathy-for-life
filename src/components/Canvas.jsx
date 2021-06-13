@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import useCanvasDraw from "../hooks/useCanvasDraw";
+import useCanvasDraw from "../hooks/useCanvasDraw/";
 
 import styles from "./styles/Canvas.module.css";
 
