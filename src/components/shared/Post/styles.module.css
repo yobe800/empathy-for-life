@@ -1,4 +1,4 @@
-@value defaultBorderRadius, mainWhite from "./variables.css";
+@value defaultBorderRadius, mainWhite from "../../styles/variables.css";
 
 .container {
   margin: 1vh 0;

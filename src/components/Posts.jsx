@@ -12,7 +12,7 @@ import ModalContainer from "./shared/ModalContainer/";
 import ModalHeader from "./shared/ModalHeader/";
 import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput";
-import Post from "./shared/Post";
+import Post from "./shared/Post/";
 import CloseButton from "./shared/CloseButton/";
 import PopUp from "./shared/PopUp/";
 import Loading from "./shared/Loading/";

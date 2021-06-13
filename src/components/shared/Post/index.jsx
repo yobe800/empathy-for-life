@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { DEFAULT_ERROR_MESSAGE } from "../../constants/constants";
+import { DEFAULT_ERROR_MESSAGE } from "../../../constants/constants";
 
-import styles from "../styles/Post.module.css";
-import Button from "./Button";
-import PopUp from "./PopUp/";
+import styles from "./styles.module.css";
+import Button from "../Button/";
+import PopUp from "../PopUp/";
 
 const Post = ({
   postId,
