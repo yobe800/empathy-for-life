@@ -7,7 +7,7 @@ import { DEFAULT_ERROR_MESSAGE } from "../constants/constants";
 
 import styles from "./styles/Menu.module.css";
 import ModalContainer from "./shared/ModalContainer/";
-import ModalHeader from "./shared/ModalHeader";
+import ModalHeader from "./shared/ModalHeader/";
 import HeaderBoard from "./shared/HeaderBoard/";
 import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton/";

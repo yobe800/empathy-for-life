@@ -9,7 +9,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 
 import styles from "./styles/DogsInformation.module.css";
 import ModalContainer from "./shared/ModalContainer/";
-import ModalHeader from "./shared/ModalHeader";
+import ModalHeader from "./shared/ModalHeader/";
 import Button from "./shared/Button";
 import LabelableInput from "./shared/LabelableInput/";
 import DogInformationCard from "./shared/DogInformationCard/";

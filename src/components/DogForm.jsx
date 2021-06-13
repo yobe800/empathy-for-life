@@ -11,7 +11,7 @@ import styles from "./styles/DogForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import LabelableInput from "./shared/LabelableInput";
 import Button from "./shared/Button/";
-import ModalHeader from "./shared/ModalHeader";
+import ModalHeader from "./shared/ModalHeader/";
 import PopUpWindow from "./shared/PopUpWindow";
 import CloseButton from "./shared/CloseButton/";
 

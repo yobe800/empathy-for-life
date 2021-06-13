@@ -14,7 +14,7 @@ import logWarnOrErrInDevelopment from "../utils/logWarnOrErrInDevelopment";
 import styles from "./styles/PostForm.module.css";
 import ModalContainer from "./shared/ModalContainer/";
 import CloseButton from "./shared/CloseButton/";
-import ModalHeader from "./shared/ModalHeader";
+import ModalHeader from "./shared/ModalHeader/";
 import Button from "./shared/Button";
 import PopUpWindow from "./shared/PopUpWindow";
 import LabelableInput from "./shared/LabelableInput/";
