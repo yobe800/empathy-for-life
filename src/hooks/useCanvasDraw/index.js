@@ -6,13 +6,13 @@ import {
   ReducerContext,
   selectors,
 } from "../../features/rootSlice";
-import { IMAGE_URLS } from "../../constants/constants";
 import popUpDogProfile from "./popUpDogProfile";
 import drawCanvas from "./drawCanvas";
 import socket from "../../socket/socket";
 import getMyCharacterControllers from "../../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../../drawings/getAutomaticMoveDog";
 import getThrottleEmit from "../../utils/getThrottleEmit";
+import getIndexOfObject from "../../utils/getIndexOfObject";
 
 const emitMyCharacterDrawing = getThrottleEmit(
   60,
@@ -72,36 +72,35 @@ const useCanvasDraw = (ref) => {
       stopMyCharacter
     );
 
-    // checkImageLoad();
-
     socket.on(
       "current users",
-      (otherDrawElements) => {
-        personElements = personElements.concat(otherDrawElements);
+      (users) => {
+        users.forEach((user) => personElements.push(user));
       },
     );
     socket.on(
       "another user draw element",
-      (anotherUserDrawElement) => {
+      (anotherUser) => {
         let hasUser = false;
         for (const element of personElements) {
-          if (element.id === anotherUserDrawElement.id) {
+          if (element.id === anotherUser.id) {
             hasUser = true;
-            Object.assign(element, anotherUserDrawElement);
+            Object.assign(element, anotherUser);
             break;
           }
         }
 
         if (!hasUser) {
-          personElements.push(anotherUserDrawElement);
+          personElements.push(anotherUser);
         }
       },
     );
     socket.on(
       "disconnected user",
       ({ id: anotherUserId }) => {
-        personElements = personElements.filter(
-          (element) => element.id !== anotherUserId,
+        personElements.splice(
+          getIndexOfObject(anotherUserId, "id", personElements),
+          1,
         );
       },
     );
