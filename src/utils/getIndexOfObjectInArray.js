@@ -1,4 +1,4 @@
-const getIndexOfObject = (target, targetKey, arr = []) => {
+const getIndexOfObjectInArray = (target, targetKey, arr = []) => {
   if (!target || !targetKey) {
     throw new Error("should input both target and targetKey");
   }
@@ -14,4 +14,4 @@ const getIndexOfObject = (target, targetKey, arr = []) => {
   }
 };
 
-export default getIndexOfObject;
+export default getIndexOfObjectInArray;

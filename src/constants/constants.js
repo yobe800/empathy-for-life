@@ -23,10 +23,10 @@ const IMAGE_URLS = {
   PERSON_SPRITE: "/assets/images/person-sprite.png",
 };
 const DIRECTIONS = {
-  38: "up",
-  40: "down",
-  39: "right",
-  37: "left",
+  "ArrowUp": "up",
+  "ArrowDown": "down",
+  "ArrowRight": "right",
+  "ArrowLeft": "left",
 };
 const LIMIT_FILE_SIZE = 5 * 1048576;
 const AXIS_CORRECTION = {

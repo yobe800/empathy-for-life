@@ -1,6 +1,5 @@
 import { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import throttle from "lodash.throttle";
 
 import {
   ReducerContext,
@@ -9,15 +8,9 @@ import {
 import popUpDogProfile from "./popUpDogProfile";
 import drawCanvas from "./drawCanvas";
 import socket from "../../socket/socket";
-import getMyCharacterControllers from "../../drawings/getMyCharacterControllers";
 import getAutomaticMoveDog from "../../drawings/getAutomaticMoveDog";
-import getThrottleEmit from "../../utils/getThrottleEmit";
-import getIndexOfObject from "../../utils/getIndexOfObject";
-
-const emitMyCharacterDrawing = getThrottleEmit(
-  60,
-  { leading: false, trailing: true },
-);
+import getIndexOfObjectInArray from "../../utils/getIndexOfObjectInArray";
+import PersonCharacter from "./constructors/PersonCharacter";
 
 const useCanvasDraw = (ref) => {
   const history = useHistory();
@@ -35,42 +28,29 @@ const useCanvasDraw = (ref) => {
     const { canvas } = ctx;
     let timeIds = [];
     const dogElements = [];
-    let personElements = [];
+    const personElements = [];
 
     const clickEventHandler = popUpDogProfile(history, dogElements);
     canvas.addEventListener("click", clickEventHandler);
     drawCanvas(ctx, personElements, dogElements);
 
-    const {
-      myCharacterDrawingObject,
-      walkMyCharacter,
-      stopMyCharacter,
-    } = getMyCharacterControllers(
-          canvas.width,
-          canvas.height,
-          userCharacter,
-          userName,
-        );
+    const myCharacter = new PersonCharacter(userCharacter, userName);
+    socket.emit("user canvas image", myCharacter);
+    personElements.push(myCharacter);
 
-    const throttledStopMyCharacter = throttle(
-      (event) => walkMyCharacter(event),
-      100,
-      { leading: true, trailing: false }
-    );
-
-    emitMyCharacterDrawing(
-      "user canvas image",
-      myCharacterDrawingObject,
-    );
-    personElements.push(myCharacterDrawingObject);
-    document.addEventListener(
-      "keydown",
-      throttledStopMyCharacter,
-    );
-    document.addEventListener(
-      "keyup",
-      stopMyCharacter
-    );
+    const keyDownEventHandler = ({ key }) => {
+      const canvasSize = {
+        width: canvas.width,
+        height: canvas.height,
+      };
+      const MOVE_DISTANCE = 12;
+      myCharacter.walk(canvasSize, key, MOVE_DISTANCE);
+    };
+    const keyUpEventHandler = () => {
+      myCharacter.stop();
+    };
+    document.addEventListener("keydown", keyDownEventHandler);
+    document.addEventListener("keyup",keyUpEventHandler);
 
     socket.on(
       "current users",
@@ -99,7 +79,7 @@ const useCanvasDraw = (ref) => {
       "disconnected user",
       ({ id: anotherUserId }) => {
         personElements.splice(
-          getIndexOfObject(anotherUserId, "id", personElements),
+          getIndexOfObjectInArray(anotherUserId, "id", personElements),
           1,
         );
       },
@@ -140,9 +120,8 @@ const useCanvasDraw = (ref) => {
     return () => {
       timeIds.forEach((timeId) => clearInterval(timeId));
       dogElements.forEach((dog) => dog.stop());
-      document.removeEventListener("keydown", throttledStopMyCharacter);
-      document.removeEventListener("keyup", stopMyCharacter);
-      personElements = [];
+      document.removeEventListener("keydown", keyDownEventHandler);
+      document.removeEventListener("keyup", keyUpEventHandler);
       [
         "current users",
         "another user draw element",
